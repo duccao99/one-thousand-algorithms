@@ -15,7 +15,7 @@ function E41(n: number) {
   return ret;
 }
 /**
- * i=1, ret=1/(1+)
+ * i=1, ret=1/(1+1) -> ret=0 initial
  *
  *
  */
