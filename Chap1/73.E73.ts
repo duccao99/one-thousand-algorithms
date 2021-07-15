@@ -1,5 +1,5 @@
-function f(n: number): number {
-  var ret = 1;
+function fx(n: number): number {
+  var ret: number = 1;
   var i = 1;
   do {
     ret *= i;
@@ -7,6 +7,7 @@ function f(n: number): number {
   } while (i <= n);
   return ret;
 }
+
 function E73(x: number, n: number): number {
   /**
    * -1+x2/2!-x4/4!+..+(-1)^n+1*x2n/(2n!)
@@ -17,7 +18,7 @@ function E73(x: number, n: number): number {
    */
   var ret = 0;
   for (let i = 0; i <= n; ++i)
-    ret += (Math.pow(-1, i + 1) * Math.pow(x, 2 * i)) / f(2 * i);
+    ret += (Math.pow(-1, i + 1) * Math.pow(x, 2 * i)) / fx(2 * i);
   return ret;
 }
 

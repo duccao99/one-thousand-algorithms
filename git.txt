@@ -1,0 +1,21 @@
+1. set username
+git config --global user.name "duccao99"
+
+2. set email 
+git config --global user.email "caovanducs@gmail.com"
+
+3. show config 
+git config --list
+
+4. show global config 
+git config --global --list
+
+5. delete previous commit 
+
+
+6. revert to the older commit (will be delete all file of current commit)
+git revert #commit_id
+
+
+7.  remove most previous commit 
+git reset --hard   HEAD~1
