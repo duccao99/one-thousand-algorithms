@@ -19,3 +19,6 @@ git revert #commit_id
 
 7.  remove most previous commit 
 git reset --hard   HEAD~1
+
+8. force push 
+- git push --force
