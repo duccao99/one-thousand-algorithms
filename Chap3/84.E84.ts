@@ -1,5 +1,3 @@
-type RetFirstDegreeEquation = number | string;
-
 function E84(a: number, b: number): RetFirstDegreeEquation {
   /**
    * ax + b = 0

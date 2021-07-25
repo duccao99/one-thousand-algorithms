@@ -1,13 +1,11 @@
-type retFirstDegreeEquation = string | number;
-
-function firstDegreeEquation(a: number, b: number): retFirstDegreeEquation {
+function firstDegreeEquation(a: number, b: number): RetFirstDegreeEquation {
   if (a === 0) return 'This equation has no solution';
   return -b / a;
 }
 
-type retQuadraticEquation = retFirstDegreeEquation | number[];
+type RetQuadraticEquation = RetFirstDegreeEquation | number[];
 
-function E65(a: number, b: number, c: number): retQuadraticEquation {
+function E65(a: number, b: number, c: number): RetQuadraticEquation {
   // Second degree equation - Quadratic equation
   // ax^2+bx+c=0
   /**
