@@ -1,0 +1,2 @@
+1. type lang don't have function overloading 
+-_-
