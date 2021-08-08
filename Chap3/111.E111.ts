@@ -355,8 +355,50 @@ async function handlePrintEmptyIsoscelesTriangle() {
   }
 }
 
-async function checkConditionUserInput(user_input: string) {
-  var error = false;
+function createAsteriskForFeatureC(n: number): string {
+  var ret: string = '';
+  for (let i = 1; i <= n; ++i) {
+    ret += 'x' + ' ';
+  }
+
+  ret = ret.substr(0, ret.length - 1);
+  return ret;
+}
+
+async function handlePrintIsoscelesRightTriangle() {
+  /**
+   * + n = 1
+   * x
+   *
+   * + n = 2
+   * x
+   * x_x
+   *
+   * + n = 3
+   * x
+   * x_x
+   * x_x_x
+   *
+   * + step 1: create asterisk that match with n
+   * + step 2: log it
+   *
+   *
+   */
+  const height = Number(await asyncReadline('Enter height: '));
+  var ret: string = '';
+  if (isNaN(height)) {
+    console.log('Height error');
+  } else {
+    for (let i = 1; i <= height; ++i) {
+      const asterisk = createAsteriskForFeatureC(i);
+      ret += asterisk + '\n';
+    }
+
+    console.log(ret);
+  }
+}
+
+async function checkConditionUserInput(user_input: string): Promise<void> {
   switch (user_input) {
     case 'a':
       // a. Print the isosceles triangle
@@ -373,6 +415,9 @@ async function checkConditionUserInput(user_input: string) {
       break;
     case 'c':
       // c. Print the isosceles right triangle
+      await handlePrintIsoscelesRightTriangle();
+      const user_input_case_c = await sayMenu();
+      await checkConditionUserInput(user_input_case_c);
 
       break;
     case 'd':
@@ -385,13 +430,11 @@ async function checkConditionUserInput(user_input: string) {
       break;
 
     default:
-      error = true;
+      console.log('Input error');
+
       break;
   }
-  if (error) {
-    console.log('Input error');
-    return;
-  }
+  return;
 }
 
 async function sayMenu() {
