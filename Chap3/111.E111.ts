@@ -49,6 +49,101 @@ function createAsterisk(number: number) {
   return ret;
 }
 
+function createMiddle(number: number) {
+  var ret: string = '';
+  for (let i = 1; i <= number; ++i) ret += ' ';
+  return ret;
+}
+
+function createEmptyAsterisk(
+  line_order: number,
+  line_length: number,
+  triangle_height: number
+) {
+  /**
+   * + n = 4
+   *
+   * ___x___
+   * __x x__
+   * _x   x_
+   * x x x x
+   *
+   *
+   * + i = 1
+   * x
+   *
+   *
+   * + i = 2
+   * x_x
+   * x+7-4-i=3-2=1
+   * middle = 1 = i - 1 + 2
+   *
+   * + i = 3
+   * x_x_x
+   * middle = 3 =
+   * 7-4-i=3-3
+   * x+7-i-1=7-3-1=3
+   *
+   *
+   * + i = 4
+   * x_x_x_x
+   * middle = 5
+   *
+   * + i = 5
+   * x_x_x_x_x
+   * middle = 7
+   *
+   * _______: line_length = 7/2 = 3.5= 3
+   * x_x_x_x:
+   *
+   *
+   */
+
+  /**
+   * line order = 2
+   * x_x
+   * -> middle = 1
+   *
+   * line length = 7, line order = 3
+   * _______, x_x_x
+   * -> x___x -> middle = ___ 3 = 3 + 0
+   *
+   *
+   * x_x_x_x, line order = 4
+   * -> middle = _____ 5 = 4 + 1
+   *
+   * x_x_x_x_x, line order = 5
+   * -> middle = _______ = 7 = 5 + 2
+   *
+   * x_x_X_x_x_x, lo = 6
+   * -> mdd = _________ = 9 = 6 + 3
+   *
+   * middle = line length - 2
+   *
+   *
+   */
+
+  var ret: string = '';
+  if (line_order === 1) return 'x';
+  if (line_order === triangle_height) {
+    for (let i = 1; i <= triangle_height; ++i) {
+      var asterisk = 'x';
+      ret += asterisk + ' ';
+    }
+    ret = ret.substr(0, ret.length - 1);
+  } else {
+    var temp_asterisk = createAsterisk(line_order);
+
+    var prefix = 'x';
+    var postfix = 'x';
+    var middle = createMiddle(temp_asterisk.length - 2);
+
+    ret = prefix + middle + postfix;
+  }
+
+  return ret;
+}
+
 function addStringAtPos(s: string, pos: number, to_be_add_string: string) {
   /**
    * abcde, 2,aa
@@ -64,6 +159,29 @@ function addStringAtPos(s: string, pos: number, to_be_add_string: string) {
   var a = s.split('');
   a[pos - 1] = a[pos - 1].concat(to_be_add_string);
   a.length -= to_be_add_string.length;
+  return a.join('');
+}
+
+function addStringAtCenterPosFeatureB(
+  s: string,
+  pos: number,
+  to_be_add_string: string
+) {
+  /**
+   * abcde, 2,aa
+   * -> abcaa
+   *
+   * _________, 3, x_x
+   * -> ___x_x___
+   *
+   * _________, 2 , x_x_x
+   * -> __x_x_x__
+   */
+
+  var a = s.split('');
+  a[pos - 1] = a[pos - 1].concat(to_be_add_string);
+  a.length -= to_be_add_string.length;
+
   return a.join('');
 }
 
@@ -185,19 +303,85 @@ async function handlePrintIsoscelesTriangle() {
   console.log(ret);
 }
 
+async function handlePrintEmptyIsoscelesTriangle() {
+  /**
+   * + n = 1
+   * x
+   *
+   * + n = 2
+   * _x_
+   * x_x
+   *
+   * + n = 3
+   * __x__
+   * _x_x_
+   * x___x
+   *
+   * + n = 4
+   * ___x___
+   * __x_x__
+   * _x___x_
+   * x_____x
+   *
+   */
+  const height = Number(await asyncReadline('Enter height: '));
+  var ret: string = '';
+
+  if (isNaN(height)) {
+    console.log('Height error');
+  } else {
+    for (let i = 1; i <= height; ++i) {
+      if (i !== height) {
+        var line = createLine(height + height - 1);
+        var asterisk = createEmptyAsterisk(i, line.length, height);
+
+        var center_pos = Math.floor((line.length - asterisk.length) / 2);
+
+        var current_line_result = addStringAtCenterPosFeatureB(
+          line,
+          center_pos,
+          asterisk
+        );
+
+        ret += current_line_result + '\n';
+      } else {
+        var line = createLine(height + height - 1);
+
+        var asterisk = createEmptyAsterisk(i, line.length, height);
+        ret += asterisk + '\n';
+      }
+    }
+    console.log(ret);
+  }
+}
+
 async function checkConditionUserInput(user_input: string) {
   var error = false;
   switch (user_input) {
     case 'a':
+      // a. Print the isosceles triangle
+
       await handlePrintIsoscelesTriangle();
-      const user_input = await sayMenu();
-      await checkConditionUserInput(user_input);
+      const user_input_case_a = await sayMenu();
+      await checkConditionUserInput(user_input_case_a);
       break;
     case 'b':
+      // b. Print the empty isosceles triangle
+      await handlePrintEmptyIsoscelesTriangle();
+      const user_input_case_b = await sayMenu();
+      await checkConditionUserInput(user_input_case_b);
       break;
     case 'c':
+      // c. Print the isosceles right triangle
+
       break;
     case 'd':
+      // d. Print the empty isosceles right triangle`;
+
+      break;
+    case 'e':
+      // e. Exit
+
       break;
 
     default:
@@ -216,7 +400,8 @@ async function sayMenu() {
   a. Print the isosceles triangle
   b. Print the empty isosceles triangle
   c. Print the isosceles right triangle
-  d. Print the empty isosceles right triangle`;
+  d. Print the empty isosceles right triangle
+  e. Exit`;
   console.log(say_menu);
 
   const user_input = await asyncReadline(`Enter feature: `);
