@@ -30,6 +30,8 @@ function createAsteriskFeatureA(m: number): string {
   for (let i = 1; i <= m; ++i) {
     result += 'x' + ' ';
   }
+
+  result = result.substr(0, result.length - 1);
   return result;
 }
 
@@ -69,8 +71,75 @@ async function handlePrintSolidRectangle() {
   }
   return;
 }
+
+function createAsteriskTopBotTypeFeatureB(n: number): string {
+  var result: string = '';
+
+  for (let i = 1; i <= n; ++i) {
+    result += 'x' + ' ';
+  }
+
+  result = result.substr(0, result.length - 1);
+  return result;
+}
+
+function createMiddleForAsterisk(n: number) {
+  var result: string = '';
+
+  for (let i = 1; i <= n; ++i) {
+    result += ' ';
+  }
+
+  return result;
+}
+
+function creatAsteriskMiddleTypeFeatureB(n: number) {
+  var result: string = '';
+
+  var pure_asterisk = createAsteriskTopBotTypeFeatureB(n);
+
+  var prefix = 'x';
+  var middle = createMiddleForAsterisk(pure_asterisk.length - 2);
+  var postfix = 'x';
+
+  result = prefix + middle + postfix;
+
+  return result;
+}
 async function handlePrintEmptyRectangle() {
-  console.log('hi');
+  /**
+   * m height, n width
+   *
+   * + 4,4
+   * x x x x
+   * x     x
+   * x     x
+   * x x x x
+   *
+   */
+  const m = Number(await getUserAsyncInput('Enter m: '));
+  const n = Number(await getUserAsyncInput('Enter n: '));
+
+  if (isNaN(m) || isNaN(n)) {
+    console.log('Input error');
+  } else {
+    var result: string = '';
+
+    const topEdge = createAsteriskTopBotTypeFeatureB(n);
+    const botEdge = createAsteriskTopBotTypeFeatureB(n);
+    var middleEdge = '';
+
+    for (let i = 2; i < m; ++i) {
+      var current_middle = creatAsteriskMiddleTypeFeatureB(n);
+      middleEdge += current_middle + '\n';
+    }
+
+    result = topEdge + '\n' + middleEdge + botEdge;
+
+    return result;
+  }
+
+  return;
 }
 
 async function showMenu() {
@@ -85,13 +154,15 @@ async function showMenu() {
 
   switch (user_input) {
     case 'a':
-      const result = await handlePrintSolidRectangle();
-      console.log(result);
+      const result_feature_a = await handlePrintSolidRectangle();
+      console.log(result_feature_a);
 
       await showMenu();
       break;
     case 'b':
-      await handlePrintEmptyRectangle();
+      const result_feature_b = await handlePrintEmptyRectangle();
+      console.log(result_feature_b);
+
       await showMenu();
       break;
     case 'e':
