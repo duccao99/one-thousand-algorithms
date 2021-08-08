@@ -30,14 +30,6 @@ async function asyncReadline(text: string): Promise<string> {
   return user_input;
 }
 
-function createCenterStuff(number: number) {
-  var ret: string[] = [];
-  for (let i = 0; i < number; ++i) {
-    ret.push(' ');
-  }
-  return ret;
-}
-
 function createLine(line_length: number) {
   var ret: string = '';
   for (let i = 1; i <= line_length; ++i) {
@@ -193,11 +185,13 @@ async function handlePrintIsoscelesTriangle() {
   console.log(ret);
 }
 
-function checkConditionUserInput(user_input: string) {
+async function checkConditionUserInput(user_input: string) {
   var error = false;
   switch (user_input) {
     case 'a':
-      handlePrintIsoscelesTriangle();
+      await handlePrintIsoscelesTriangle();
+      const user_input = await sayMenu();
+      await checkConditionUserInput(user_input);
       break;
     case 'b':
       break;
@@ -216,9 +210,9 @@ function checkConditionUserInput(user_input: string) {
   }
 }
 
-async function E111() {
+async function sayMenu() {
   const say_menu = `
-  --               Menu            --
+  -- ************* Menu ************* --
   a. Print the isosceles triangle
   b. Print the empty isosceles triangle
   c. Print the isosceles right triangle
@@ -226,6 +220,11 @@ async function E111() {
   console.log(say_menu);
 
   const user_input = await asyncReadline(`Enter feature: `);
-  checkConditionUserInput(user_input);
+  return user_input;
+}
+
+async function E111() {
+  const user_input = await sayMenu();
+  await checkConditionUserInput(user_input);
 }
 E111();
