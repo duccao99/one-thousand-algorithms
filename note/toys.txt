@@ -4,3 +4,8 @@
 2. Favorite 
 110
 111
+
+
+3. generate tsconfig.json 
+tsc --init
+tsc -v 
