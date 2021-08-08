@@ -33,7 +33,7 @@ async function asyncReadline(text: string): Promise<string> {
 function createLine(line_length: number) {
   var ret: string = '';
   for (let i = 1; i <= line_length; ++i) {
-    ret += '_';
+    ret += ' ';
   }
   return ret;
 }
@@ -42,7 +42,7 @@ function createAsterisk(number: number) {
 
   var ret: string = '';
   for (let i = 0; i < number; ++i) {
-    ret = ret + 'x' + '_';
+    ret = ret + 'x' + ' ';
   }
   ret = ret.substr(0, ret.length - 1);
 
@@ -398,6 +398,99 @@ async function handlePrintIsoscelesRightTriangle() {
   }
 }
 
+function createMiddleForFeatureD(n: number): string {
+  var ret: string = '';
+  for (let i = 1; i <= n; ++i) {
+    ret += ' ';
+  }
+  return ret;
+}
+
+function createAsteriskForFeatureD(line_order: number, height: number) {
+  /**
+   * + i = 1
+   * x
+   *
+   * + i = 2
+   * x_x
+   * middle = _ = 1
+   *
+   * + i = 3
+   * x_x_x
+   * middle = 3
+   *
+   *
+   *
+   *
+   * + i = 4
+   * x_x_x_x
+   *
+   *
+   */
+
+  var ret: string = '';
+  if (line_order === 1) {
+    return 'x';
+  } else if (line_order === height) {
+    for (let i = 1; i <= height; ++i) {
+      ret = ret + 'x' + ' ';
+    }
+  } else {
+    const pure_asterisk = createAsterisk(line_order);
+    const prefix = 'x';
+    const postfix = 'x';
+    const middle = createMiddleForFeatureD(pure_asterisk.length - 2);
+
+    ret = prefix + middle + postfix;
+  }
+  return ret;
+}
+
+async function handlePrintEmptyIsoscelesRightTriangle() {
+  /**
+   * + n = 1
+   * x
+   *
+   * + n = 2
+   * x
+   * x x
+   *
+   * + n = 3
+   * x
+   * x x
+   * x x x
+   *
+   * + n = 4
+   * x
+   * x x
+   * x   x
+   * x x x x
+   *
+   * + n = 5
+   * x
+   * x x
+   * x   x
+   * x    x
+   * x x x x x
+   *
+   * idea:
+   * + step 1: create the asterisk that match
+   * + step 2: loop and log it
+   *
+   *
+   */
+  const height = Number(await asyncReadline('Enter height: '));
+  var ret: string = '';
+  if (isNaN(height)) console.log('Height error');
+  else {
+    for (let i = 1; i <= height; i++) {
+      const asterisk = createAsteriskForFeatureD(i, height);
+      ret = ret + asterisk + '\n';
+    }
+    console.log(ret);
+  }
+}
+
 async function checkConditionUserInput(user_input: string): Promise<void> {
   switch (user_input) {
     case 'a':
@@ -422,7 +515,9 @@ async function checkConditionUserInput(user_input: string): Promise<void> {
       break;
     case 'd':
       // d. Print the empty isosceles right triangle`;
-
+      await handlePrintEmptyIsoscelesRightTriangle();
+      const user_input_case_d = await sayMenu();
+      await checkConditionUserInput(user_input_case_d);
       break;
     case 'e':
       // e. Exit
