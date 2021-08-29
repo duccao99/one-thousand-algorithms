@@ -7,6 +7,3 @@
 112
 
 
-3. generate tsconfig.json 
-tsc --init
-tsc -v 
