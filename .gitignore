@@ -103,3 +103,5 @@ learn/
 
 # TernJS port file
 .tern-port
+temp.js
+testJsMethod.js
