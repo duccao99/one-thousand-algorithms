@@ -293,3 +293,14 @@ pick adafae3ea84a2cfdb54d20bfd34044f4da52b199
 2. git commit --amend -m "rewrite the previous commit by --amend"
 - rewrite the previous commit
 
+
+
+
+----- common 
+1. tcvduc account
+git config --global user.name "tcvduc"
+git config --global user.email "caovanducs@gmail.com"
+
+2. duc-trinh-jh account 
+git config --global user.name "duc-trinh-jh"
+git config --global user.email "duc.trinh@journeyh.io"
