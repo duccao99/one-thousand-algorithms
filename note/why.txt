@@ -1,3 +1,12 @@
 1. Why year % 4 = 0 && year % 100 !=0 || year % 400 = 0 
 was the leap year condition ?
 
+2. Why does n^0 = 1
+- n^3 = n x n x n 
+- n^n is the product of n x n x ... x n x ...
+- So n ^ 0 means we don't have any product of n or
+means the product of no numbers at all
+
+
+
+
