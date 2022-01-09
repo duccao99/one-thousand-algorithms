@@ -1,0 +1,129 @@
+3 1 4 2 5
+
+(0) - done - [1,2,3,4,5]
+- mergeSort([3,1,4,2,5])
+- right = [3,1,4,2,5]
+- mid = 3
+- left = right.splice(0,3) = [3,1,4]
+- right = [2,5]
+----------------------------(1)----------------(2)--------------
+- mergingSortingLeftAndRight(mergeSort([3,1,4]),mergeSort([2,5]))
+
+- mergingSortingLeftAndRight([1,3,4],[2,5])
+- sortedResult = []
+- left.length && right.length = 3 && 2 = loop 
+- sortedResult = [1]
+- left = [3,4] 
+- right = [2,5]
+
+- left.length && right.length = 2 && 2 = loop 
+- sortedResult = [1,2]
+- right = [5]
+- left = [3,4]
+
+- left.length && right.length = 2 && 1 = loop 
+- sortedResult = [1,2,3]
+- left = [4]
+- right = [5]
+
+- left.length && right.length = 1 & 1 = loop 
+- sortedResult = [1,2,3,4]
+- left = [] 
+- right = [5]
+
+- left.length && right.length = 0 && 1 = break loop 
+
+- result [1,2,3,4,5]
+
+
+
+
+
+
+
+(1) - done - [1,3,4]
+- mergeSort([3,1,4])
+- right = [3,1,4]
+- mid = 2
+- left = right.splice(0,2) = [3,1]
+- right = [4]
+----------------------------(1.1)----------------(1.2)--------------
+- mergingSortingLeftAndRight(mergeSort([3,1]),mergeSort([4]))
+- mergingSortingLeftAndRight([1,3],[4]) = [1,3,4]
+- sortedResult = []
+- left.length && right.length = 2 && 1 = loop  
+- sortedResult = [1]
+- left = [3]
+- right = [4]
+- left.length && right.length = 1 && 1 = loop  
+- sortedResult = [1,3]
+- left = []
+- right = [4]
+- left.length && right.length = 0 && 1 = break loop  
+- result [1,3,4]
+
+
+
+
+
+(1.1) - done - [1,3]
+- mergeSort([3,1])
+- right = [3,1]
+- mid = 1
+- left = right.splice(0,1) = [3]
+- right = [1]
+----------------------------(1.1.1)----------------(1.1.2)--------------
+- mergingSortingLeftAndRight(mergeSort([3]),mergeSort([1]))
+- mergingSortingLeftAndRight([3],[1]) = [1,3]
+- sortedResult = []
+- left.length && right.length = 1 && 1 = true 
+- sortedResult = [1]
+- right = []
+- left = [3]
+- return [1,3] 
+
+
+(1.1.1) - done - [3]
+- mergeSort([3])
+- return [3]
+
+
+(1.1.2) - done - [1]
+- mergeSort([1])
+- return [1]
+
+(1.2) - done - [4]
+- mergeSort([4])
+- return [4]
+
+
+
+
+(2) - done - [2,5]
+- mergeSort([2,5])
+- right = [2,5]
+- mid = 1
+- left = right.splice(0,1) = [2]
+- right = [5]
+----------------------------(2.1)----------------(2.2)--------------
+- mergingSortingLeftAndRight(mergeSort([2]),mergeSort([5]))
+- mergingSortingLeftAndRight([2],[5])
+- sortedResult = []
+- left.length && right.length = 1 && 1 = loop 
+- sortedResult = [2]
+- left = [] 
+- right = [5]
+- left.length && right.length = 0 && 1 = break loop 
+- result = [2,5]
+
+(2.1) - done - [2]
+- mergeSort([2])
+- return [2]
+
+(2.2) - done - [5]
+- mergeSort([5])
+- return [5]
+
+
+
+
