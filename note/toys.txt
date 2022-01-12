@@ -11,4 +11,9 @@
 3. fun fact 
 + 0: Zero is neither positive nor negative
 
+4. loop travese tech 
++ traverse array
++ traverse string 
++ traverse number 
+
 
