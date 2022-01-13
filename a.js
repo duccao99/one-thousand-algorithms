@@ -1,6 +1,7 @@
-const right = [5];
-const mid = Math.round(right.length / 2);
-const left = right.splice(0, mid);
+const ret = [];
 
-console.log(left);
-console.log(right);
+for (let i = 1; i < 100; ++i) {
+  ret.push(Math.floor(Math.random() * i));
+}
+
+console.log(ret);

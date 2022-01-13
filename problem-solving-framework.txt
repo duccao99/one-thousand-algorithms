@@ -8,9 +8,6 @@
   const testCase3 = []; // 
   const testCase4 = []; // 
   const testCase5 = []; // 
-
-
-
  * 
  * Approach
  * + step 1: 
