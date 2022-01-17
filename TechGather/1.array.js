@@ -33,6 +33,26 @@ function useArrayIndexAsElement() {
   console.log(indexAsElement);
 }
 
+function arrayLoopBetterWay() {
+  // 3. array Loop Better Way
+
+  const a = [1, 2, 3, 4, 5];
+  const aLength = a.length;
+
+  // a.length will not be calculated each loop
+  for (let i = 0; i < aLength; ++i) {}
+}
+
+function arrayLoopMoreBetterWay() {
+  // 4. array Loop more better Way
+  const a = [1, 2, 3, 4, 5];
+
+  // because we have to write const aLength = a.length
+  // write this way is better
+  // a.length is still be calculated once time
+  for (let i = a.length; i >= 0; --i) {}
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
