@@ -21,8 +21,7 @@
  */
 
 
-
-{
+function test1() {
   const testCase1 = []; // []
   const testCase2 = []; // []
   const testCase3 = []; // []
@@ -34,5 +33,10 @@
   console.log(E186(testCase3));
   console.log(E186(testCase4));
   console.log(E186(testCase5));
+}
+
+
+{
+ test1()
 }
 

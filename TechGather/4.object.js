@@ -1,4 +1,5 @@
-{
+function objectAsHashTable() {
+  // 1. Object as Hash Table tech
   const object = {};
 
   const a = [1, 2, 2, 2, 3, 4, 5, 5];
@@ -10,7 +11,8 @@
   console.log(object);
 }
 
-{
+function loopObjectTech() {
+  // 2. Loop object tech
   const object = { 1: 1, 2: 3, 3: 1, 4: 1, 5: 2 };
 
   console.log("");
@@ -20,11 +22,31 @@
   }
 }
 
+function removeObjectKeyTech() {
+  // 3. Remove object key tech
+  let object = {
+    cow: "boo",
+    cat: "meoo",
+    dog: "goal goal",
+  };
+
+  const key = "dog";
+  delete object[key];
+
+  console.log(object);
+}
+
+function checkIfKeyInObject() {
+  // 4. Check if a key in object tech
+  const object = {
+    a: 1,
+    b: 2,
+  };
+
+  console.log("1" in object); // false
+  console.log("a" in object); // true
+}
+
 {
-  const object = { 1: 1, 2: 3, 3: 1, 4: 1, 5: 2 };
-  console.log("");
-  // loop object use for in
-  // for (const a of object) {
-  //   console.log(a);
-  // }
+  removeObjectKeyTech();
 }
