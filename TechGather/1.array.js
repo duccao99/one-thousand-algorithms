@@ -16,6 +16,8 @@ function arrayReverseTraverse() {
 }
 
 function useArrayIndexAsElement() {
+  // 3. Use array index as element
+
   const a = [1, 2, 3, 4, 3, 2, 5, 3, 2, 1, 5, 4]; // []
   const aMax = 5;
   const indexAsElement = [];
