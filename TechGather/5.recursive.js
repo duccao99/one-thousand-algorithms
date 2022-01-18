@@ -5,6 +5,7 @@
  *
  */
 function reverseLogArrayRecursive(a, length) {
+  // 1. reverse log array recursive
   if (length === 1) return console.log(a[0]);
 
   console.log(a[length - 1]);

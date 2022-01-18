@@ -47,6 +47,36 @@ function checkIfKeyInObject() {
   console.log("a" in object); // true
 }
 
+function traverseToMidCompareTwoSides() {
+  /**
+   *
+   * @param {Object} object
+   */
+  function getTotalObjectKeys(object) {
+    let count = 0;
+    for (const key in object) count++;
+    return count;
+  }
+
+  const object = { 0: 1, 1: 2, 2: 2, 3: 1 };
+
+  const totalObjectKeys = getTotalObjectKeys(object);
+
+  const mid = Math.round(totalObjectKeys / 2);
+
+  let count = 0;
+  for (const key in object) {
+    if (count === mid) {
+      break;
+    }
+
+    // Do something
+    const leftSide = object[key];
+    // const rightSide = ..
+    count++;
+  }
+}
+
 {
   removeObjectKeyTech();
 }

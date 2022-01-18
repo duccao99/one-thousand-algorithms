@@ -53,6 +53,20 @@ function arrayLoopMoreBetterWay() {
   for (let i = a.length; i >= 0; --i) {}
 }
 
+function traverseToMidCompareTwoSides() {
+  // 5. traverse to mid, compare two sides
+  const a = [1, 2, 3, 2, 1];
+
+  const mid = Math.round(a.length / 2);
+  const aLength = a.length;
+
+  for (let i = aLength - 1; i >= mid; --i) {
+    if (a[i] === a[aLength - i - 1]) {
+      // do something
+    }
+  }
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
