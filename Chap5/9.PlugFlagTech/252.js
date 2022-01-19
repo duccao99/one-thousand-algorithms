@@ -23,7 +23,47 @@
   const testCase4 = [1,5,2,6,3,-1,4]; // 1
   const testCase5 = [3,3,3,8,5,5,9,6,7,7]; // 1
  * 
+ *
+ * Approach:
+ *                            wave
+ *                            /  \ 
+ * + step 1: handle draw 1 - 1    2 - 2 logic - done
+ * + step 2: handle draw 1 - 1    2 - 2 logic    
+ *                            \   /
+ *                            wave 
+ *                     
+ *                      wave 
+ *                       \
+ * + step 3: handle draw  1 - 1 logic
+ * 
+ * + step 4: handle draw  1 - 1 logic
+ *                       /
+ *                      wave
+ *                                 wave
+ *                                /
+ * + step 5: handle draw 1 - 1 - 1         logic
+ * 
+ * + step 6: handle draw 1 - 1 - 1         logic
+ *                                \
+ *                                 wave
+ * /
+
+/**
+ *
+ * @param {Array} a
+ * @param {Number} pos
  */
+function removeArrayElement(a, pos) {
+  if (pos === 0) a.shift();
+  if (pos === a.length - 1) a.pop();
+
+  for (let i = pos; i < a.length; ++i) {
+    a[i] = a[i + 1];
+  }
+  a.length--;
+
+  return a;
+}
 
 /**
  *
@@ -44,6 +84,45 @@ function E252(a) {
 
   return flag;
 }
+
+/**
+ *
+ * @param {String} drawWavePoint
+ */
+function fixDrawWavePoint(drawWavePoint) {
+  /**
+   * __________8________________9
+   * result: __________8_____9
+   */
+
+  let length = drawWavePoint.length;
+  let startRemoveIndex = -1;
+  let removeCountTime = 0;
+  let drawWavePointArray = drawWavePoint.split("");
+
+  for (let i = drawWavePoint.length - 1; i >= 0; --i) {
+    if (drawWavePoint[length - i - 1] !== "_") {
+      startRemoveIndex = length - i - 1 + 1;
+      break;
+    }
+    removeCountTime += 1;
+  }
+
+  removeCountTime -= 1;
+
+  for (let j = 0; j < removeCountTime; ) {
+    drawWavePointArray = removeArrayElement(
+      drawWavePointArray,
+      startRemoveIndex
+    );
+
+    removeCountTime -= 1;
+  }
+
+  return drawWavePointArray.join("");
+}
+
+fixDrawWavePoint("__________8________________9");
 
 /**
  *
@@ -164,18 +243,6 @@ function printWaveArray(a) {
 
             drawWaveCountTemp += 1;
           }
-          console.log("drawWaveStartSliceIndex: ", drawWaveStartSliceIndex);
-          console.log("drawWaveCountTemp: ", drawWaveCountTemp);
-
-          drawWavePoint = drawWavePoint.replace(
-            drawWavePoint.slice(
-              drawWaveStartSliceIndex,
-              drawWaveStartSliceIndex + drawWaveCountTemp
-            ),
-            ""
-          );
-          // please note stuff before test something
-          console.log("drawWavePoint: ", drawWavePoint);
 
           countWavePoint++;
         }
@@ -200,6 +267,8 @@ function printWaveArray(a) {
     }
 
     drawer += a[a.length - 1];
+
+    drawWavePoint = fixDrawWavePoint(drawWavePoint);
 
     console.log(drawWavePoint);
     console.log(drawTwoBackSlash);
@@ -227,7 +296,9 @@ function test1() {
 
 {
   // test1();
-  const a = [1, 5, 2, 6, 3, -1, 4]; // 1
+  const a = [1, 1, 5, 2, 2, 6, 3, 3]; // 1
   const b = [3, 3, 3, 8, 5, 5, 9, 6, 6, 6]; // 1
+  printWaveArray(a);
+  console.log("");
   printWaveArray(b);
 }

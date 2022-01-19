@@ -67,9 +67,83 @@ function traverseToMidCompareTwoSides() {
   }
 }
 
+function loopWithoutIncreaseIndex() {
+  // 6. loop without increase i (i++)
+
+  let n = 10;
+
+  let count = 1;
+  for (let i = 0; i < n; ) {
+    console.log(`${i} - ${count}`);
+    n--;
+    count++;
+  }
+}
+
+/**
+ *
+ * @param {Array} a
+ * @param {Number} pos
+ */
+function removeArrayElement(a, pos) {
+  // 7. remove array element at position
+
+  /**
+   * - a = [1,2,3,4,5,6,7,8,9]
+   * - pos = 1
+   * - result: 1 3 4 5 6 7 8 9
+   *
+   *
+   */
+  if (pos === 0) a.shift();
+  if (pos === a.length - 1) a.pop();
+
+  for (let i = pos; i < a.length; ++i) {
+    a[i] = a[i + 1];
+  }
+
+  a.length--;
+
+  return a;
+}
+
+/**
+ *
+ * @param {Array} a
+ * @param {any} e
+ */
+function addElementToArrayAtFirstPosition(a, e) {
+  // 8. Add an element to an array at first position
+
+  /**
+   * - a = [1,2,3,4,5]
+   * - e = 0
+   * - result: [0,1,2,3,4,5]
+   */
+  return [e, ...a];
+}
+
+/**
+ *
+ * @param {Array} a
+ * @param {any} e
+ */
+function addElementToArrayAtLastPosition(a, e) {
+  // 9. Add an element to an array at first position
+
+  /**
+   * - a = [1,2,3,4,5]
+   * - e = 0
+   * - result: [1,2,3,4,5,0]
+   */
+  return [...a, e];
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
+  // useArrayIndexAsElement();
+  // loopWithoutIncreaseIndex();
 
-  useArrayIndexAsElement();
+  console.log(addElementToArrayAtFirstPosition([1, 2, 3, 4, 5], 0));
 }
