@@ -1,8 +1,3 @@
-const primes = [2, 3, 5, 7];
-
-for (let i = 0; i < primes.length; ++i) {
-  console.log(primes[i]);
-  primes.pop();
-}
-
-console.log(primes);
+const a = [1, 2, 3, 4, 5];
+console.log(a.unshift(0));
+console.log(a);

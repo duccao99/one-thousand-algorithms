@@ -139,11 +139,79 @@ function addElementToArrayAtLastPosition(a, e) {
   return [...a, e];
 }
 
+/**
+ *
+ * @param {Array} a
+ */
+function reverseArray(a) {
+  /**
+   * 10. reverse an array echt
+   *
+   * - a = [1,2,3,4,5]
+   * - result = [5,4,3,2,1]
+   */
+  const mid = Math.floor(a.length / 2);
+
+  for (let i = a.length - 1; i >= mid; --i) {
+    const temporary = a[i];
+    a[i] = a[a.length - i - 1];
+    a[a.length - i - 1] = temporary;
+  }
+
+  return a;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function arrayShift(a) {
+  /**
+   * 11. Implement Array.shift() tech
+   *--------0 1 2 3 4-----
+   * - a = [1,2,3,4,5]
+   * - a.arrayShift()
+   * -------0 1 2 3------
+   * - a = [2,3,4,5]
+   *
+   */
+  const result = new Array(a.length - 1);
+
+  for (let i = result.length - 1; i >= 0; --i) {
+    result[i] = a[i + 1];
+  }
+
+  return result;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function arrayPop(a) {
+  /**
+   * 12. Implement Array.pop() tech
+   *
+   *--------0 1 2 3 4-----------
+   * - a = [1,2,3,4,5]
+   * ------------0 1 2 3------
+   * - result = [1,2,3,4]
+   */
+  const ret = new Array(a.length - 1);
+  for (let i = ret.length - 1; i >= 0; --i) {
+    ret[i] = a[i];
+  }
+  return ret;
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
   // useArrayIndexAsElement();
   // loopWithoutIncreaseIndex();
-
-  console.log(addElementToArrayAtFirstPosition([1, 2, 3, 4, 5], 0));
+  // console.log(addElementToArrayAtFirstPosition([1, 2, 3, 4, 5], 0));
+  // console.log(reverseArray([1, 2, 3, 4, 5]));
+  // console.log(reverseArray([1, 2, 3, 4]));
+  // console.log(arrayShift([1, 2, 3, 4, 5]));
+  console.log(arrayPop([1, 2, 3, 4, 5]));
 }
