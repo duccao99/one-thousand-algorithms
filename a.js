@@ -1,4 +1,7 @@
-const max_num = Number.NEGATIVE_INFINITY;
-const max_num_pos = Number.POSITIVE_INFINITY;
+const ret = [];
 
-console.log(max_num_pos);
+for (let i = 1; i < 100; ++i) {
+  ret.push(Math.floor(Math.random() * i));
+}
+
+console.log(ret);

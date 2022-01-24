@@ -155,6 +155,16 @@ and it's okay if you remove the changed
 - after that do: git switch another_branch
 
 
+28. Pull only one branch and not cause merge commit
+- git pull --ff-only origin main
+
+29. configure git credential with replace all
+git config --global --replace-all user.name "Your New Name"
+git config --global --replace-all user.email "Your new email"
+
+git config --global --replace-all user.name "tcvduc"
+git config --global --replace-all user.email "caovanducs@gmail.com"
+
 
 /************ Why we checkout branch ? ****************
 + Prepare push --force case
@@ -295,12 +305,36 @@ pick adafae3ea84a2cfdb54d20bfd34044f4da52b199
 
 
 
+----- Common
+1. git config --global credential.github.com.useHttpPath true
 
------ common 
-1. tcvduc account
+2. tcvduc account
 git config --global user.name "tcvduc"
+Git config
+
+2. set email 
 git config --global user.email "caovanducs@gmail.com"
 
-2. duc-trinh-jh account 
-git config --global user.name "duc-trinh-jh"
-git config --global user.email "duc.trinh@journeyh.io"
+
+---------------------------------
+-- repository not found problem 
+---------------------------------
++ git remote rm origin 
++ git remote add origin https://USERNAME:PASSWORD@github.com/username/reponame.git 
+--> Old way -> not work 
+
++ git remote rm origin
++ git remote add origin https://<tokenhere>@github.com/<user>/<repo>.git
+
++ Get access token: 
+Avatar -> settings -> Developer settings -> Personal access tokens 
+-> generate new token 
+
+
+- example:
+git clone https://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@github.com/carparknow/flex.git
+
+- git clone https://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@github.com/duc-trinh-jh/on-board-flex.git
+
+- git clone https://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@github.com/DEV-heyfritz/HeyFritz.git
+

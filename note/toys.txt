@@ -1,14 +1,27 @@
 1. type lang don't have function overloading 
 -_-
 
-2. Favorite 
+2.1. Favorite 
 110
 111
 112
 175
 194
+241
+252 - waves array
+227
+
+
+
+
 
 3. fun fact 
 + 0: Zero is neither positive nor negative
++ {} - empty set is either even number or odd number
+
+4. loop travese tech 
++ traverse array
++ traverse string 
++ traverse number 
 
 
