@@ -133,7 +133,7 @@ function findPositionToInsert(a, e) {
   const smallerThanE = [];
 
   for (let i = a.length - 1; i >= 0; --i) {
-    if (a[i] < e) {
+    if (a[i] <= e) {
       smallerThanE.push(a[i]);
     }
   }
