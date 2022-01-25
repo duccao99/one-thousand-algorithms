@@ -204,6 +204,29 @@ function arrayPop(a) {
   return ret;
 }
 
+/**
+ *
+ * @param {Array} a
+ * @param {any} e
+ */
+function javascriptArrayUnshiftTech(a, e) {
+  /**
+   * 13. Implementation of javascript Array.unshift() method
+   * -------0 1 2 3 4------
+   * - a = [1,2,3,4,5]
+   * - e = 6
+   * ------------0 1 2 3 4 5-------
+   * - result = [6,1,2,3,4,5]
+   */
+  const result = new Array(a.length + 1);
+  result[0] = e;
+
+  for (let i = result.length - 1; i >= 1; --i) {
+    result[i] = a[i - 1];
+  }
+  return result;
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
@@ -213,5 +236,6 @@ function arrayPop(a) {
   // console.log(reverseArray([1, 2, 3, 4, 5]));
   // console.log(reverseArray([1, 2, 3, 4]));
   // console.log(arrayShift([1, 2, 3, 4, 5]));
-  console.log(arrayPop([1, 2, 3, 4, 5]));
+  // console.log(arrayPop([1, 2, 3, 4, 5]));
+  console.log(javascriptArrayUnshiftTech([1, 2, 3, 4, 5], 6));
 }
