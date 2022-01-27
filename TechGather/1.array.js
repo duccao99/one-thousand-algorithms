@@ -227,6 +227,27 @@ function javascriptArrayUnshiftTech(a, e) {
   return result;
 }
 
+/**
+ *
+ * @param {Array} a
+ * @param {any} element
+ *
+ */
+function javascriptArrayPush(a, element) {
+  /**
+   * 14. Implementation of javascript Array.push() method tech
+   */
+  const ret = new Array(a.length + 1);
+
+  ret[ret.length - 1] = element;
+
+  for (let i = ret.length - 2; i >= 0; --i) {
+    ret[i] = a[i];
+  }
+
+  return ret;
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
@@ -237,5 +258,6 @@ function javascriptArrayUnshiftTech(a, e) {
   // console.log(reverseArray([1, 2, 3, 4]));
   // console.log(arrayShift([1, 2, 3, 4, 5]));
   // console.log(arrayPop([1, 2, 3, 4, 5]));
-  console.log(javascriptArrayUnshiftTech([1, 2, 3, 4, 5], 6));
+  // console.log(javascriptArrayUnshiftTech([1, 2, 3, 4, 5], 6));
+  console.log(javascriptArrayPush([1, 2], 3));
 }
