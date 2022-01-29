@@ -248,6 +248,68 @@ function javascriptArrayPush(a, element) {
   return ret;
 }
 
+/**
+ *
+ * @param {Array} a
+ */
+function moveAllElementToLeftOneUnitLinearTraverse(a) {
+  /**
+   * 15. Move all array element to the left one unit
+   * using linear traverse tech
+   *
+   */
+
+  const temporary = a[0];
+
+  for (let i = 1; i <= a.length - 1; i++) {
+    a[i - 1] = a[i];
+  }
+
+  a[a.length - 1] = temporary;
+
+  return a;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function moveAllElementToLeftOneUnitReverseTraverse(a) {
+  /**
+   * 16. Move all array element to the left one unit
+   * using reverse traverse tech
+   *
+   */
+  const temporary = a[0];
+
+  for (let i = a.length - 1; i >= 1; --i) {
+    a[a.length - i - 1] = a[a.length - i];
+  }
+
+  a[a.length - 1] = temporary;
+
+  return a;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function shiftRightRotateTech(a) {
+  /**
+   * 17. shift right rotate array one unit tech
+   */
+  const temporary = a[a.length - 1];
+
+  for (let i = a.length - 2; i >= 0; --i) {
+    a[i + 1] = a[i];
+  }
+
+  a[0] = temporary;
+
+  return a;
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
@@ -259,5 +321,8 @@ function javascriptArrayPush(a, element) {
   // console.log(arrayShift([1, 2, 3, 4, 5]));
   // console.log(arrayPop([1, 2, 3, 4, 5]));
   // console.log(javascriptArrayUnshiftTech([1, 2, 3, 4, 5], 6));
-  console.log(javascriptArrayPush([1, 2], 3));
+  // console.log(javascriptArrayPush([1, 2], 3));
+  // console.log(moveAllElementToLeftOneUnitLinearTraverse([1, 2, 3, 4, 5]));
+  // console.log(moveAllElementToLeftOneUnitReverseTraverse([1, 2, 3, 4, 5]));
+  console.log(shiftRightRotateTech([1, 2, 3, 4, 5]));
 }

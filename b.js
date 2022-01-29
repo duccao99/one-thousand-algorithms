@@ -1,8 +1,10 @@
-for (let i = 1; i <= 2; ++i) {
-  let pos = i;
-  for (let j = 1; j <= 5; ++j) {
-    console.log("i: ", i);
-    console.log("pos: ", pos);
-    pos--;
-  }
+const a = [1, 2, 3, 4, 5];
+const temporary = a[a.length - 1];
+
+for (let i = a.length - 2; i >= 0; --i) {
+  a[i + 1] = a[i];
 }
+
+a[0] = temporary;
+
+console.log(a);
