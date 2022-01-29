@@ -310,6 +310,23 @@ function shiftRightRotateTech(a) {
   return a;
 }
 
+/**
+ *
+ * @param {Array} a
+ * @param {string} key
+ */
+function javascriptArrayJoin(a, key) {
+  /**
+   * 18. Implementation of Array.join() method tech
+   */
+  let ret = "";
+
+  for (let i = a.length - 1; i >= 0; --i) {
+    ret += a[a.length - i - 1] + key;
+  }
+
+  return ret;
+}
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
@@ -324,5 +341,6 @@ function shiftRightRotateTech(a) {
   // console.log(javascriptArrayPush([1, 2], 3));
   // console.log(moveAllElementToLeftOneUnitLinearTraverse([1, 2, 3, 4, 5]));
   // console.log(moveAllElementToLeftOneUnitReverseTraverse([1, 2, 3, 4, 5]));
-  console.log(shiftRightRotateTech([1, 2, 3, 4, 5]));
+  // console.log(shiftRightRotateTech([1, 2, 3, 4, 5]));
+  console.log(javascriptArrayJoin([1, 2, 3, 4, 5], " "));
 }
