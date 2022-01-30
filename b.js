@@ -1,10 +1,26 @@
-const a = [1, 2, 3, 4, 5];
-const temporary = a[a.length - 1];
+const a = [
+  [1, 4],
+  [1, 2, 3, 4],
+  [1, 4],
+  [1, 2],
+];
 
-for (let i = a.length - 2; i >= 0; --i) {
-  a[i + 1] = a[i];
+/**
+ *
+ * @param {Array} a
+ */
+function removeDuplicatedNumber(a) {
+  const hashmap = {};
+  for (let i = a.length - 1; i >= 0; --i) {
+    hashmap[a[i]] = (hashmap[a[i]] || 0) + 1;
+  }
+  console.log("hashmap: ", hashmap);
+
+  const ret = [];
+  for (const key in hashmap) {
+    ret.push(key);
+  }
+  return ret;
 }
 
-a[0] = temporary;
-
-console.log(a);
+console.log(removeDuplicatedNumber(a));
