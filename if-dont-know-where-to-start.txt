@@ -1,4 +1,43 @@
-  /* - Stuff human do:
+/**
+ * Problem: Problem description
  * 
- * - Stuff computer do:
+ * Understanding the problem
+ * - a = []
+ * - ret = []
+ * + i = 
+ * + i = 
+ * + i = 
+ * 
+ * 
+ * 
+ * 
+
+  const testCase1 = []; // 
+  const testCase2 = []; // 
+  const testCase3 = []; // 
+  const testCase4 = []; // 
+  const testCase5 = []; // 
+ 
+ * 
  */
+
+
+function test1() {
+  const testCase1 = []; // []
+  const testCase2 = []; // []
+  const testCase3 = []; // []
+  const testCase4 = []; // []
+  const testCase5 = []; // []
+
+  console.log(E186(testCase1));
+  console.log(E186(testCase2));
+  console.log(E186(testCase3));
+  console.log(E186(testCase4));
+  console.log(E186(testCase5));
+}
+
+
+{
+ test1()
+}
+
