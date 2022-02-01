@@ -24,6 +24,13 @@
 3. fun fact 
 + 0: Zero is neither positive nor negative
 + {} - empty set is either even number or odd number
++ set vs sequence: 
+  + common: elements, terms 
+  + difference  
+    + sequence: the same elements can appear multiple times
+    + sequence: the order does matter
+    + set: the same elements cannot appear multiple times 
+    + set: the order doesn't matter
 
 4. loop travese tech 
 + traverse array
