@@ -109,6 +109,34 @@ function E303(a) {
   return ret;
 }
 
+function E303Optimal(a) {
+  let positiveSequences = [];
+
+  for (let i = a.length - 1; i >= 0; --i) {
+    if (isPositiveNumber(a[i])) {
+      let positiveSequence = [];
+      for (let j = i; j >= 0; --j) {
+        if (isNegativeNumber(a[j])) {
+          break;
+        }
+        positiveSequence = push(positiveSequence, a[j]);
+      }
+      positiveSequences = push(positiveSequences, positiveSequence);
+    }
+  }
+
+  const hashmap = {};
+  let max = 0;
+  for (let i = positiveSequences.length - 1; i >= 0; --i) {
+    if (max <= positiveSequences[i].length) {
+      max = positiveSequences[i].length;
+    }
+    hashmap[max] = positiveSequences[i];
+  }
+
+  return reverse(hashmap[max]);
+}
+
 function test1() {
   const testCase1 = [-1, 1, 2, -2, 3, 4, 5]; // [[3,4,5]]
   const testCase2 = [1, 2, 3, -1, -2, 1, 2, 4]; // [[1,2,3], [1,2,4]]
@@ -121,6 +149,20 @@ function test1() {
   console.log(E303(testCase4));
 }
 
+function test2() {
+  const testCase1 = [-1, 1, 2, -2, 3, 4, 5]; // [[3,4,5]]
+  const testCase2 = [1, 2, 3, -1, -2, 1, 2, 4]; // [[1,2,3], [1,2,4]]
+  const testCase3 = [4, 5, 6, -2, 4, 5, -1, 7, 8, 9, 10]; //[ [7,8,9,10]]
+  const testCase4 = [1, 2, 3, 4, 5, -1, 1, 2, 3, 4, 4, -2]; // [[1,2,3,4,5], [1,2,3,4,4]]
+
+  console.log(E303Optimal(testCase1));
+  console.log(E303Optimal(testCase2));
+  console.log(E303Optimal(testCase3));
+  console.log(E303Optimal(testCase4));
+}
+
 {
   test1();
+  console.log("");
+  test2();
 }
