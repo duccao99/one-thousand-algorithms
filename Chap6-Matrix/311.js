@@ -160,7 +160,7 @@ function isIntegerNumber(n) {
 
 async function E311() {
   while (true) {
-    console.log("This is an entering matrix program");
+    console.log("This is an entering integer matrix program");
 
     const rows = await asyncAskUser("Enter number of row: ");
     const columns = await asyncAskUser("Enter number of column: ");
