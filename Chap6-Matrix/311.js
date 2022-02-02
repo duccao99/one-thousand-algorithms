@@ -90,16 +90,72 @@ function initializeMatrix(rows, columns) {
 }
 
 function logMatrix(matrix) {
-  const rows = matrix.length - 1;
-
-  for (let i = rows; i >= 0; --i) {
-    const columns = matrix[i].length - 1;
+  for (let i = 0; i <= matrix.length - 1; i++) {
     let logger = ``;
-    for (let j = columns; j >= 0; --j) {
+    for (let j = 0; j <= matrix[i].length - 1; j++) {
       logger += matrix[i][j] + " ";
     }
     console.log(logger);
   }
+}
+
+function advanceLogMatrix(matrix) {
+  /**
+   *
+   * --0 1
+   * 0|1 2
+   * 1|3 4
+   */
+  let retColumnLog = `--`;
+
+  for (let i = 0; i <= matrix[0].length - 1; ++i) {
+    retColumnLog += i + " ";
+  }
+  console.log(retColumnLog);
+
+  for (let i = 0; i <= matrix.length - 1; ++i) {
+    let logger = ``;
+    for (let j = 0; j <= matrix[i].length - 1; ++j) {
+      logger += matrix[i][j] + " ";
+    }
+
+    let rowInex = i + "|";
+    let retRowLog = rowInex + logger;
+
+    console.log(retRowLog);
+  }
+}
+
+/**
+ *
+ * @param {Number} rows
+ * @param {Number} columns
+ */
+async function enteringMatrix(rows, columns) {
+  let matrix = [];
+  for (let i = 0; i <= rows - 1; ++i) {
+    let column = [];
+    for (let j = 0; j <= columns - 1; ++j) {
+      const text = await asyncAskUser(`Enter value at matrix[${i}][${j}]: `);
+      if (isIntegerNumber(+text)) {
+        column = push(column, +text);
+      }
+      if (!isIntegerNumber(+text)) {
+        console.log("Please enter an integer number");
+        j++;
+      }
+    }
+    matrix = push(matrix, column);
+  }
+  return matrix;
+}
+
+/**
+ *
+ * @param {Number} n
+ */
+function isIntegerNumber(n) {
+  return Math.floor(n) - n === 0;
 }
 
 async function E311() {
@@ -108,9 +164,10 @@ async function E311() {
 
     const rows = await asyncAskUser("Enter number of row: ");
     const columns = await asyncAskUser("Enter number of column: ");
-    const matrix = initializeMatrix(rows, columns);
-
-    logMatrix(matrix);
+    // const matrix = initializeMatrix(rows, columns);
+    const matrix = await enteringMatrix(rows, columns);
+    console.log("matrix: ", matrix);
+    advanceLogMatrix(matrix);
     break;
   }
 }
