@@ -3,11 +3,11 @@
  * 
  * Understanding the problem
  * 
-  const testCase1 = []; // 
-  const testCase2 = []; // 
-  const testCase3 = []; // 
-  const testCase4 = []; // 
-  const testCase5 = []; // 
+  const a1 = [1,2,3,4,5]; // 
+  const a2 = []; // 
+  const a3 = []; // 
+  const a4 = []; // 
+  const a5 = []; // 
  * 
  * Approach
  * + step 1: 
@@ -22,17 +22,17 @@
 
 
 function test1() {
-  const testCase1 = []; // []
-  const testCase2 = []; // []
-  const testCase3 = []; // []
-  const testCase4 = []; // []
-  const testCase5 = []; // []
+  const a1 = [1,2,3,4,5]; // 
+  const a2 = []; // 
+  const a3 = []; // 
+  const a4 = []; // 
+  const a5 = []; // 
 
-  console.log(E186(testCase1));
-  console.log(E186(testCase2));
-  console.log(E186(testCase3));
-  console.log(E186(testCase4));
-  console.log(E186(testCase5));
+  console.log(E186(a1));
+  console.log(E186(a2));
+  console.log(E186(a3));
+  console.log(E186(a4));
+  console.log(E186(a5));
 }
 
 
