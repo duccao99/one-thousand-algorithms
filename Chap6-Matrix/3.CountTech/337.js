@@ -50,7 +50,7 @@ function getNumberOfDigitsOfNumber(n) {
  *
  *
  */
-function E336(matrix) {
+function E337(matrix) {
   let count = 0;
   for (let i = matrix.length - 1; i >= 0; --i) {
     for (let j = matrix[i].length - 1; j >= 0; --j) {
@@ -77,9 +77,9 @@ function test1() {
     [2, 5, 2],
     [1, 2, 11],
   ]; // 10
-  console.log(E336(a1)); // 9
-  console.log(E336(a2)); // 18
-  console.log(E336(a3)); // 10
+  console.log(E337(a1)); // 9
+  console.log(E337(a2)); // 18
+  console.log(E337(a3)); // 10
 }
 
 {
