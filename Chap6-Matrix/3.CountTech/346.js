@@ -472,9 +472,16 @@ function test1() {
     [1, 2, 1, 3],
     [2, 5, 2, 4],
   ]; // 2
+  const a3 = [
+    [1, 2, 4],
+    [3, 4, 5],
+    [5, 4, 7],
+    [5, 6, 6],
+  ]; // 1
 
   console.log(fx(a1));
   console.log(fx(a2));
+  console.log(fx(a3));
 }
 
 {
