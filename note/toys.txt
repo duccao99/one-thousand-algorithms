@@ -14,6 +14,7 @@
 271
 280 - array processing tech
 293 - loop tree rounds tech
+346 - matrix - queen element
 
 2.2. Unsolved
 330 
