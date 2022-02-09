@@ -16,3 +16,7 @@ tsc -v
 5. toggle zen mode - show who commit 
 ctrl + shift + p 
 toggle zen mode
+
+6. Configure setting json 
+- ctr + shift + P 
+- type: setting json 
