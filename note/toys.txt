@@ -19,13 +19,12 @@
 2.2. Unsolved
 330 
 
+3. Keyword
+- sqrt: square root (can bac 2)
+- nth root: nth root (can bac n) 
 
 
-
-
-
-
-3. fun fact 
+4. fun fact 
 + 0: Zero is neither positive nor negative
 + {} - empty set is either even number or odd number
 + set vs sequence: 
@@ -35,8 +34,15 @@
     + sequence: the order does matter
     + set: the same elements cannot appear multiple times 
     + set: the order doesn't matter
++ Can negative number be a prime number?
+  + No 
+  + Yes 
+  + It does not matter
+ 
 
-4. loop travese tech 
+   
+
+5. loop travese tech 
 + traverse array
 + traverse string 
 + traverse number 
