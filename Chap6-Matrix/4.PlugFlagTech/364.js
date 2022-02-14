@@ -70,6 +70,17 @@
  * }
  *
  * 
+ * - matrix a4
+ * -- 0 1 
+ * 0| 1 2
+ * 1| 3 4
+ * - matrix b4
+ * -- 0 1 2 3 
+ * 0| 1 2 5 5
+ * 1| 3 4 5 5
+ * 2| 5 5 1 2
+ * 3| 5 5 3 4
+ * 
   const a1 = [[1,2],[3,4]]
   const b1 = [[1,2,3],[3,4,4],[5,6,7]]
 
@@ -78,6 +89,9 @@
 
   const a3 = [[1]]
   const b3 = [[2,3],[4,5]]
+
+  const a4 = [[1,2],[3,4]]
+  const b4 = [[1,2,5,5],[3,4,5,5],[5,5,1,2],[5,5,3,4]]
 
 
  * 
@@ -109,7 +123,10 @@ function fx(a, b) {
   }
 
   const aLastValue = a[a.length - 1][a[0].length - 1];
-  const ret = {};
+  const ret = {
+    isChild: false,
+    coordinate: "",
+  };
 
   for (let i = b.length - 1; i >= 0; --i) {
     for (let j = b[i].length - 1; j >= 0; --j) {
@@ -133,9 +150,11 @@ function fx(a, b) {
         }
         subMatrix = reverse(subMatrix);
         if (isMatrixAEqualToMatrixB(subMatrix, a)) {
+          const temporary = refereringMatrix(b);
+
           ret.isChild = "Matrix A was a Matrix B child";
-          ret.coordinate =
-            "Coordinate\n" + drawMatrixCoordinate(coordinates, b);
+          ret.coordinate +=
+            "Coordinate\n" + drawMatrixCoordinate(coordinates, temporary);
         }
       }
     }
@@ -148,6 +167,22 @@ function fx(a, b) {
     };
   }
 
+  return ret;
+}
+
+/**
+ *
+ * @param {Array<Array>} a
+ */
+function refereringMatrix(a) {
+  const ret = [];
+  for (let i = 0; i <= a.length - 1; i++) {
+    const row = [];
+    for (let j = 0; j <= a[i].length - 1; ++j) {
+      row.push(a[i][j]);
+    }
+    ret.push(row);
+  }
   return ret;
 }
 
@@ -348,6 +383,28 @@ function test1() {
     [4, 5],
   ];
 
+  const a4 = [
+    [1, 2],
+    [3, 4],
+  ];
+  const b4 = [
+    [1, 2, 1, 2],
+    [3, 4, 3, 4],
+    [1, 2, 1, 2],
+    [3, 4, 3, 4],
+  ];
+
+  const a5 = [
+    [1, 2],
+    [3, 4],
+  ];
+  const b5 = [
+    [1, 2, 5, 5],
+    [3, 4, 5, 5],
+    [5, 5, 1, 2],
+    [5, 5, 3, 4],
+  ];
+
   console.log(fx(a1, b1).isChild);
   console.log(fx(a1, b1).coordinate);
 
@@ -356,6 +413,12 @@ function test1() {
 
   console.log(fx(a3, b3).isChild);
   console.log(fx(a3, b3).coordinate);
+
+  console.log(fx(a4, b4).isChild);
+  console.log(fx(a4, b4).coordinate);
+
+  console.log(fx(a5, b5).isChild);
+  console.log(fx(a5, b5).coordinate);
 }
 
 {
