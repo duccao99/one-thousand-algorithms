@@ -121,6 +121,176 @@ function matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m) {
   console.log("middleToEndRet: ", middleToEndRet);
 }
 
+function generateMatrix(rows, columns) {
+  /**
+   * 5. Generate matrix tech
+   *
+   * - Input: rows, columns
+   * - Output: matrix have rows and columns corresponding the input
+   *
+   * + rows: 2
+   * + columns: 3
+   * + matrix:
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 1 2 3
+   */
+
+  /**
+   *
+   * @param {Array} a
+   * @param {any} e
+   */
+  function push(a, e) {
+    const ret = new Array(a.length + 1);
+    ret[ret.length - 1] = e;
+    for (let i = ret.length - 2; i >= 0; --i) {
+      ret[i] = a[i];
+    }
+    return ret;
+  }
+
+  /**
+   *
+   * @param {Number} from
+   * @param {Number} to
+   *
+   */
+  function generateRandomNumber(from, to) {
+    /**
+     * - Generate random number from = from, to = to
+     * - from = 1
+     * - to = 100
+     * + ret = 0
+     * + ret = 2
+     * ..
+     * + ret = 100
+     *
+     * - Math.random() = 0, 0.1, 0.11, 0.2 ,.., 1
+     *
+     * + random = 0
+     * + random = 0.1
+     * + random = 0.5
+     * + random = 0.6
+     * + random = 1
+     *
+     * + random * from = 0
+     * + random * from = 0.1
+     * + random * from = 0.5
+     * + random * from = 0.6
+     * + random * from = 1
+     *
+     * + random * to = 0
+     * + random * to = 10
+     * + random * to = 50
+     * + random * to = 60
+     * + random * to = 100
+     *
+     * -> First equation: Math.random() * to
+     *    + ret in range: [0,to]
+     *    -> How to make from in rage?
+     *
+     * + random + from = 1
+     * + random + from = 1.1
+     * + random + from = 1.5
+     * + random + from = 1.6
+     * + random + from = 2
+     *
+     * + random + to = 2
+     * + random + to = 100.1
+     * + random + to = 100.5
+     * + random + to = 100.6
+     * + random + to = 101
+     *
+     * + random
+     *
+     * - Idea:
+     * + step 1: traverse from from to to
+     * + step 2: find some thing
+     *
+     *
+     * + i = 1
+     *   + random * i
+     *     + 0 * 1 = 0
+     *     + 0.1 * 1 = 0.1
+     *     + 0.5 * 1 = 0.5
+     *     + 0.6 * 1 = 0.6
+     *     + 1 * 1 = 1
+     *     -> Result range: [0,1]
+     *     + Math.floor(random) * i
+     *
+     *
+     *
+     * + i = 100
+     *   + random * i
+     *     + 0 * 100 = 0
+     *     + 0.1 * 100 = 10
+     *     + 0.5 * 100 = 50
+     *     + 0.6 * 100 = 60
+     *     + 1 * 100 = 100
+     *     -> Result range: [0,100]
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+    let random = Math.random(); // 0 .. 1
+
+    let ret = null;
+    for (let i = from; i <= to; ++i) {
+      ret = random * i;
+    }
+
+    if (ret < from || ret > to) {
+      return generateRandomNumber(from, to);
+    }
+
+    return Math.floor(ret);
+  }
+
+  let ret = [];
+  for (let i = rows - 1; i >= 0; --i) {
+    let column = [];
+    for (let j = columns - 1; j >= 0; --j) {
+      column = push(column, generateRandomNumber(0, 100));
+    }
+    ret = push(ret, column);
+  }
+
+  return ret;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function advanceLogMatrix(m) {
+  /**
+   * 6. Advance Log Matrix
+   * - matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 3 2 1
+   * 2| 1 1 1
+   * 3| 2 2 2
+   */
+  let columnIndex = "--";
+  for (let i = 0; i <= m[0].length - 1; ++i) {
+    columnIndex += i + " ";
+  }
+  console.log(columnIndex);
+
+  for (let i = 0; i <= m.length - 1; i++) {
+    let row = i + "|";
+    for (let j = 0; j <= m[0].length - 1; ++j) {
+      row += m[i][j] + " ";
+    }
+    console.log(row);
+  }
+}
+
 {
   const m = [
     [1, 2, 3],
@@ -130,5 +300,6 @@ function matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m) {
   //   matrixLinearTraverse(m);
   //   matrixReverseTraverse(m);
   //   matrixTraverseTopLeftToMidAndBottomRightToNextMid(m);
-  matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m);
+  // matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m);
+  advanceLogMatrix(generateMatrix(3, 4));
 }
