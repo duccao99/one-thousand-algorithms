@@ -1,0 +1,205 @@
+/**
+ * Problem: Find a digit the number that 
+ * is mostly appeared in a matrix of integer
+ * 
+ * - Matrix
+ * -- 0  1  2
+ * 0| 11 22 33
+ * 1| 44 15 19
+ * 2| 17 28 39
+ * 3| 47 48 59
+ * 
+ *  
+ * - ret = 1
+ * 
+ * Approach
+ * + step 1: reverse traverse matrix
+ * + step 2: create an hashmap
+ * + step 3: at matrix[i][j], get array of digits
+ * + step 4: traverse array of digits
+ * + step 5: use the hashmap to count the number of appeared
+ * of digit
+ * + step 6: traverse hashmap, get the greatest value  
+ * + step 7: traverse hashmap, get key  
+ *
+ *  
+ *           
+ * 
+ * 
+ * 
+ * 
+ * /
+  
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function fx(m) {
+  const hashmap = {};
+
+  for (let i = m.length - 1; i >= 0; --i) {
+    for (let j = m[i].length - 1; j >= 0; --j) {
+      const numberDigits = getNumberArrayOfDigit(m[i][j]);
+      for (let k = numberDigits.length - 1; k >= 0; --k) {
+        hashmap[numberDigits[k]] = (hashmap[numberDigits[k]] || 0) + 1;
+      }
+    }
+  }
+
+  let maxAppearNumber = Number.NEGATIVE_INFINITY;
+  let maxAppearDigit = null;
+
+  for (const key in hashmap) {
+    if (hashmap[key] > maxAppearNumber) {
+      maxAppearNumber = hashmap[key];
+      maxAppearDigit = key;
+    }
+  }
+  return `The digit that is mostly appear in the matrix is: ${maxAppearDigit}\n`;
+}
+
+/**
+ *
+ * @param {Number} n
+ */
+function getNumberArrayOfDigit(n) {
+  let ret = [];
+
+  while (n !== 0) {
+    ret = push(ret, n % 10);
+    n = Math.floor(n / 10);
+  }
+
+  return ret;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function advanceLogMatrix(m) {
+  /**
+   *
+   * @param {Number} n
+   */
+  function getNumberDigits(n) {
+    let ret = 0;
+
+    while (n !== 0) {
+      n = Math.floor(n / 10);
+      ret++;
+    }
+
+    return ret;
+  }
+
+  let columnIndex = "--";
+  for (let i = 0; i <= m[0].length - 1; ++i) {
+    const valueDigits = getNumberDigits(m[0][i]);
+    let space = "";
+    for (let i = valueDigits - 1; i >= 0; --i) {
+      space += " ";
+    }
+    columnIndex += i + space;
+  }
+  console.log(columnIndex);
+
+  for (let i = 0; i <= m.length - 1; ++i) {
+    let row = i + "|";
+    for (let j = 0; j <= m[i].length - 1; ++j) {
+      let numberDigits = getNumberDigits(m[i][j]);
+      let space = " ";
+      // for (let i = numberDigits - 1; i >= 0; --i) {
+      //   space += " ";
+      // }
+      row += m[i][j] + space;
+    }
+    console.log(row);
+  }
+}
+
+/**
+ *
+ * @param {Array} a
+ * @param {any} e
+ */
+function push(a, e) {
+  let ret = new Array(a.length + 1);
+  ret[ret.length - 1] = e;
+  for (let i = ret.length - 2; i >= 0; --i) {
+    ret[i] = a[i];
+  }
+  return ret;
+}
+
+function test1() {
+  /**
+   *
+   * @param {Number} rows
+   * @param {Number} columns
+   *
+   */
+  function generateMatrix(rows, columns) {
+    let ret = [];
+    for (let i = rows - 1; i >= 0; --i) {
+      let row = [];
+      for (let j = columns - 1; j >= 0; --j) {
+        row = push(row, generateNumber(0, 2000));
+      }
+      ret = push(ret, row);
+    }
+    return ret;
+  }
+
+  /**
+   *
+   * @param {Number} from
+   * @param {Number} to
+   *
+   */
+  function generateNumber(from, to) {
+    let random = Math.random();
+    let ret = random * to;
+
+    if (ret < from || ret > to) {
+      return generateNumber(from, to);
+    }
+
+    return Math.floor(ret);
+  }
+
+  const rows_1 = 1;
+  const rows_2 = 2;
+  const rows_3 = 3;
+  const rows_4 = 4;
+
+  const columns_1 = 1;
+  const columns_2 = 2;
+  const columns_3 = 3;
+  const columns_4 = 4;
+
+  const m1 = generateMatrix(rows_1, columns_2);
+  const m2 = generateMatrix(rows_2, columns_3);
+  const m3 = generateMatrix(rows_3, columns_1);
+  const m4 = generateMatrix(rows_3, columns_4);
+  const m5 = generateMatrix(rows_4, columns_3);
+
+  advanceLogMatrix(m1);
+  console.log(fx(m1));
+
+  advanceLogMatrix(m2);
+  console.log(fx(m2));
+
+  advanceLogMatrix(m3);
+  console.log(fx(m3));
+
+  advanceLogMatrix(m4);
+  console.log(fx(m4));
+
+  advanceLogMatrix(m5);
+  console.log(fx(m5));
+}
+
+{
+  test1();
+}
