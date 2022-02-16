@@ -11,8 +11,8 @@ function objectAsHashTable() {
   console.log(object);
 }
 
-function loopObjectTech() {
-  // 2. Loop object tech
+function linearTraverseObjectTech() {
+  // 2. Linear traverse object tech
   const object = { 1: 1, 2: 3, 3: 1, 4: 1, 5: 2 };
 
   console.log("");
@@ -48,6 +48,8 @@ function checkIfKeyInObject() {
 }
 
 function traverseToMidCompareTwoSides() {
+  // 5. Check if a key in object tech
+
   /**
    *
    * @param {Object} object
@@ -77,6 +79,28 @@ function traverseToMidCompareTwoSides() {
   }
 }
 
+/**
+ *
+ * @param {object} object
+ */
+function reverseObjectKeyValueTech(object) {
+  let ret = {};
+  let keys = [];
+  let values = [];
+
+  for (const key in object) {
+    keys.push(key);
+    values.push(object[key]);
+  }
+
+  for (let i = keys.length - 1; i >= 0; --i) {
+    ret[keys[i]] = values[i];
+  }
+
+  return ret;
+}
+
 {
-  removeObjectKeyTech();
+  // removeObjectKeyTech();
+  console.log(reverseObjectKeyValueTech({ a: 1, b: 2, c: 3, d: 4 }));
 }
