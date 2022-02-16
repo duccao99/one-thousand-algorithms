@@ -276,19 +276,65 @@ function advanceLogMatrix(m) {
    * 2| 1 1 1
    * 3| 2 2 2
    */
-  let columnIndex = "--";
-  for (let i = 0; i <= m[0].length - 1; ++i) {
-    columnIndex += i + " ";
+  /**
+   *
+   * @param {Number} n
+   */
+  function getNumberDigits(n) {
+    /**
+     * - n = 1
+     * - ret = 1
+     *
+     * - n = 12
+     * - ret = 2
+     *
+     * - n = 123
+     * - ret = 3
+     *
+     *
+     * - 123/10 = 12
+     * - 12/10 = 1
+     * - 1/10 = 0
+     *
+     *
+     */
+    let digits = 0;
+    while (n !== 0) {
+      n = Math.floor(n / 10);
+      digits++;
+    }
+    return digits;
   }
+
+  /* 
+    - check first row
+    - find digits of m[i][j]
+    - then log column index suitably
+   */
+
+  console.log("------Matrix------");
+  let columnIndex = "--";
+
+  for (let i = 0; i <= m[0].length - 1; ++i) {
+    let currentElementDigits = getNumberDigits(m[0][i]);
+    let spacing = "";
+    for (let j = currentElementDigits - 1; j >= 0; --j) {
+      spacing += " ";
+    }
+    columnIndex += i + spacing;
+  }
+
   console.log(columnIndex);
 
-  for (let i = 0; i <= m.length - 1; i++) {
+  for (let i = 0; i <= m.length - 1; ++i) {
     let row = i + "|";
-    for (let j = 0; j <= m[0].length - 1; ++j) {
+    for (let j = 0; j <= m[i].length - 1; j++) {
       row += m[i][j] + " ";
     }
     console.log(row);
   }
+
+  console.log("------------------");
 }
 
 {
