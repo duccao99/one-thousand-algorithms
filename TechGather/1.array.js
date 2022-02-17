@@ -327,6 +327,29 @@ function javascriptArrayJoin(a, key) {
 
   return ret;
 }
+
+/**
+ *
+ * @param {Array} a
+ * @param {any} e
+ */
+function reversePush(a, e) {
+  /**
+   * 19. Reverse push tech
+   * -------0 1 2
+   * - a = [1,2,3]
+   * - e = 5
+   * ---------0 1 2 3
+   * - ret = [5,1,2,3]
+   */
+  const ret = new Array(a.length + 1);
+  ret[0] = e;
+  for (let i = ret.length - 1; i >= 1; --i) {
+    ret[i] = a[i - 1];
+  }
+  return ret;
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
@@ -342,5 +365,6 @@ function javascriptArrayJoin(a, key) {
   // console.log(moveAllElementToLeftOneUnitLinearTraverse([1, 2, 3, 4, 5]));
   // console.log(moveAllElementToLeftOneUnitReverseTraverse([1, 2, 3, 4, 5]));
   // console.log(shiftRightRotateTech([1, 2, 3, 4, 5]));
-  console.log(javascriptArrayJoin([1, 2, 3, 4, 5], " "));
+  // console.log(javascriptArrayJoin([1, 2, 3, 4, 5], " "));
+  console.log(reversePush([1, 2, 3], 5));
 }
