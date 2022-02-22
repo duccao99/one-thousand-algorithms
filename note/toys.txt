@@ -18,13 +18,14 @@
 
 2.2. Unsolved
 330 
+391
 
 3. Keyword
 - sqrt: square root (can bac 2)
 - nth root: nth root (can bac n) 
 
 
-4. fun fact 
+4. fun facts 
 + 0: Zero is neither positive nor negative
 + {} - empty set is either even number or odd number
 + set vs sequence: 
@@ -38,6 +39,12 @@
   + No 
   + Yes 
   + It does not matter
++ Foo and Bar variables relatived to US Army WWII acronym
+  + FUBAR - Fucked Up Beyond All Recognition
+    + const foo = 1 <=> const fuckedUp = 1
+    + const bar = 2 <=> const beyondAllRecognition = 2
+ 
+
  
 
    
