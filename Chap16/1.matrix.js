@@ -1,6 +1,6 @@
 /**
  * Problem: Write a program to display the shift down 
- * rotate of matrix, two seconds - one line 
+ * rotate of matrix, t-time equal to one line 
  * 
  * 
  * Understanding the problem
@@ -30,23 +30,41 @@
  * @param {Array<Array>} m
  */
 async function fx(m) {
-  const text = "1. Press `r` to rotate matrix\n2. Press `e` to exit!\n";
   color.yellow("Matrix input");
   advanceLogMatrix(m);
+
+  let positionNeedToPaintColor = 0;
+
   while (1) {
-    const userInput = await asyncGetUserInput(text);
+    const userInput = await asyncGetUserInput("");
 
     if (userInput === "e") {
+      clearInterval(interval);
       break;
     }
-    if (userInput === "r") {
-      matrixShiftDownRotate(m);
 
-      color.yellow("Matrix after shift down rotate");
-      advanceLogMatrix(m);
+    if (userInput === "r") {
+      function start() {
+        if (positionNeedToPaintColor > m.length - 1) {
+          positionNeedToPaintColor = 0;
+        }
+
+        // matrixShiftDownRotate(m);
+        matrixShiftDownRotate(m);
+
+        color.yellow("Matrix after shift down rotate");
+
+        advanceLogMatrix(m, positionNeedToPaintColor);
+
+        positionNeedToPaintColor++;
+      }
+      const timeSecond = 1500;
+      awaitTimeSecondsThenDoSomething(timeSecond, start);
     }
   }
 }
+
+let interval = {};
 
 function promiseGetText(question, rl) {
   return new Promise((resolve) => {
@@ -159,8 +177,65 @@ const color = new Color();
 /**
  *
  * @param {Array<Array>} m
+ * @param {Number} positionNeedToPaintColor
+ *
  */
-function advanceLogMatrix(m) {
+function advanceLogMatrix(m, rowPositionNeedToPaintColor) {
+  /**
+   *
+   * @param {string} s
+   */
+  function stringRightTrim(s) {
+    let arrayCharacters = new Array(s.length);
+
+    for (let i = s.length - 1; i >= 0; --i) {
+      arrayCharacters[i] = s[i];
+    }
+
+    while (arrayCharacters[arrayCharacters.length - 1] === " ") {
+      arrayCharacters = pop(arrayCharacters);
+    }
+
+    return {
+      arrayCharacters: arrayCharacters,
+      string: join(arrayCharacters, ""),
+    };
+  }
+
+  /**
+   *
+   * @param {Array} a
+   * @param {string} key
+   *
+   */
+  function join(a, key) {
+    let ret = "";
+
+    for (let i = 0; i <= a.length - 1; ++i) {
+      ret += a[i] + key;
+    }
+
+    return ret;
+  }
+
+  /**
+   *
+   * @param {Array} a
+   */
+  function pop(a) {
+    /**
+     * -------0 1 2 3
+     * - a = [1,2,3,4]
+     * ---------0 1 2
+     * - ret = [1,2,3]
+     */
+    const ret = new Array(a.length - 1);
+    for (let i = ret.length - 1; i >= 0; --i) {
+      ret[i] = a[i];
+    }
+    return ret;
+  }
+
   const topBoundary = "-----Matrix-----";
   console.log(topBoundary); // len = 16
   /**
@@ -187,26 +262,38 @@ function advanceLogMatrix(m) {
     }
     columnIndex += i + space;
   }
-  console.log(columnIndex); // len = 9
-  console.log("columnIndex length: ", columnIndex.length);
+  columnIndex = stringRightTrim(columnIndex).string;
   let spaceBetweenLastColumnIndexToRightBoundary =
     topBoundary.length - columnIndex.length;
-  console.log(
-    "spaceBetweenLastColumnIndexToRightBoundary: ",
-    spaceBetweenLastColumnIndexToRightBoundary
+  const spaceForColumnIndexToRightBoundary = generateSpace(
+    spaceBetweenLastColumnIndexToRightBoundary - 1
   );
-
+  columnIndex += spaceForColumnIndexToRightBoundary + "|";
+  console.log(columnIndex);
+  const rowMiddleIndex = Math.floor((m.length - 1) / 2);
   for (let i = 0; i <= m.length - 1; ++i) {
     let row = i + "|";
     for (let j = 0; j <= m[i].length - 1; ++j) {
       row += m[i][j] + " ";
-      if (j === m[0].length - 1) {
-        const spaces = generateSpace(5);
-        row += spaces + "|";
-        const matrixIJDigits = getNumberDigits(m[i][j]);
-      }
     }
-    console.log(row);
+    row = stringRightTrim(row).string;
+    const spaceBetweenRowIToRightBoundary = generateSpace(
+      topBoundary.length - 1 - row.length
+    );
+    row += spaceBetweenRowIToRightBoundary + "|";
+    if (i === rowMiddleIndex) {
+      row += " 1. Press `r` to start rotating the matrix";
+    }
+    if (i === rowMiddleIndex + 1) {
+      row += " 2. Press `e` to exit!";
+    }
+
+    if (i === rowPositionNeedToPaintColor) {
+      color.yellow(row);
+    }
+    if (i !== rowPositionNeedToPaintColor) {
+      console.log(row);
+    }
   }
   const bottomBoundary = "---------------";
   console.log(bottomBoundary);
@@ -243,6 +330,24 @@ function push(a, e) {
     ret[i] = a[i];
   }
   return ret;
+}
+
+/**
+ *
+ * @param {Function} doSomething
+ */
+function awaitTimeSecondsThenDoSomething(
+  timeSecond,
+  doSomething,
+  ...doSomethingParameters
+) {
+  interval = setInterval(() => {
+    doSomething(...doSomethingParameters);
+  }, timeSecond);
+}
+
+function logOne() {
+  console.log(1);
 }
 
 function test1() {
