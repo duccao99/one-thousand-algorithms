@@ -45,13 +45,4 @@ class Color {
   };
 }
 
-const color = new Color();
-const s = "abc";
-console.log("Regular white: ");
-color.white(s);
-console.log("Light white: ");
-color.ligthWhite(s);
-console.log("Bold white: ");
-color.boldWhite(s);
-
-color.yellow(s);
+module.exports = { Color };
