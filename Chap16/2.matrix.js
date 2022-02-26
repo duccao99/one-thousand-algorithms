@@ -1,5 +1,5 @@
 /**
- * Problem: Write a program to display the shift down 
+ * Problem: Write a program to display the shift top 
  * rotate of matrix, t-time equal to one line 
  * 
  * 
@@ -33,7 +33,7 @@ async function fx(m) {
   color.yellow("Matrix input");
   advanceLogMatrix(m);
 
-  let positionNeedToPaintColor = 0;
+  let positionNeedToPaintColor = 1;
 
   while (1) {
     const userInput = await asyncGetUserInput("");
@@ -45,18 +45,17 @@ async function fx(m) {
 
     if (userInput === "r") {
       function start() {
-        if (positionNeedToPaintColor > m.length - 1) {
-          positionNeedToPaintColor = 0;
+        if (positionNeedToPaintColor < 0) {
+          positionNeedToPaintColor = m.length - 1;
         }
 
-        // matrixShiftDownRotate(m);
-        matrixShiftDownRotate(m);
+        matrixShiftTopRotate(m);
 
         color.yellow("Matrix after shift down rotate");
 
         advanceLogMatrix(m, positionNeedToPaintColor);
 
-        positionNeedToPaintColor++;
+        positionNeedToPaintColor--;
       }
       const timeSecond = 1500;
       awaitTimeSecondsThenDoSomething(timeSecond, start);
@@ -91,10 +90,9 @@ async function asyncGetUserInput(question) {
  *
  * @param {Array<Array>} m
  */
-function matrixShiftDownRotate(m) {
+function matrixShiftTopRotate(m) {
   /**
-   * 1.
-   * - m
+   * - matrix
    * -- 0 1 2
    * 0| 1 2 3
    * 1| 4 5 6
@@ -103,60 +101,36 @@ function matrixShiftDownRotate(m) {
    *
    * - ret
    * -- 0 1 2
-   * 3| 0 0 0
-   * 0| 1 2 3
-   * 1| 4 5 6
-   * 2| 7 8 9
-   *
-   *
-   * - m[0] = m[3]
-   * - m[1] = m[0]
-   * - m[2] = m[1]
-   * - m[3] = m[2]
-   *
-   * - i from m.length - 1 to 1
-   * - swap m[i], m[i-1]
-   *
-   * 2.
-   * - m
-   * -- 0 1 2
-   * 0| 1 2 3
    * 1| 4 5 6
    * 2| 7 8 9
    * 3| 0 0 0
-   *
-   * + i = 3 , swap(m,3,2), swap(m,i,i-1)
-   * -- 0 1 2
    * 0| 1 2 3
+   *
+   * + i = 1 , swap(m,1,0) = swap(m,i,i-1)
+   * -- 0 1 2
    * 1| 4 5 6
-   * 2| 0 0 0
-   * 3| 7 8 9
-   *
-   * + i = 2, swap(m,2,1)
-   * -- 0 1 2
    * 0| 1 2 3
-   * 1| 0 0 0
-   * 2| 4 5 6
-   * 3| 7 8 9
+   * 2| 7 8 9
+   * 3| 0 0 0
    *
-   * + i = 1, swap(m,1,0)
+   * + i = 2 , swap(m,2,1) = swap(m,i,i-1)
    * -- 0 1 2
-   * 0| 0 0 0
+   * 0| 4 5 6
+   * 2| 7 8 9
    * 1| 1 2 3
-   * 2| 4 5 6
-   * 3| 7 8 9
+   * 3| 0 0 0
    *
-   *
-   *
-   *
-   *
-   *
-   *
-   *
+   * + i = 3 , swap(m,3,2) = swap(m,i,i-1)
+   * -- 0 1 2
+   * 0| 4 5 6
+   * 1| 7 8 9
+   * 3| 0 0 0
+   * 2| 1 2 3
    */
-  for (let i = m.length - 1; i >= 1; --i) {
+  for (let i = 1; i <= m.length - 1; ++i) {
     swap(m, i, i - 1);
   }
+  return m;
 }
 
 /**
@@ -282,7 +256,7 @@ function advanceLogMatrix(m, rowPositionNeedToPaintColor) {
     );
     row += spaceBetweenRowIToRightBoundary + "|";
     if (i === rowMiddleIndex) {
-      row += " 1. Press `r` to start shift down rotate the matrix";
+      row += " 1. Press `r` to start shift top rotate the matrix";
     }
     if (i === rowMiddleIndex + 1) {
       row += " 2. Press `e` to exit!";
