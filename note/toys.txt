@@ -43,6 +43,8 @@
   + FUBAR - Fucked Up Beyond All Recognition
     + const foo = 1 <=> const fuckedUp = 1
     + const bar = 2 <=> const beyondAllRecognition = 2
+
++ WAR: Willing, Able, Ready
  
 
  
