@@ -1,27 +1,7 @@
 /**
  * Problem: Write a program to display the shift down 
- * rotate of matrix, t-time equal to one line 
+ * rotate row of matrix, t-time equal to one line 
  * 
- * 
- * Understanding the problem
- * 
- * - Matrix
- * -- 0 1 2
- * 0| 1 6 3
- * 1| 6 28 7
- * 2| 28 16 8
- * 3| 7 11 13
- * 
- * After two seconds display this 
- * 
- * - ret
- * -- 0 1 2
- * 3| 7 11 13
- * 0| 1 6 3
- * 1| 6 28 7
- * 2| 28 16 8
- * 
- * The display stop when user press `E` 
  *
  * /
   
@@ -43,16 +23,13 @@ async function fx(m) {
       break;
     }
 
-    if (userInput === "r") {
+    if (userInput === "s") {
       function start() {
         if (positionNeedToPaintColor > m.length - 1) {
           positionNeedToPaintColor = 0;
         }
 
-        // matrixShiftDownRotate(m);
-        matrixShiftDownRotate(m);
-
-        color.yellow("Matrix after shift down rotate");
+        matrixRowShiftDownRotate(m);
 
         advanceLogMatrix(m, positionNeedToPaintColor);
 
@@ -91,7 +68,7 @@ async function asyncGetUserInput(question) {
  *
  * @param {Array<Array>} m
  */
-function matrixShiftDownRotate(m) {
+function matrixRowShiftDownRotate(m) {
   /**
    * 1.
    * - m
@@ -282,7 +259,7 @@ function advanceLogMatrix(m, rowPositionNeedToPaintColor) {
     );
     row += spaceBetweenRowIToRightBoundary + "|";
     if (i === rowMiddleIndex) {
-      row += " 1. Press `r` to start shift down rotate the matrix";
+      row += " 1. Press `s` to start shift down rotate the matrix";
     }
     if (i === rowMiddleIndex + 1) {
       row += " 2. Press `e` to exit!";

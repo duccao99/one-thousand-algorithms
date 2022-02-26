@@ -45,4 +45,6 @@ class Color {
   };
 }
 
+("sadasd");
+
 module.exports = { Color };

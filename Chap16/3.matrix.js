@@ -1,6 +1,6 @@
 /**
- * Problem: Write a program to display the shift top 
- * rotate the row of matrix, t-time equal to one line 
+ * Problem: Write a program to display the shift left 
+ * rotate the column of matrix, t-time equal to one line 
  * 
  * 
  *
@@ -14,7 +14,7 @@ async function fx(m) {
   color.yellow("Matrix input");
   advanceLogMatrix(m);
 
-  let positionNeedToPaintColor = 1;
+  let columnIndexNeedToPaintColor = 1;
 
   while (1) {
     const userInput = await asyncGetUserInput("");
@@ -26,15 +26,15 @@ async function fx(m) {
 
     if (userInput === "s") {
       function start() {
-        if (positionNeedToPaintColor < 0) {
-          positionNeedToPaintColor = m.length - 1;
+        if (columnIndexNeedToPaintColor < 0) {
+          columnIndexNeedToPaintColor = m[0].length - 1;
         }
 
-        matrixRowShiftTopRotate(m);
+        matrixColumnShiftLeftRotate(m);
 
-        advanceLogMatrix(m, positionNeedToPaintColor);
+        advanceLogMatrix(m, null, columnIndexNeedToPaintColor);
 
-        positionNeedToPaintColor--;
+        columnIndexNeedToPaintColor--;
       }
       const timeSecond = 1500;
       awaitTimeSecondsThenDoSomething(timeSecond, start);
@@ -69,7 +69,7 @@ async function asyncGetUserInput(question) {
  *
  * @param {Array<Array>} m
  */
-function matrixRowShiftTopRotate(m) {
+function matrixColumnShiftLeftRotate(m) {
   /**
    * - matrix
    * -- 0 1 2
@@ -80,34 +80,37 @@ function matrixRowShiftTopRotate(m) {
    *
    * - ret
    * -- 0 1 2
-   * 1| 4 5 6
-   * 2| 7 8 9
-   * 3| 0 0 0
-   * 0| 1 2 3
-   *
-   * + i = 1 , swap(m,1,0) = swap(m,i,i-1)
-   * -- 0 1 2
-   * 1| 4 5 6
-   * 0| 1 2 3
-   * 2| 7 8 9
+   * 0| 2 3 1
+   * 1| 5 6 4
+   * 2| 8 9 7
    * 3| 0 0 0
    *
-   * + i = 2 , swap(m,2,1) = swap(m,i,i-1)
+   * + i = 1
    * -- 0 1 2
-   * 0| 4 5 6
-   * 2| 7 8 9
-   * 1| 1 2 3
+   * 0| 2 1 3
+   * 1| 5 4 6
+   * 2| 8 7 9
+   * 3| 0 0 0
+   * + j = [3,0]
+   * + swap m[j][i], m[j][i-1]
+   *
+   * + i = 2
+   * -- 0 1 2
+   * 0| 2 3 1
+   * 1| 5 6 4
+   * 2| 8 9 7
    * 3| 0 0 0
    *
-   * + i = 3 , swap(m,3,2) = swap(m,i,i-1)
-   * -- 0 1 2
-   * 0| 4 5 6
-   * 1| 7 8 9
-   * 3| 0 0 0
-   * 2| 1 2 3
    */
-  for (let i = 1; i <= m.length - 1; ++i) {
-    swap(m, i, i - 1);
+  function matrixColumnSwap(m, i, j) {
+    const temporary = m[j][i];
+    m[j][i] = m[j][i - 1];
+    m[j][i - 1] = temporary;
+  }
+  for (let i = 1; i <= m[0].length - 1; ++i) {
+    for (let j = m.length - 1; j >= 0; --j) {
+      matrixColumnSwap(m, i, j);
+    }
   }
   return m;
 }
@@ -130,10 +133,16 @@ const color = new Color();
 /**
  *
  * @param {Array<Array>} m
- * @param {Number} positionNeedToPaintColor
+ * @param {Number|null} rowIndexNeedToPaintColor
+ * @param {Number|null} columnIndexNeedToPaintColor
+ *
  *
  */
-function advanceLogMatrix(m, rowPositionNeedToPaintColor) {
+function advanceLogMatrix(
+  m,
+  rowIndexNeedToPaintColor,
+  columnIndexNeedToPaintColor
+) {
   /**
    *
    * @param {string} s
@@ -205,7 +214,7 @@ function advanceLogMatrix(m, rowPositionNeedToPaintColor) {
 
     return ret;
   }
-
+  // log column index
   let columnIndex = "--";
   for (let i = 0; i <= m[0].length - 1; ++i) {
     let space = "";
@@ -223,11 +232,18 @@ function advanceLogMatrix(m, rowPositionNeedToPaintColor) {
   );
   columnIndex += spaceForColumnIndexToRightBoundary + "|";
   console.log(columnIndex);
+
+  // log row index
   const rowMiddleIndex = Math.floor((m.length - 1) / 2);
   for (let i = 0; i <= m.length - 1; ++i) {
     let row = i + "|";
     for (let j = 0; j <= m[i].length - 1; ++j) {
-      row += m[i][j] + " ";
+      if (j === columnIndexNeedToPaintColor) {
+        row += "|" + m[i][j] + "| ";
+      }
+      if (j !== columnIndexNeedToPaintColor) {
+        row += m[i][j] + " ";
+      }
     }
     row = stringRightTrim(row).string;
     const spaceBetweenRowIToRightBoundary = generateSpace(
@@ -241,10 +257,10 @@ function advanceLogMatrix(m, rowPositionNeedToPaintColor) {
       row += " 2. Press `e` to exit!";
     }
 
-    if (i === rowPositionNeedToPaintColor) {
+    if (i === rowIndexNeedToPaintColor) {
       color.yellow(row);
     }
-    if (i !== rowPositionNeedToPaintColor) {
+    if (i !== rowIndexNeedToPaintColor) {
       console.log(row);
     }
   }

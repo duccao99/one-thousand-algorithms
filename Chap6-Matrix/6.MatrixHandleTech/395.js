@@ -1,5 +1,5 @@
 /**
- * Problem: Shift top rotate matrix
+ * Problem: Shift top rotate the row in the matrix
  * 
  * 
  * Understanding the problem
