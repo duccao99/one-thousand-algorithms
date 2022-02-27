@@ -149,7 +149,7 @@ function swap(m, i, j) {
   m[j] = temporary;
 }
 
-const { Color } = require("../TechGather/6.console-color");
+const { Color } = require("../../TechGather/6.console-color");
 const color = new Color();
 /**
  *
