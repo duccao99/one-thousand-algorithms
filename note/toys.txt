@@ -25,6 +25,23 @@
 - nth root: nth root (can bac n) 
 
 
+- ~: tilde
+- #: hashtag 
+- ^: caret 
+- *: asterisk
+- -: dash 
+- {}: curly braket
+- []: square braket  
+- ': apostrophe
+- ": quotation marks
+- /\: slash
+- \: back slash
+- /: forward slash 
+
+
+
+
+
 4. fun facts 
 + 0: Zero is neither positive nor negative
 + {} - empty set is either even number or odd number

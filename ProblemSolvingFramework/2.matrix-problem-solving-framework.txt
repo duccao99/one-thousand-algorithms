@@ -1,6 +1,5 @@
 /**
- * Problem: Shift right rotates clockwise the values lying 
- * on the matrix boundary  
+ * Problem: 
  * 
  * 
  * Understanding the problem
@@ -12,30 +11,9 @@
  * 2| 28 16 8
  * 3| 7 11 13
  * 
- * - boundary: 
- * -- 0  1  2
- * 0| 1  6  3
- * 1| 6     7
- * 2| 28    8
- * 3| 7  11 13
  * 
- * - shift right rotate clockwise one-time result
- * -- 0  1  2
- * 0| 6  1  6
- * 1| 28    3
- * 2| 7     7
- * 3| 11 13 8
- * 
- * Approach
- * + step 1: handle top boundary shift right clockwise rotate
- * + step 2: handle right boundary shift right clockwise rotate
- * + step 3: handle bottom boundary shift right clockwise rotate
- * + step 4: handle left boundary shift right clockwise rotate
- * 
- * 
- * 
- * 
- * 
+ *
+ *
  * /
   
 /**
@@ -43,136 +21,9 @@
  * @param {Array<Array>} m
  */
 function fx(m) {
-  const ret2 = handleRightBoundaryShiftRightClockwiseRotate(m);
-  const ret1 = handleTopBoundaryShiftRightClockwiseRotate(ret2);
-  return ret1;
+
 }
 
-/**
- *
- * @param {Array<Array>} m
- */
-function handleTopBoundaryShiftRightClockwiseRotate(m) {
-  /**
-   * - boundary:
-   * -- 0  1  2
-   * 0| 1  6  3
-   * 1| 6     7
-   * 2| 28    8
-   * 3| 7  11 13
-   *
-   * - top boundary:
-   * -- 0  1  2
-   * 0| 1  6  3
-   *
-   * - top boundary ret:
-   * -- 0  1  2
-   * 0| 6  1  6
-   *
-   * // variable for handle right boundary purpose
-   * + const saveTopRightCornerBoundaryValue = m[0][m[0].length-1]
-   *
-   * + i from m[0].length - 1 to 0
-   *   + swap m[0][i], m[0][i-1]
-   * + m[0][0] = m[1][0]
-   *
-   *
-   */
-
-  for (let i = m[0].length - 1; i >= 1; --i) {
-    const temporary = m[0][i];
-    m[0][i] = m[0][i - 1];
-    m[0][i - 1] = temporary;
-  }
-  m[0][0] = m[1][0];
-  return m;
-}
-/**
- *
- * @param {Array<Array>} m
- */
-function handleRightBoundaryShiftRightClockwiseRotate(m) {
-  /**
-   * - boundary:
-   * -- 0  1  2
-   * 0| 1  6  3
-   * 1| 6     7
-   * 2| 28    8
-   * 3| 7  11 13
-   *
-   *
-   * - Right boundary
-   * -- 0  1  2
-   * 0|       3
-   * 1|       7
-   * 2|       8
-   * 3|       13
-   *
-   * - Right boundary ret
-   * -- 0  1  2
-   * 0| 1  6  3
-   * 1| 6     7
-   * 2| 28    8
-   * 3| 7  11 13
-   *
-   * - traverse column index = 2
-   * for(let i=m.length-1;i>=1;--i){
-   *    // m[i][2]
-   *
-   * }
-   *
-   *
-   *
-   */
-
-  const matrixBottomRightCornerValue = m[m.length - 1][m[0].length - 1];
-
-  for (let i = m.length - 1; i >= 1; --i) {
-    const temporary = m[i][2];
-    m[i][2] = m[i - 1][2];
-    m[i - 1][2] = temporary;
-  }
-
-  m[m.length - 1][m[0].length - 2] = matrixBottomRightCornerValue;
-
-  return m;
-}
-/**
- *
- * @param {Array<Array>} m
- */
-function handleBottomBoundaryShiftRightClockwiseRotate(m) {
-  /**
-   * - boundary:
-   * -- 0  1  2
-   * 0| 1  6  3
-   * 1| 6     7
-   * 2| 28    8
-   * 3| 7  11 13
-   *
-   * - Bottom boundary
-   * -- 0  1  2
-   * 0|
-   * 1|
-   * 2|
-   * 3| 7  11 13
-   *
-   * - Bottom boundary ret
-   * -- 0  1  2
-   * 0|
-   * 1|
-   * 2| 7      8
-   * 3| 11  13 8
-   *
-   *
-   *
-   */
-}
-/**
- *
- * @param {Array<Array>} m
- */
-function handleLeftBoundaryShiftRightClockwiseRotate(m) {}
 
 /**
  *
@@ -433,9 +284,9 @@ function test2() {
   const columns_3 = 3;
   const columns_4 = 4;
 
-  // const m1 = generateMatrix(rows_1, columns_2);
-  // const m2 = generateMatrix(rows_2, columns_3);
-  // const m3 = generateMatrix(rows_2, columns_1);
+  const m1 = generateMatrix(rows_1, columns_2);
+  const m2 = generateMatrix(rows_2, columns_3);
+  const m3 = generateMatrix(rows_2, columns_1);
   const m4 = generateMatrix(rows_3, columns_4);
   const m5 = generateMatrix(rows_4, columns_3);
 
@@ -449,14 +300,14 @@ function test2() {
   const row_index_2 = 2;
   const row_index_3 = 3;
 
-  // advanceLogMatrix(m1);
-  // advanceLogMatrix(fx(m1));
+  advanceLogMatrix(m1);
+  advanceLogMatrix(fx(m1));
 
-  // advanceLogMatrix(m2);
-  // advanceLogMatrix(fx(m2));
+  advanceLogMatrix(m2);
+  advanceLogMatrix(fx(m2));
 
-  // advanceLogMatrix(m3);
-  // advanceLogMatrix(fx(m3));
+  advanceLogMatrix(m3);
+  advanceLogMatrix(fx(m3));
 
   advanceLogMatrix(m4);
   advanceLogMatrix(fx(m4));
