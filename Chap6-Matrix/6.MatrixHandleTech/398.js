@@ -28,9 +28,9 @@
  * 
  * Approach
  * + step 1: handle top boundary shift right clockwise rotate
- * + step 2: handle right boundary shift right clockwise rotate
- * + step 3: handle bottom boundary shift right clockwise rotate
- * + step 4: handle left boundary shift right clockwise rotate
+ * + step 2: handle right boundary shift right clockwise rotate - done
+ * + step 3: handle bottom boundary shift right clockwise rotate - done
+ * + step 4: handle left boundary shift right clockwise rotate - done
  * 
  * 
  * 
@@ -43,7 +43,9 @@
  * @param {Array<Array>} m
  */
 function fx(m) {
-  const ret2 = handleRightBoundaryShiftRightClockwiseRotate(m);
+  const ret4 = handleLeftBoundaryShiftRightClockwiseRotate(m);
+  const ret3 = handleBottomBoundaryShiftRightClockwiseRotate(ret4);
+  const ret2 = handleRightBoundaryShiftRightClockwiseRotate(ret3);
   const ret1 = handleTopBoundaryShiftRightClockwiseRotate(ret2);
   return ret1;
 }
@@ -69,22 +71,24 @@ function handleTopBoundaryShiftRightClockwiseRotate(m) {
    * -- 0  1  2
    * 0| 6  1  6
    *
-   * // variable for handle right boundary purpose
-   * + const saveTopRightCornerBoundaryValue = m[0][m[0].length-1]
-   *
-   * + i from m[0].length - 1 to 0
-   *   + swap m[0][i], m[0][i-1]
-   * + m[0][0] = m[1][0]
-   *
+   * -----------------0 1 2 3 4
+   * + top boundary: [1,2,3,4,5]
+   *------------------0 1 2 3
+   * + ret:          [1,5,2,3,4]
+   * + move elements within the index rage of []
    *
    */
 
-  for (let i = m[0].length - 1; i >= 1; --i) {
+  const matrixTopRightCornerValue = m[0][m[0].length - 1];
+
+  for (let i = m[0].length - 1; i >= 2; --i) {
     const temporary = m[0][i];
     m[0][i] = m[0][i - 1];
     m[0][i - 1] = temporary;
   }
-  m[0][0] = m[1][0];
+
+  m[0][1] = matrixTopRightCornerValue;
+
   return m;
 }
 /**
@@ -110,30 +114,22 @@ function handleRightBoundaryShiftRightClockwiseRotate(m) {
    *
    * - Right boundary ret
    * -- 0  1  2
-   * 0| 1  6  3
-   * 1| 6     7
-   * 2| 28    8
-   * 3| 7  11 13
-   *
-   * - traverse column index = 2
-   * for(let i=m.length-1;i>=1;--i){
-   *    // m[i][2]
-   *
-   * }
+   * 0|       6
+   * 1|       3
+   * 2|       7
+   * 3|       8
    *
    *
    *
    */
 
-  const matrixBottomRightCornerValue = m[m.length - 1][m[0].length - 1];
+  const lastColumnIndex = m[0].length - 1;
 
   for (let i = m.length - 1; i >= 1; --i) {
-    const temporary = m[i][2];
-    m[i][2] = m[i - 1][2];
-    m[i - 1][2] = temporary;
+    const temporary = m[i][lastColumnIndex];
+    m[i][lastColumnIndex] = m[i - 1][lastColumnIndex];
+    m[i - 1][lastColumnIndex] = temporary;
   }
-
-  m[m.length - 1][m[0].length - 2] = matrixBottomRightCornerValue;
 
   return m;
 }
@@ -167,12 +163,88 @@ function handleBottomBoundaryShiftRightClockwiseRotate(m) {
    *
    *
    */
+
+  for (let i = 0; i <= m[m.length - 1].length - 1 - 1; ++i) {
+    const temporary = m[m.length - 1][i];
+    m[m.length - 1][i] = m[m.length - 1][i + 1];
+    m[m.length - 1][i + 1] = temporary;
+  }
+
+  return m;
 }
 /**
  *
  * @param {Array<Array>} m
  */
-function handleLeftBoundaryShiftRightClockwiseRotate(m) {}
+function handleLeftBoundaryShiftRightClockwiseRotate(m) {
+  /**
+   * - boundary:
+   * -- 0  1  2
+   * 0| 1  6  3
+   * 1| 6     7
+   * 2| 28    8
+   * 3| 7  11 13
+   *
+   * - Left boundary
+   * -- 0  1  2
+   * 0| 1
+   * 1| 6
+   * 2| 28
+   * 3| 7
+   *
+   * - Left boundary ret
+   * -- 0  1  2
+   * 0| 6
+   * 1| 28
+   * 2| 7
+   * 3| 11
+   */
+
+  const matrixTopLeftCornerValue = m[0][0];
+  /**
+   * --0
+   * 0|1
+   * 1|2
+   * 2|3
+   * 3|4
+   *
+   * + i = 0
+   *   + swap(m[i][0],m[i+1][0])
+   *
+   * --0
+   * 1|2
+   * 0|1
+   * 2|3
+   * 3|4
+   *
+   *
+   * + i = 1
+   *   + swap(m[i][0],m[i+1][0])
+   *
+   * --0
+   * 1|2
+   * 2|3
+   * 0|1
+   * 3|4
+   * + i = 2 = m.lenght - 1 - 1
+   *
+   *
+   * --0
+   * 1|2
+   * 2|3
+   * 3|4
+   * 0|1
+   *
+   */
+
+  for (let i = 0; i <= m.length - 1 - 1; ++i) {
+    const temporary = m[i][0];
+    m[i][0] = m[i + 1][0];
+    m[i + 1][0] = temporary;
+  }
+
+  return m;
+}
 
 /**
  *
@@ -432,12 +504,14 @@ function test2() {
   const columns_2 = 2;
   const columns_3 = 3;
   const columns_4 = 4;
+  const columns_5 = 5;
+  const columns_6 = 6;
 
   // const m1 = generateMatrix(rows_1, columns_2);
   // const m2 = generateMatrix(rows_2, columns_3);
   // const m3 = generateMatrix(rows_2, columns_1);
   const m4 = generateMatrix(rows_3, columns_4);
-  const m5 = generateMatrix(rows_4, columns_3);
+  const m5 = generateMatrix(rows_4, columns_6);
 
   const column_index_0 = 0;
   const column_index_1 = 1;
