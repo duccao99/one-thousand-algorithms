@@ -73,4 +73,10 @@
 + traverse string 
 + traverse number 
 
++ linear traverse 
++ reverse traverse 
+
+6. Advance flag tech 
+- Use literally flag to handle literally 
+logic purpose
 

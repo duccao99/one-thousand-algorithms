@@ -158,96 +158,24 @@ function generateMatrix(rows, columns) {
    */
   function generateRandomNumber(from, to) {
     /**
-     * - Generate random number from = from, to = to
-     * - from = 1
-     * - to = 100
-     * + ret = 0
-     * + ret = 2
-     * ..
-     * + ret = 100
+     * + Result: [10,20]
      *
-     * - Math.random() = 0, 0.1, 0.11, 0.2 ,.., 1
+     * - math.random() = [0,0.999999]
+     * - from = 10
+     * - to = 20
+     * - to - from = 10
+     * - math.random() * to = [0,19.99998]
+     * - math.random() * to + from = [10,29.99999]
      *
-     * + random = 0
-     * + random = 0.1
-     * + random = 0.5
-     * + random = 0.6
-     * + random = 1
+     * - math.random() * (to-from) = [0,9.9999999]
+     * - math.random() * (to-from) + from = [10,19.9999999]
      *
-     * + random * from = 0
-     * + random * from = 0.1
-     * + random * from = 0.5
-     * + random * from = 0.6
-     * + random * from = 1
-     *
-     * + random * to = 0
-     * + random * to = 10
-     * + random * to = 50
-     * + random * to = 60
-     * + random * to = 100
-     *
-     * -> First equation: Math.random() * to
-     *    + ret in range: [0,to]
-     *    -> How to make from in rage?
-     *
-     * + random + from = 1
-     * + random + from = 1.1
-     * + random + from = 1.5
-     * + random + from = 1.6
-     * + random + from = 2
-     *
-     * + random + to = 2
-     * + random + to = 100.1
-     * + random + to = 100.5
-     * + random + to = 100.6
-     * + random + to = 101
-     *
-     * + random
-     *
-     * - Idea:
-     * + step 1: traverse from from to to
-     * + step 2: find some thing
-     *
-     *
-     * + i = 1
-     *   + random * i
-     *     + 0 * 1 = 0
-     *     + 0.1 * 1 = 0.1
-     *     + 0.5 * 1 = 0.5
-     *     + 0.6 * 1 = 0.6
-     *     + 1 * 1 = 1
-     *     -> Result range: [0,1]
-     *     + Math.floor(random) * i
-     *
-     *
-     *
-     * + i = 100
-     *   + random * i
-     *     + 0 * 100 = 0
-     *     + 0.1 * 100 = 10
-     *     + 0.5 * 100 = 50
-     *     + 0.6 * 100 = 60
-     *     + 1 * 100 = 100
-     *     -> Result range: [0,100]
-     *
-     *
-     *
-     *
+     * - math.floor(math.random()*(to-from)+from) = [10,19]
+     * - math.round(math.random()*(to-from)+from) = [10,20]
      *
      *
      */
-    let random = Math.random(); // 0 .. 1
-
-    let ret = null;
-    for (let i = from; i <= to; ++i) {
-      ret = random * i;
-    }
-
-    if (ret < from || ret > to) {
-      return generateRandomNumber(from, to);
-    }
-
-    return Math.floor(ret);
+    return Math.round(Math.random() * (to - from) + from);
   }
 
   let ret = [];

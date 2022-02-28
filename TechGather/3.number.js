@@ -45,25 +45,33 @@ function reverseTraverseNumber() {
 function generateRandomNumber(from, to) {
   /**
    * 3. Generate random number tech
+   * - from = 10
+   * - to = 30
+   * - to - from = 20
+   * - ret = [10,30]
+   *
+   * + math.random() = [0,0.99999]
+   * + math.random() * from = [0,9.9999]
+   * + math.random() * to = [0,29.9999997]
+   * + math.random() * (to-from) = [0,19.9999998]
+   * + math.random() * (to-from) + from = [10,29.99999998]
+   * + math.floor(math.random()*(to-from)+from) = [10,29]
+   * + math.round(math.random()*(to-from)+from) = [10,30]
+   *
+   *
+   *
    */
-
-  let random = Math.random();
-
-  let ret = null;
-
-  for (let i = from; i <= to; ++i) {
-    ret = random * i;
-  }
-
-  if (ret < from || ret > to) {
-    return generateRandomNumber(from, to);
-  }
-
-  return Math.floor(ret);
+  return Math.round(Math.random() * (to - from) + from);
 }
 
 {
-  for (let i = 1000; i >= 1; --i) {
-    console.log(generateRandomNumber(2, 100));
+  for (let i = 0; i <= 30; ++i) {
+    const ret = generateRandomNumber(10, 30);
+    if (ret === 10) {
+      console.log(ret);
+    }
+    if (ret === 30) {
+      console.log(ret);
+    }
   }
 }
