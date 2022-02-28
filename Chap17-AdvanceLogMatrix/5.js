@@ -21,6 +21,14 @@ async function fx(m) {
   advanceLogMatrix(m);
 
   let columnIndexNeedToPaintColor = 1;
+  const coordinateNeedToPaintColor = {
+    i: 0,
+    j: 0,
+  };
+  let isiIncreasing = false;
+  let isjIncreasing = false;
+  let isjDecreasing = false;
+  let isiDecreasing = false;
 
   while (1) {
     const userInput = await asyncGetUserInput("");
@@ -32,17 +40,77 @@ async function fx(m) {
 
     if (userInput === "s") {
       function start() {
-        if (columnIndexNeedToPaintColor < 0) {
-          columnIndexNeedToPaintColor = m[0].length - 1;
+        matrixShiftRightBoundaryClockwiseRotate(m);
+
+        // console.clear();
+        const coordinate = {
+          x: 100,
+          y: 100,
+        };
+        process.stdout.cursorTo(coordinate.x, coordinate.y);
+
+        advanceLogMatrix(m, null, null, [
+          coordinateNeedToPaintColor.i,
+          coordinateNeedToPaintColor.j,
+        ]);
+
+        if (
+          coordinateNeedToPaintColor.i === 0 &&
+          coordinateNeedToPaintColor.j === 0
+        ) {
+          isjIncreasing = true;
+        }
+        if (
+          coordinateNeedToPaintColor.i === 0 &&
+          coordinateNeedToPaintColor.j === m[0].length - 1
+        ) {
+          isiIncreasing = true;
+        }
+        if (
+          coordinateNeedToPaintColor.i === m.length - 1 &&
+          coordinateNeedToPaintColor.j === m[0].length - 1
+        ) {
+          isjDecreasing = true;
+        }
+        if (
+          coordinateNeedToPaintColor.i === m.length - 1 &&
+          coordinateNeedToPaintColor.j === 0
+        ) {
+          isiDecreasing = true;
         }
 
-        matrixColumnShiftLeftRotate(m);
+        if (isjIncreasing) {
+          coordinateNeedToPaintColor.j++;
+          if (coordinateNeedToPaintColor.j > m[0].length - 1) {
+            isjIncreasing = false;
+            coordinateNeedToPaintColor.j = m[0].length - 1;
+          }
+        }
+        if (isiIncreasing) {
+          coordinateNeedToPaintColor.i++;
+          if (coordinateNeedToPaintColor.i > m.length - 1) {
+            coordinateNeedToPaintColor.i = m.length - 1;
+            isiIncreasing = false;
+          }
+        }
 
-        advanceLogMatrix(m, null, columnIndexNeedToPaintColor);
+        if (isjDecreasing) {
+          coordinateNeedToPaintColor.j--;
+          if (coordinateNeedToPaintColor.j < 0) {
+            coordinateNeedToPaintColor.j = 0;
+            isjDecreasing = false;
+          }
+        }
 
-        columnIndexNeedToPaintColor--;
+        if (isiDecreasing) {
+          coordinateNeedToPaintColor.i--;
+          if (coordinateNeedToPaintColor.i < 0) {
+            coordinateNeedToPaintColor.i = 0;
+            isiDecreasing = false;
+          }
+        }
       }
-      const timeSecond = 1500;
+      const timeSecond = 1000;
       awaitTimeSecondsThenDoSomething(timeSecond, start);
     }
   }
@@ -75,15 +143,174 @@ async function asyncGetUserInput(question) {
  *
  * @param {Array<Array>} m
  */
-function matrixColumnShiftLeftRotate(m) {
-  for (let i = 1; i <= m[0].length - 1; ++i) {
-    for (let j = m.length - 1; j >= 0; --j) {
-      const temporary = m[j][i];
-      m[j][i] = m[j][i - 1];
-      m[j][i - 1] = temporary;
+function matrixShiftRightBoundaryClockwiseRotate(m) {
+  /**
+   *
+   * @param {Array<Array>} m
+   */
+  function shiftRightClockwiseLeftBoundaryMatrix(m) {
+    /**
+     * - matrix
+     * -- 0 1 2
+     * 0| 1 2 3
+     * 1| 4 5 6
+     * 2| 7 8 9
+     * 3| 0 1 2
+     *
+     * - left boundary:
+     * -- 0
+     * 0| 1
+     * 1| 4
+     * 2| 7
+     * 3| 1
+     *
+     * - left boundary ret:
+     * -- 0
+     * 0| 4
+     * 1| 7
+     * 2| 0
+     * 3| 1
+     *
+     */
+    for (let i = 0; i <= m.length - 1 - 1; ++i) {
+      const temporary = m[i][0];
+      m[i][0] = m[i + 1][0];
+      m[i + 1][0] = temporary;
     }
+    return m;
   }
-  return m;
+
+  /**
+   *
+   * @param {Array<Array>} m
+   */
+  function shiftRightClockwiseBottomBoundaryMatrix(m) {
+    /**
+     * - matrix
+     * -- 0 1 2
+     * 0| 1 2 3
+     * 1| 4 5 6
+     * 2| 7 8 9
+     * 3| 0 1 2
+     *
+     * - bottom boundary:
+     * -- 0 1 2
+     * 0|
+     * 1|
+     * 2|
+     * 3| 0 1 2
+     *
+     * - bottom boundary ret:
+     * -- 0 1 2
+     * 0|
+     * 1|
+     * 2|
+     * 3| 1 2 9
+     *
+     */
+
+    const lastRowIndex = m.length - 1;
+
+    for (let i = 0; i <= m[lastRowIndex].length - 1 - 1; ++i) {
+      const temporary = m[lastRowIndex][i];
+      m[lastRowIndex][i] = m[lastRowIndex][i + 1];
+      m[lastRowIndex][i + 1] = temporary;
+    }
+
+    return m;
+  }
+
+  /**
+   *
+   * @param {Array<Array>} m
+   */
+  function shiftRightClockwiseRightBoundaryMatrix(m) {
+    /**
+     * - matrix
+     * -- 0 1 2
+     * 0| 1 2 3
+     * 1| 4 5 6
+     * 2| 7 8 9
+     * 3| 0 1 2
+     *
+     * - right boundary:
+     * -- 0 1 2
+     * 0|     3
+     * 1|     6
+     * 2|     9
+     * 3|     2
+     *
+     * - right boundary ret:
+     * -- 0 1 2
+     * 0|     2
+     * 1|     3
+     * 2|     6
+     * 3|     9
+     *
+     */
+
+    const lastColumnIndex = m[0].length - 1;
+
+    for (let i = m.length - 1; i >= 1; --i) {
+      const temporary = m[i][lastColumnIndex];
+      m[i][lastColumnIndex] = m[i - 1][lastColumnIndex];
+      m[i - 1][lastColumnIndex] = temporary;
+    }
+
+    return m;
+  }
+
+  /**
+   *
+   * @param {Array<Array>} m
+   */
+  function shiftRightClockwiseTopBoundaryMatrix(m) {
+    /**
+     * - matrix
+     * -- 0 1 2
+     * 0| 1 2 3
+     * 1| 4 5 6
+     * 2| 7 8 9
+     * 3| 0 1 2
+     *
+     * - top boundary:
+     * -- 0 1 2
+     * 0| 1 2 3
+     * 1|
+     * 2|
+     * 3|
+     *
+     * - top boundary ret:
+     * -- 0 1 2
+     * 0| 4 1 2
+     * 1|
+     * 2|
+     * 3|
+     *
+     */
+
+    const firstRowIndex = 0;
+
+    const matrixTopRightCornerValue =
+      m[firstRowIndex][m[firstRowIndex].length - 1];
+
+    for (let i = m[firstRowIndex].length - 1; i >= 2; --i) {
+      const temporary = m[firstRowIndex][i];
+      m[firstRowIndex][i] = m[firstRowIndex][i - 1];
+      m[firstRowIndex][i - 1] = temporary;
+    }
+
+    m[firstRowIndex][1] = matrixTopRightCornerValue;
+
+    return m;
+  }
+
+  const ret1 = shiftRightClockwiseLeftBoundaryMatrix(m);
+  const ret2 = shiftRightClockwiseBottomBoundaryMatrix(ret1);
+  const ret3 = shiftRightClockwiseRightBoundaryMatrix(ret2);
+  const ret4 = shiftRightClockwiseTopBoundaryMatrix(ret3);
+
+  return ret4;
 }
 
 const { Color } = require("../TechGather/6.console-color");
@@ -93,13 +320,16 @@ const color = new Color();
  * @param {Array<Array>} m
  * @param {Number|null} rowIndexNeedToPaintColor
  * @param {Number|null} columnIndexNeedToPaintColor
+ * @param {Array|null} coordinateNeedToPaintColor
+ *
  *
  *
  */
 function advanceLogMatrix(
   m,
   rowIndexNeedToPaintColor,
-  columnIndexNeedToPaintColor
+  columnIndexNeedToPaintColor,
+  coordinateNeedToPaintColor
 ) {
   /**
    *
@@ -136,6 +366,29 @@ function advanceLogMatrix(
     }
 
     return ret;
+  }
+
+  /**
+   *
+   * @param {Array} a
+   * @param {Array} b
+   *
+   */
+  function isArrayAEqualToArrayB(a, b) {
+    if (!a || !b || a.length !== b.length) {
+      return false;
+    }
+
+    let flag = true;
+
+    for (let i = a.length - 1; i >= 0; --i) {
+      if (a[i] !== b[i]) {
+        flag = false;
+        break;
+      }
+    }
+
+    return flag;
   }
 
   /**
@@ -196,12 +449,23 @@ function advanceLogMatrix(
   for (let i = 0; i <= m.length - 1; ++i) {
     let row = i + "|";
     for (let j = 0; j <= m[i].length - 1; ++j) {
-      if (j === columnIndexNeedToPaintColor) {
+      // paint by coordinate logic
+      if (isArrayAEqualToArrayB([i, j], coordinateNeedToPaintColor)) {
         row += "|" + m[i][j] + "| ";
+        // row += m[i][j] + " ";
       }
-      if (j !== columnIndexNeedToPaintColor) {
+      if (!isArrayAEqualToArrayB([i, j], coordinateNeedToPaintColor)) {
         row += m[i][j] + " ";
       }
+
+      // paint by column index logic
+
+      // if (j === columnIndexNeedToPaintColor) {
+      //   row += "|" + m[i][j] + "| ";
+      // }
+      // if (j !== columnIndexNeedToPaintColor) {
+      //   row += m[i][j] + " ";
+      // }
     }
     row = stringRightTrim(row).string;
     const spaceBetweenRowIToRightBoundary = generateSpace(
@@ -209,7 +473,7 @@ function advanceLogMatrix(
     );
     row += spaceBetweenRowIToRightBoundary + "|";
     if (i === rowMiddleIndex) {
-      row += " 1. Press `s` to start shift top rotate the matrix";
+      row += " 1. Press `s` to start app";
     }
     if (i === rowMiddleIndex + 1) {
       row += " 2. Press `e` to exit!";
@@ -373,14 +637,16 @@ async function test2() {
    *
    */
   function generateNumber(from, to) {
-    let random = Math.random();
-    let ret = random * to;
-
-    if (ret < from || ret > to) {
-      return generateNumber(from, to);
-    }
-
-    return Math.floor(ret);
+    /**
+     * + math.random() = [0,0.99999]
+     * + from = 1
+     * + to = 10
+     *
+     * + math.random() * to = [0,9.99999]
+     * + math.random() * to + from = [1,10.999999]
+     * + math.floor(math.random()*to+from) = [1,10]
+     */
+    return Math.floor(Math.random() * to + from);
   }
 
   const rows_1 = 1;
@@ -392,12 +658,14 @@ async function test2() {
   const columns_2 = 2;
   const columns_3 = 3;
   const columns_4 = 4;
+  const columns_5 = 5;
+  const columns_6 = 6;
 
   const m1 = generateMatrix(rows_1, columns_2);
   const m2 = generateMatrix(rows_2, columns_3);
   const m3 = generateMatrix(rows_2, columns_1);
   const m4 = generateMatrix(rows_3, columns_4);
-  const m5 = generateMatrix(rows_4, columns_3);
+  const m5 = generateMatrix(rows_4, columns_5);
   const column_index_0 = 0;
   const column_index_1 = 1;
   const column_index_2 = 2;
