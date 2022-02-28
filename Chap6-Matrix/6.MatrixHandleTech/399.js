@@ -28,9 +28,9 @@
  * 
  * Approach
  * + step 1: handle top boundary shift left clockwise rotate
- * + step 2: handle left boundary shift left clockwise rotate - done
- * + step 3: handle bottom boundary shift left clockwise rotate - done
- * + step 4: handle left boundary shift left clockwise rotate - done
+ * + step 2: handle left boundary shift left clockwise rotate 
+ * + step 3: handle bottom boundary shift left clockwise rotate 
+ * + step 4: handle left boundary shift left clockwise rotate 
  * 
  * 
  * 
@@ -43,7 +43,11 @@
  * @param {Array<Array>} m
  */
 function fx(m) {
-  return functionCóDấu(m);
+  const ret1 = matrixShiftLeftRotateClockwiseLeftBoundary(m);
+  const ret2 = matrixShiftLeftRotateClockwiseTopBoundary(ret1);
+  const ret3 = matrixShiftLeftRotateClockwiseRightBoundary(ret2);
+  const ret4 = matrixShiftLeftRotateClockwiseBottomBoundary(ret3);
+  return ret4;
 }
 
 /**
@@ -73,8 +77,142 @@ function matrixShiftLeftRotateClockwiseLeftBoundary(m) {
    * 2| 4
    * 3| 7
    *
-   * ->
+   *
    */
+
+  const firstColumnIndex = 0;
+
+  for (let i = m.length - 1; i >= 1; --i) {
+    const temporary = m[i][firstColumnIndex];
+    m[i][firstColumnIndex] = m[i - 1][firstColumnIndex];
+    m[i - 1][firstColumnIndex] = temporary;
+  }
+
+  return m;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixShiftLeftRotateClockwiseTopBoundary(m) {
+  /*
+   * - matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 1 0 1
+   *
+   * - Top boundary
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1|
+   * 2|
+   * 3|
+   *
+   * - Top boundary ret
+   * -- 0 1 2
+   * 0| 2 3 6
+   * 1|
+   * 2|
+   * 3|
+   *
+   *
+   *
+   */
+  const firstRowIndex = 0;
+
+  for (let i = 0; i <= m[firstRowIndex].length - 1 - 1; ++i) {
+    const temporary = m[firstRowIndex][i];
+    m[firstRowIndex][i] = m[firstRowIndex][i + 1];
+    m[firstRowIndex][i + 1] = temporary;
+  }
+
+  return m;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixShiftLeftRotateClockwiseRightBoundary(m) {
+  /*
+   * - matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 1 0 1
+   *
+   * - right boundary
+   * -- 0 1 2
+   * 0|     3
+   * 1|     6
+   * 2|     9
+   * 3|     1
+   *
+   * - right boundary ret
+   * -- 0 1 2
+   * 0|     6
+   * 1|     9
+   * 2|     1
+   * 3|     0
+   *
+   *
+   *
+   */
+  const lastColumnIndex = m[0].length - 1;
+
+  for (let i = 0; i <= m.length - 1 - 1; ++i) {
+    const temporary = m[i][lastColumnIndex];
+    m[i][lastColumnIndex] = m[i + 1][lastColumnIndex];
+    m[i + 1][lastColumnIndex] = temporary;
+  }
+
+  return m;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixShiftLeftRotateClockwiseBottomBoundary(m) {
+  /*
+   * - matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 1 0 1
+   *
+   * - bottom boundary
+   * -- 0 1 2
+   * 0|
+   * 1|
+   * 2|
+   * 3| 1 0 1
+   *
+   * - right boundary ret
+   * -- 0 1 2
+   * 0|
+   * 1|
+   * 2|
+   * 3| 0 1 9
+   *
+   *
+   *
+   */
+
+  const lastRowIndex = m.length - 1;
+
+  for (let i = m[lastRowIndex].length - 1; i >= 2; --i) {
+    const temporary = m[lastRowIndex][i];
+    m[lastRowIndex][i] = m[lastRowIndex][i - 1];
+    m[lastRowIndex][i - 1] = temporary;
+  }
+
+  return m;
 }
 
 /**
@@ -193,7 +331,7 @@ function advanceLogMatrix(m) {
   let spaceBetweenLastColumnIndexToRightBoundary =
     topBoundary.length - columnIndex.length;
   const spaceForColumnIndexToRightBoundary = generateSpace(
-    spaceBetweenLastColumnIndexToRightBoundary - 1
+    spaceBetweenLastColumnIndexToRightBoundary - 1 + 5
   );
   columnIndex += spaceForColumnIndexToRightBoundary + "|";
   console.log(columnIndex);
@@ -205,7 +343,7 @@ function advanceLogMatrix(m) {
     }
     row = stringRightTrim(row).string;
     const spaceBetweenRowIToRightBoundary = generateSpace(
-      topBoundary.length - 1 - row.length
+      topBoundary.length - 1 - row.length + 5
     );
     row += spaceBetweenRowIToRightBoundary + "|";
     console.log(row);
