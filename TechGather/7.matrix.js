@@ -1,30 +1,245 @@
 /**
+ * - Matrix traverse common cases
+ * -- matrix
+ * -- 0 1 2
+ * 0| 1 2 3
+ * 1| 4 5 6
+ * 2| 7 8 9
+ * 3| 3 2 1
+ *
+ * + Case 1: matrixRowLinearTraverse - done
+ *   + ret = 1 2 3 4 5 6 7 8 9 3 2 1
+ * + Case 2: matrixRowReverseTraverse - done
+ *   + ret = 3 2 1 6 5 4 9 8 7 1 2 3
+ * + Case 3: matrixRowLinearTraverseBackward  - done
+ *   + ret = 3 2 1 7 8 9 4 5 6 1 2 3
+ * + Case 4: matrixRowReverseTraverseBackward - done
+ *   + ret = 1 2 3 9 8 7 6 5 4 3 2 1
+ * + Case 5: matrixColumnLinearTraverse
+ *   + ret = 1 4 7 3 2 5 8 2 3 6 9 1
+ * + Case 6: matrixColumnReverseTraverse
+ *   + ret = 3 6 9 1 2 5 8 2 1 4 7 3
+ * + Case 7: matrixColumnLinearTraverseBackward
+ *   + ret = 3 7 4 1 2 8 5 2 1 9 6 3
+ * + Case 8: matrixColumnReverseTraverseBackward
+ *   + ret = 1 9 6 3 2 8 5 2 3 7 4 1
+ *
+ *
+ *
+ *
+ */
+
+/**
  * @param {Array<Array>} m
  */
-function matrixLinearTraverse(m) {
+function matrixRowLinearTraverse(m) {
   /**
    * 1. Matrix linear traverse tech
+   * - matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 1 2
+   *
+   * - ret
+   * 1
+   * 2
+   * 3
+   * 4
+   * 5
+   * 6
+   * 7
+   * 8
+   * 9
+   * 3
+   * 1
+   * 2
    */
+  let ret = "";
   for (let i = 0; i <= m.length - 1; i++) {
     for (let j = 0; j <= m.length - 1; ++j) {
-      console.log(m[i][j]);
+      ret += m[i][j] + " ";
     }
   }
+  return ret;
 }
 
 /**
  * @param {Array<Array>} m
  */
-function matrixReverseTraverse(m) {
+function matrixRowReverseTraverse(m) {
   /**
    * 2. Matrix reverse traverse tech
+   * - matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 1 2
+   * - ret
+   * 3 2 1 6 5 4 9 8 7 2 1 3
    */
+  let ret = "";
+
+  for (let i = 0; i < m.length; ++i) {
+    for (let j = m[i].length - 1; j >= 0; --j) {
+      ret += m[i][j] + " ";
+    }
+  }
+
+  return ret;
+}
+
+/**
+ * @param {Array<Array>} m
+ */
+function matrixRowLinearTraverseBackward(m) {
+  /**
+   * 3. matrix Row Linear Traverse Backward tech
+   * -- matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 2 1
+   *
+   * - ret = 3 2 1 7 8 9 4 5 6 1 2 3
+   */
+  let ret = "";
+
+  for (let i = m.length - 1; i >= 0; --i) {
+    for (let j = 0; j < m[i].length; ++j) {
+      ret += m[i][j] + " ";
+    }
+  }
+
+  return ret;
+}
+
+/**
+ * @param {Array<Array>} m
+ */
+function matrixRowReverseTraverseBackward(m) {
+  /**
+   * 4. matrix Row Reverse Traverse Backward tech
+   * -- matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 2 1
+   * - ret = 1 2 3 9 8 7 6 5 4
+   */
+  let ret = "";
 
   for (let i = m.length - 1; i >= 0; --i) {
     for (let j = m[i].length - 1; j >= 0; --j) {
-      console.log(m[i][j]);
+      ret += m[i][j] + " ";
     }
   }
+
+  return ret;
+}
+
+/**
+ * @param {Array<Array>} m
+ */
+function matrixColumnLinearTraverse(m) {
+  /**
+   * 5. matrix Column Linear Traverse tech
+   * -- matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 2 1
+   * - ret = 1 4 7 3 2 5 8 2 3 6 9 1
+   */
+  let ret = "";
+
+  for (let j = 0; j <= m[0].length - 1; ++j) {
+    for (let i = 0; i <= m.length - 1; ++i) {
+      ret += m[i][j] + " ";
+    }
+  }
+
+  return ret;
+}
+
+/**
+ * @param {Array<Array>} m
+ */
+function matrixColumnReverseTraverse(m) {
+  /**
+   * 6. matrix Column Reverse Traverse tech
+   * -- matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 2 1
+   * - ret = 3 6 9 1 2 5 8 2 1 4 7 3
+   */
+  let ret = "";
+
+  for (let j = m[0].length - 1; j >= 0; --j) {
+    for (let i = 0; i <= m.length - 1; ++i) {
+      ret += m[i][j] + " ";
+    }
+  }
+
+  return ret;
+}
+
+/**
+ * @param {Array<Array>} m
+ */
+function matrixColumnLinearTraverseBackward(m) {
+  /**
+   * 7. matrix Column Linear Traverse Backward tech
+   * -- matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 2 1
+   * - ret = 3 7 4 1 2 8 5 2 1 9 6 3
+   */
+  let ret = "";
+
+  for (let j = 0; j <= m[0].length - 1; j++) {
+    for (let i = m.length - 1; i >= 0; --i) {
+      ret += m[i][j] + " ";
+    }
+  }
+
+  return ret;
+}
+
+/**
+ * @param {Array<Array>} m
+ */
+function matrixColumnReverseTraverseBackward(m) {
+  /**
+   * 8. matrix Column Reverse Traverse Backward tech
+   * -- matrix
+   * -- 0 1 2
+   * 0| 1 2 3
+   * 1| 4 5 6
+   * 2| 7 8 9
+   * 3| 3 2 1
+   * - ret = 1 9 6 3 2 8 5 2 3 7 4 1
+   */
+  let ret = "";
+
+  for (let j = m[0].length - 1; j >= 0; --j) {
+    for (let i = m.length - 1; i >= 0; --i) {
+      ret += m[i][j] + " ";
+    }
+  }
+
+  return ret;
 }
 
 /**
@@ -32,7 +247,7 @@ function matrixReverseTraverse(m) {
  */
 function matrixTraverseTopLeftToMidAndBottomRightToNextMid(m) {
   /**
-   * 3. Traverse matrix from top left to the middle position
+   * . Traverse matrix from top left to the middle position
    * and from the bottom right to the middle's next position
    *
    * - matrix           top left        bottom right
@@ -324,18 +539,27 @@ function advanceLogMatrix(m) {
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],
+    [3, 2, 1],
   ];
-  //   matrixLinearTraverse(m);
+  // console.log(matrixLinearTraverse(m));
+  // console.log(matrixRowReverseTraverse(m));
+  // console.log(matrixRowLinearTraverseBackward(m));
+  // console.log(matrixRowReverseTraverseBackward(m));
+  // console.log(matrixColumnLinearTraverse(m));
+  // console.log(matrixColumnReverseTraverse(m));
+  // console.log(matrixColumnLinearTraverseBackward(m));
+  console.log(matrixColumnReverseTraverseBackward(m));
   //   matrixReverseTraverse(m);
   //   matrixTraverseTopLeftToMidAndBottomRightToNextMid(m);
   // matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m);
-  advanceLogMatrix(generateMatrix(3, 4));
+  // advanceLogMatrix(generateMatrix(3, 4));
 }
 
 /**
  * Common solution tech for solve matrix problem
  * + Pour matrix
  *   + column traverse
+ *   + row traverse
  *
  * + Handle Array tech
  *   + reverse array
