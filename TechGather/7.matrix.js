@@ -331,3 +331,13 @@ function advanceLogMatrix(m) {
   // matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m);
   advanceLogMatrix(generateMatrix(3, 4));
 }
+
+/**
+ * Common solution tech for solve matrix problem
+ * + Pour matrix
+ *   + column traverse
+ *
+ * + Handle Array tech
+ *   + reverse array
+ *
+ */
