@@ -37,7 +37,7 @@
  * Bubble sort in ascending order
  * @param a
  */
-function bubbleSort(a: number[]): number[] {
+function bubbleSort(a) {
   for (let i = 0; i < a.length; ++i) {
     for (let j = i + 1; j < a.length; ++j) {
       if (a[j] < a[i]) {
@@ -54,7 +54,7 @@ function bubbleSort(a: number[]): number[] {
  * Bubble sort in descending order
  * @param a
  */
-function bubbleSortDesc(a: number[]): number[] {
+function bubbleSortDesc(a) {
   for (let i = 0; i < a.length; ++i) {
     for (let j = i + 1; j < a.length; ++j) {
       if (a[j] > a[i]) {
