@@ -230,6 +230,10 @@ function matrixColumnReverseTraverseBackward(m) {
    * 2| 7 8 9
    * 3| 3 2 1
    * - ret = 1 9 6 3 2 8 5 2 3 7 4 1
+   *
+   * - Why do go backward is always more effective?
+   *
+   *
    */
   let ret = "";
 

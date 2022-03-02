@@ -175,8 +175,10 @@ function fx4(m) {
    */
   const matrixRet = initializeMatrix(m[0].length, m.length);
 
-  for (let i = m[0].length - 1; i >= 0; --i) {
-    for (let j = m.length - 1; j >= 0; --j) {}
+  for (let i = 0; i <= m[0].length - 1; ++i) {
+    for (let j = m.length - 1; j >= 0; --j) {
+      matrixRet[i][m.length - j - 1] = m[j][i];
+    }
   }
 
   return matrixRet;
@@ -188,39 +190,28 @@ function fx4(m) {
  */
 function fx5(m) {
   /**
-   *   + Rotate 180 degrees at bottom right corner
+   *   + Rotate 270 degrees at bottom right corner
    *   m[m.length-1][m[0].length-1]
    *
    *   + Right rotate
    *   - Matrix           - ret
-   *   -- 0 1 2           -- 0 1 2
-   *   0| 1 2 3           0| 1 0 1
-   *   1| 4 5 6           1| 9 8 7
-   *   2| 7 8 9           2| 6 5 4
-   *   3| 1 0 1           3| 3 2 1
+   *   -- 0 1 2           -- 0 1 2 3
+   *   0| 1 2 3           0| 3 6 9 1
+   *   1| 4 5 6           1| 2 5 8 0
+   *   2| 7 8 9           2| 1 4 7 1
+   *   3| 1 0 1
    *
    *
    */
-  const columnMiddleIndex = Math.floor(m[0].length / 2);
-
-  for (let i = m[0].length - 1; i >= columnMiddleIndex; --i) {
-    for (let j = m.length - 1; j >= 0; --j) {
-      const temporary = m[j][i];
-      m[j][i] = m[j][m[0].length - i - 1];
-      m[j][m[0].length - i - 1] = temporary;
-    }
-  }
+  const matrixRet = initializeMatrix(m[0].length, m.length);
 
   for (let i = m[0].length - 1; i >= 0; --i) {
-    const rowMiddleIndex = Math.floor(m.length / 2);
-    for (let j = m.length - 1; j >= rowMiddleIndex; --j) {
-      const temporary = m[j][i];
-      m[j][i] = m[m.length - j - 1][i];
-      m[m.length - j - 1][i] = temporary;
+    for (let j = 0; j <= m.length - 1; ++j) {
+      matrixRet[matrixRet.length - i - 1][j] = m[j][i];
     }
   }
 
-  return m;
+  return matrixRet;
 }
 /**
  *
@@ -229,23 +220,23 @@ function fx5(m) {
  */
 function fx6(m) {
   /**
-   *   + Rotate 180 degrees at bottom right corner
+   *   + Rotate 270 degrees at bottom right corner
    *   m[m.length-1][m[0].length-1]
    *
    *    + Left rotate
    *    - Matrix           - ret
-   *    -- 0 1 2           -- 0 1 2
-   *    0| 1 2 3           0| 1 0 1
-   *    1| 4 5 6           1| 9 8 7
-   *    2| 7 8 9           2| 6 5 4
-   *    3| 1 0 1           3| 3 2 1
+   *    -- 0 1 2           -- 0 1 2 3
+   *    0| 1 2 3           0| 1 7 4 1
+   *    1| 4 5 6           1| 0 8 5 2
+   *    2| 7 8 9           2| 1 9 6 3
+   *    3| 1 0 1
    *
    */
-  const matrixRet = initializeMatrix(m.length, m[0].length);
+  const matrixRet = initializeMatrix(m[0].length, m.length);
 
-  for (let i = m.length - 1; i >= 0; --i) {
-    for (let j = m[0].length - 1; j >= 0; --j) {
-      matrixRet[m.length - i - 1][m[0].length - j - 1] = m[i][j];
+  for (let i = 0; i <= m[0].length - 1; i++) {
+    for (let j = m.length - 1; j >= 0; --j) {
+      matrixRet[i][m.length - j - 1] = m[j][i];
     }
   }
 
@@ -259,21 +250,21 @@ function fx6(m) {
 function fx7(m) {
   /**
    *
-   * + Rotate 180 degrees at bottom left corner m[m.length-1][0]
+   * + Rotate 270 degrees at bottom left corner m[m.length-1][0]
    *   + Right rotate
    *   - Matrix           - ret
-   *   -- 0 1 2           -- 0 1 2
-   *   0| 1 2 3           0| 1 0 1
-   *   1| 4 5 6           1| 9 8 7
-   *   2| 7 8 9           2| 6 5 4
-   *   3| 1 0 1           3| 3 2 1
+   *   -- 0 1 2           -- 0 1 2 3
+   *   0| 1 2 3           0| 3 6 9 1
+   *   1| 4 5 6           1| 2 5 8 2
+   *   2| 7 8 9           2| 1 4 7 3
+   *   3| 3 2 1
    *
    */
-  const matrixRet = initializeMatrix(m.length, m[0].length);
+  const matrixRet = initializeMatrix(m[0].length, m.length);
 
-  for (let i = m.length - 1; i >= 0; --i) {
-    for (let j = m[i].length - 1; j >= 0; --j) {
-      matrixRet[m.length - i - 1][m[0].length - j - 1] = m[i][j];
+  for (let j = m[0].length - 1; j >= 0; --j) {
+    for (let i = 0; i < m.length; ++i) {
+      matrixRet[m[0].length - j - 1][i] = m[i][j];
     }
   }
 
@@ -287,22 +278,22 @@ function fx7(m) {
 function fx8(m) {
   /**
    *
-   * + Rotate 180 degrees at bottom left corner m[m.length-1][0]
+   * + Rotate 270 degrees at bottom left corner m[m.length-1][0]
    *
    *    + Left rotate
    *    - Matrix           - ret
-   *    -- 0 1 2           -- 0 1 2
-   *    0| 1 2 3           0| 1 0 1
-   *    1| 4 5 6           1| 9 8 7
-   *    2| 7 8 9           2| 6 5 4
-   *    3| 1 0 1           3| 3 2 1
+   *    -- 0 1 2           -- 0 1 2 3
+   *    0| 1 2 3           0| 1 7 4 1
+   *    1| 4 5 6           1| 0 8 5 2
+   *    2| 7 8 9           2| 1 9 6 3
+   *    3| 1 0 1
    *
    */
-  const matrixRet = initializeMatrix(m.length, m[0].length);
+  const matrixRet = initializeMatrix(m[0].length, m.length);
 
-  for (let i = m.length - 1; i >= 0; --i) {
-    for (let j = m[i].length - 1; j >= 0; --j) {
-      matrixRet[m.length - i - 1][m[0].length - j - 1] = m[i][j];
+  for (let i = 0; i <= m[0].length - 1; ++i) {
+    for (let j = m.length - 1; j >= 0; --j) {
+      matrixRet[i][m.length - j - 1] = m[j][i];
     }
   }
 
@@ -1040,9 +1031,9 @@ function test8() {
   // test1();
   // test2();
   // test3();
-  test4();
+  // test4();
   // test5();
   // test6();
   // test7();
-  // test8();
+  test8();
 }
