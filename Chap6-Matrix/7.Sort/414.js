@@ -1,10 +1,8 @@
 /**
- * Problem: Write a function to sort the elements
- * in the matrix as description bellow
- * + Column has even index was sorted in descending
- * order from top to bottom
- * + Column has odd index was sorted in ascending
- * order from top to bottom
+ * Problem: Sort the elements in the matrix in ascending order
+ * row and column in two ways, using an sub-array and
+ * not using an sub-array from left to right and top to bottom
+ *
  *
  *
  * Understanding the problem
@@ -17,77 +15,15 @@
  *
  * - ret
  * -- 0 1 2
- * 0| 7 2 9
- * 1| 4 2 6
- * 2| 3 5 3
- * 3| 1 8 1
+ * 0| 1 2 3
+ * 3| 1 2 3
+ * 1| 4 5 6
+ * 2| 7 8 9
+ *
+ *
  *
  *
  */
-
-/**
- *
- * @param {Array<Array>} m
- *
- */
-function fx(m) {
-  for (let i = m[0].length - 1; i >= 0; --i) {
-    if (isEvenNumber(i)) {
-      // descending order
-      for (let j = m.length - 1; j >= 0; --j) {
-        for (let k = j - 1; k >= 0; --k) {
-          if (m[k][i] < m[j][i]) {
-            const temporary = m[k][i];
-            m[k][i] = m[j][i];
-            m[j][i] = temporary;
-          }
-        }
-      }
-    }
-    if (isOddNumber(i)) {
-      // ascending order
-      for (let j = m.length - 1; j >= 0; --j) {
-        for (let k = j - 1; k >= 0; --k) {
-          if (m[k][i] > m[j][i]) {
-            const temporary = m[k][i];
-            m[k][i] = m[j][i];
-            m[j][i] = temporary;
-          }
-        }
-      }
-    }
-  }
-
-  return m;
-}
-
-/**
- *
- * @param {Number} n
- */
-function isOddNumber(n) {
-  return n % 2 !== 0;
-}
-
-/**
- *
- * @param {Number} n
- */
-function isEvenNumber(n) {
-  return n % 2 === 0;
-}
-
-/**
- *
- * @param {Array} a
- */
-function reverseArray(a) {
-  const arrayMiddleIndex = Math.floor((a.length - 1) / 2);
-  for (let i = a.length - 1; i >= arrayMiddleIndex; --i) {
-    swapArray(a, i, a.length - i - 1);
-  }
-  return a;
-}
 
 /**
  *
@@ -97,7 +33,7 @@ function reverseArray(a) {
  *
  */
 function quicksort(a, left, right) {
-  let index = partition(a, left, right);
+  const index = partition(a, left, right);
   if (left < index - 1) {
     quicksort(a, left, index - 1);
   }
@@ -105,6 +41,18 @@ function quicksort(a, left, right) {
     quicksort(a, index, right);
   }
   return a;
+}
+
+/**
+ *
+ * @param {Array} a
+ * @param {Number} i
+ * @param {Number} j
+ */
+function swapArray(a, i, j) {
+  const temporary = a[i];
+  a[i] = a[j];
+  a[j] = temporary;
 }
 
 /**
@@ -118,6 +66,7 @@ function partition(a, left, right) {
   const pivot = a[Math.floor((left + right) / 2)];
   let i = left;
   let j = right;
+
   while (i <= j) {
     while (a[i] < pivot) {
       i++;
@@ -131,36 +80,93 @@ function partition(a, left, right) {
       j--;
     }
   }
-
   return i;
 }
 
 /**
  *
  * @param {Array} a
- * @param {Number} i
- * @param {Number} j
- *
  */
-function swapArray(a, i, j) {
-  const temporary = a[i];
-  a[i] = a[j];
-  a[j] = temporary;
+function bubblesort(a) {
+  for (let i = a.length - 1; i >= 0; --i) {
+    for (let j = i - 1; j >= 0; --j) {
+      if (a[j] > a[i]) {
+        const temporary = a[i];
+        a[i] = a[j];
+        a[j] = temporary;
+      }
+    }
+  }
+  return a;
 }
 
 /**
  *
- * @param {Number} n
+ * @param {Array<Array>} m
+ *
  */
-function isOddNumber(n) {
-  return n % 2 !== 0;
+function fx1(m) {
+  // using sub-array
+
+  let subArrayContainsRow = [];
+
+  for (let i = m.length - 1; i >= 0; --i) {
+    subArrayContainsRow = push(subArrayContainsRow, m[m.length - i - 1]);
+  }
+
+  for (let i = subArrayContainsRow.length - 1; i >= 0; --i) {
+    subArrayContainsRow[i] = bubblesort(subArrayContainsRow[i]);
+  }
+
+  console.log("matrix after the row were sorted");
+  advanceLogMatrix(subArrayContainsRow);
+
+  for (let i = 0; i <= subArrayContainsRow[0].length - 1; ++i) {
+    let column = [];
+    for (let j = 0; j <= subArrayContainsRow.length - 1; ++j) {
+      column = push(column, subArrayContainsRow[j][i]);
+    }
+
+    column = bubblesort(column);
+
+    for (let k = 0; k <= column.length - 1; ++k) {
+      subArrayContainsRow[k][i] = column[k];
+    }
+  }
+
+  console.log("matrix after the column were sorted");
+
+  return subArrayContainsRow;
 }
+
 /**
  *
- * @param {Number} n
+ * @param {Array<Array>} m
+ *
  */
-function isEvenNumber(n) {
-  return n % 2 === 0;
+function fx2(m) {
+  // not using sub-array
+  for (let i = m.length - 1; i >= 0; --i) {
+    m[i] = bubblesort(m[i]);
+  }
+
+  console.log("matrix after the row were sorted");
+  advanceLogMatrix(m);
+
+  for (let i = m[0].length - 1; i >= 0; --i) {
+    for (let j = m.length - 1; j >= 0; --j) {
+      for (let k = j - 1; k >= 0; --k) {
+        if (m[k][i] > m[j][i]) {
+          const temporary = m[k][i];
+          m[k][i] = m[j][i];
+          m[j][i] = temporary;
+        }
+      }
+    }
+  }
+
+  console.log("matrix after the column were sorted");
+  return m;
 }
 
 /**
@@ -349,7 +355,7 @@ function generateNumber(from, to) {
   return Math.round(Math.random() * (to - from) + from);
 }
 
-function test() {
+function test1() {
   const rows_1 = 1;
   const rows_2 = 2;
   const rows_3 = 3;
@@ -388,18 +394,70 @@ function test() {
   const remove_column_index_4 = 4;
 
   advanceLogMatrix(m3);
-  advanceLogMatrix(fx(m3));
+  advanceLogMatrix(fx1(m3));
   // console.log(fx(m3));
 
   advanceLogMatrix(m4);
-  advanceLogMatrix(fx(m4));
+  advanceLogMatrix(fx1(m4));
   // console.log(fx(m4));
 
   advanceLogMatrix(m5);
-  advanceLogMatrix(fx(m5));
+  advanceLogMatrix(fx1(m5));
+  // console.log(fx(m5));
+}
+
+function test2() {
+  const rows_1 = 1;
+  const rows_2 = 2;
+  const rows_3 = 3;
+  const rows_4 = 4;
+
+  const columns_1 = 1;
+  const columns_2 = 2;
+  const columns_3 = 3;
+  const columns_4 = 4;
+  const columns_5 = 5;
+
+  const m3 = generateMatrix(rows_2, columns_3);
+  const m4 = generateMatrix(rows_3, columns_4);
+  const m5 = generateMatrix(rows_4, columns_5);
+
+  const column_index_0 = 0;
+  const column_index_1 = 1;
+  const column_index_2 = 2;
+  const column_index_3 = 3;
+
+  const row_index_0 = 0;
+  const row_index_1 = 1;
+  const row_index_2 = 2;
+  const row_index_3 = 3;
+
+  const remove_row_index_0 = 0;
+  const remove_row_index_1 = 1;
+  const remove_row_index_2 = 2;
+  const remove_row_index_3 = 3;
+  const remove_row_index_4 = 4;
+
+  const remove_column_index_0 = 0;
+  const remove_column_index_1 = 1;
+  const remove_column_index_2 = 2;
+  const remove_column_index_3 = 3;
+  const remove_column_index_4 = 4;
+
+  advanceLogMatrix(m3);
+  advanceLogMatrix(fx2(m3));
+  // console.log(fx(m3));
+
+  advanceLogMatrix(m4);
+  advanceLogMatrix(fx2(m4));
+  // console.log(fx(m4));
+
+  advanceLogMatrix(m5);
+  advanceLogMatrix(fx2(m5));
   // console.log(fx(m5));
 }
 
 {
-  test();
+  // test1();
+  test2();
 }
