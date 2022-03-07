@@ -113,7 +113,11 @@ function shift(a) {
  * @param {Number} n
  */
 function decToBin8Bit(n) {
-  if (n >= 0) {
+  /**
+   *
+   * @param {Number} n
+   */
+  function getPositiveNumberArrayOfBit(n) {
     /**
      * + 1
      * + 0000 0001
@@ -160,11 +164,125 @@ function decToBin8Bit(n) {
     return bitset + " " + join(moduloBitSet, "");
   }
 
+  if (n >= 0) {
+    return getPositiveNumberArrayOfBit(n);
+  }
+
   if (n < 0) {
     /**
-     * - n = - 53
+     * Find n = -1 using two's complement numbers
+     * - n = -1
+     * + 1 decimal = 0000 0001 binary
+     * + `Inverted` bit = 1111 1110
+     * + add 1
+     *   1111 1110
+     * + 0000 0001
+     *   _________
+     *   1111 1111
+     *   7654 3210 (index)
+     * -2^7 + 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2^1 + 2^0 = -1
+     *
+     * -> n = -1 decimal = 1111 1111 binary (two's complement numbers)
+     *
+     * - n = -8
+     * + 8 decimal = 0000 1000
+     * + invert ret = 1111 0111
+     * + add 1
+     * 1111 0111
+     * 0000 0001
+     * 1111 1000
+     * ----------------7654 3210
+     * -> -8 decimal = 1111 1000 binary (two's complement numbers)
+     * -2^7 + 2^6 + 2^5 + 2^4 + 2^3 = -8
+     *
+     *
+     *
+     *
+     *
+     *
+     * + step 1: get absolute n array of bits
+     * + step 2: invert step 1
+     * + step 3: add step 2 with 0000 0001
+     *     + case 1:
+     *        1111 1111
+     *      + 0000 0001
+     *       10000 0000
+     *
+     *     + case 2:
+     *        0000 1111
+     *      + 0000 0001
+     *
+     *
      */
+    let nPositiveBitSet = stringToArray(
+      getPositiveNumberArrayOfBit(Math.abs(n))
+    );
+
+    for (let i = nPositiveBitSet.length - 1; i >= 0; --i) {
+      let flag = false;
+
+      if (nPositiveBitSet[i] === "0") {
+        nPositiveBitSet[i] = "1";
+        flag = true;
+      }
+
+      if (flag === false) {
+        if (nPositiveBitSet[i] === "1") {
+          nPositiveBitSet[i] = "0";
+        }
+      }
+    }
+
+    let rememberOne = false;
+
+    for (let i = nPositiveBitSet.length - 1; i >= 0; --i) {
+      if (nPositiveBitSet[i] !== " ") {
+        if (i === nPositiveBitSet.length - 1) {
+          let addition = +nPositiveBitSet[i] + 1;
+          if (addition === 2) {
+            rememberOne = true;
+            nPositiveBitSet[i] = "0";
+          }
+        }
+
+        if (i !== nPositiveBitSet.length - 1) {
+          let addition = +nPositiveBitSet[i] + 0;
+
+          if (rememberOne) {
+            addition += 1;
+            if (addition === 2) {
+              nPositiveBitSet[i] = "0";
+              rememberOne = true;
+            }
+
+            if (addition !== 2) {
+              nPositiveBitSet[i] = "1";
+              rememberOne = false;
+            }
+          }
+          if (!rememberOne) {
+            nPositiveBitSet[i] = `${addition}`;
+          }
+        }
+      }
+    }
+
+    return join(nPositiveBitSet, "");
   }
+}
+
+/**
+ *
+ * @param {string} s
+ */
+function stringToArray(s) {
+  const ret = new Array(s.length);
+
+  for (let i = ret.length - 1; i >= 0; --i) {
+    ret[i] = s[i];
+  }
+
+  return ret;
 }
 
 /**
