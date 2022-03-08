@@ -39,7 +39,113 @@
  * @param {Array<Array>} m
  *
  */
-function fx(m) {}
+function fx(m) {
+  let positiveNumbers = [];
+  let negativeNumbers = [];
+
+  for (let i = m[0].length - 1; i >= 0; --i) {
+    for (let j = m.length - 1; j >= 0; --j) {
+      const mji = m[j][i];
+      if (isPositiveNumber(mji)) {
+        positiveNumbers = push(positiveNumbers, mji);
+      }
+      if (isNegativeNumber(mji)) {
+        negativeNumbers = push(negativeNumbers, mji);
+      }
+    }
+  }
+
+  negativeNumbers = ascendingBubbleSort(negativeNumbers);
+
+  positiveNumbers = descendingBubbleSort(positiveNumbers);
+
+  for (let i = m.length - 1; i >= 0; --i) {
+    for (let j = m[i].length - 1; j >= 0; --j) {
+      if (isPositiveNumber(m[i][j])) {
+        m[i][j] = positiveNumbers[positiveNumbers.length - 1];
+        positiveNumbers = pop(positiveNumbers);
+      }
+      if (isNegativeNumber(m[i][j])) {
+        m[i][j] = negativeNumbers[negativeNumbers.length - 1];
+        negativeNumbers = pop(negativeNumbers);
+      }
+    }
+  }
+
+  console.log("matrix after it has been sorted");
+
+  return m;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function pop(a) {
+  /**
+   * - a = [1,2,3,4]
+   * - ret = [1,2,3]
+   */
+  const ret = new Array(a.length - 1);
+
+  for (let i = ret.length - 1; i >= 0; --i) {
+    ret[i] = a[i];
+  }
+
+  return ret;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function ascendingBubbleSort(a) {
+  for (let i = a.length - 1; i >= 0; --i) {
+    for (let j = i - 1; j >= 0; --j) {
+      if (a[j] >= a[i]) {
+        const temporary = a[i];
+        a[i] = a[j];
+        a[j] = temporary;
+      }
+    }
+  }
+
+  return a;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function descendingBubbleSort(a) {
+  for (let i = a.length - 1; i >= 0; --i) {
+    for (let j = i - 1; j >= 0; --j) {
+      if (a[j] <= a[i]) {
+        const temporary = a[i];
+        a[i] = a[j];
+        a[j] = temporary;
+      }
+    }
+  }
+
+  return a;
+}
+
+/**
+ *
+ * @param {Number} n
+ */
+function isPositiveNumber(n) {
+  return n > 0;
+}
+
+/**
+ *
+ * @param {Number} n
+ */
+function isNegativeNumber(n) {
+  return n < 0;
+}
 
 /**
  *
