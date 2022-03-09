@@ -251,7 +251,7 @@ function matrixColumnReverseTraverseBackward(m) {
  */
 function matrixTraverseTopLeftToMidAndBottomRightToNextMid(m) {
   /**
-   * . Traverse matrix from top left to the middle position
+   * 9. Traverse matrix from top left to the middle position
    * and from the bottom right to the middle's next position
    *
    * - matrix           top left        bottom right
@@ -298,7 +298,7 @@ function matrixTraverseTopLeftToMidAndBottomRightToNextMid(m) {
  */
 function matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m) {
   /**
-   * 4. Traverse matrix from top left to middle position
+   * 10. Traverse matrix from top left to middle position
    * and from the middle's next position to the end
    *
    * - matrix     top left      middle to end
@@ -342,7 +342,7 @@ function matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m) {
 
 function generateMatrix(rows, columns) {
   /**
-   * 5. Generate matrix tech
+   * 11. Generate matrix tech
    *
    * - Input: rows, columns
    * - Output: matrix have rows and columns corresponding the input
@@ -414,6 +414,9 @@ function generateMatrix(rows, columns) {
  * @param {Array<Array>} m
  */
 function advanceLogMatrix(m) {
+  /**
+   * 12. advance log matrix
+   */
   /**
    *
    * @param {Number} number
@@ -538,12 +541,72 @@ function advanceLogMatrix(m) {
   console.log(bottomBoundary);
 }
 
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixBoundaryClockwiseTraverse(m) {
+  /**
+   * 13. matrix boundary clockwise traverse tecch
+   * - matrix
+   * -- 0 1 2 3
+   * 0| 1 2 4 3
+   * 1| 5 6 2 7
+   * 2| 9 8 4 5
+   *
+   * - ret = 1 2 4 3 7 5 4 8 9 5
+   *
+   * + i = 0
+   *   + j = 0
+   *   + j = 1
+   *   + j = 2
+   *   + j = 3
+   * + i = 1
+   *   + j = 3
+   * + i = 2
+   *   + j = 3
+   *   + j = 2
+   *   + j = 1
+   *   + j = 0
+   * + i = 1
+   *   + j = 0
+   *
+   *
+   *
+   */
+  let ret = "";
+
+  for (let i = 0; i <= m.length - 1; ++i) {
+    if (i === 0) {
+      for (let j = 0; j <= m[i].length - 1; ++j) {
+        ret += m[i][j] + " ";
+      }
+    }
+
+    if (i > 0 && i < m.length - 1) {
+      ret += m[i][m[i].length - 1] + " ";
+    }
+
+    if (i === m.length - 1) {
+      for (let j = m[i].length - 1; j >= 0; --j) {
+        ret += m[i][j] + " ";
+      }
+      for (let k = m.length - 1 - 1; k > 0; --k) {
+        ret += m[k][0] + " ";
+      }
+    }
+  }
+
+  console.log(ret);
+}
+
 {
   const m = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [3, 2, 1],
+    [1, 2, 3, 4],
+    [2, 5, 6, 7],
+    [3, 5, 6, 2],
+    [4, 5, 6, 1],
+    [7, 8, 9, 8],
   ];
   // console.log(matrixLinearTraverse(m));
   // console.log(matrixRowReverseTraverse(m));
@@ -552,11 +615,12 @@ function advanceLogMatrix(m) {
   // console.log(matrixColumnLinearTraverse(m));
   // console.log(matrixColumnReverseTraverse(m));
   // console.log(matrixColumnLinearTraverseBackward(m));
-  console.log(matrixColumnReverseTraverseBackward(m));
+  // console.log(matrixColumnReverseTraverseBackward(m));
   //   matrixReverseTraverse(m);
   //   matrixTraverseTopLeftToMidAndBottomRightToNextMid(m);
   // matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m);
   // advanceLogMatrix(generateMatrix(3, 4));
+  matrixBoundaryClockwiseTraverse(m); // 1 2 3 4 7 2 1 8 9 8 7 4 3 2
 }
 
 /**
