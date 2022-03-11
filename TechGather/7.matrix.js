@@ -29,6 +29,70 @@
  *
  */
 
+const numberOfRow = generateRandomNumber(1, 9);
+const numberOfColumn = generateRandomNumber(1, 9);
+
+const m1 = generateMatrix(1, 1);
+const m2 = generateMatrix(5, 1);
+const m3 = generateMatrix(5, 2);
+const m4 = generateMatrix(5, 6);
+
+const m5 = generateMatrix(1, 6);
+const m6 = generateMatrix(2, 6);
+const m7 = generateMatrix(5, 6);
+
+const m8 = generateMatrix(numberOfRow, numberOfColumn);
+
+/**
+ *
+ * @param {Number} from
+ * @param {Number} to
+ *
+ */
+function generateRandomNumber(from, to) {
+  /**
+   * + Result: [10,20]
+   *
+   * - math.random() = [0,0.999999]
+   * - from = 10
+   * - to = 20
+   * - to - from = 10
+   * - math.random() * to = [0,19.99998]
+   * - math.random() * to + from = [10,29.99999]
+   *
+   * - math.random() * (to-from) = [0,9.9999999]
+   * - math.random() * (to-from) + from = [10,19.9999999]
+   *
+   * - math.floor(math.random()*(to-from)+from) = [10,19]
+   * - math.round(math.random()*(to-from)+from) = [10,20]
+   *
+   *
+   */
+  return Math.round(Math.random() * (to - from) + from);
+}
+
+/**
+ *
+ * @param {Array} a
+ * @param {any} e
+ *
+ */
+function push(a, e) {
+  /**
+   * -------0 1 2
+   * - a = [1,2,3]
+   * - e = 5
+   * ---------0 1 2 3
+   * - ret = [1,2,3,5]
+   */
+  const ret = new Array(a.length + 1);
+  ret[ret.length - 1] = e;
+  for (let i = ret.length - 2; i >= 0; --i) {
+    ret[i] = a[i];
+  }
+  return ret;
+}
+
 /**
  * @param {Array<Array>} m
  */
@@ -369,39 +433,11 @@ function generateMatrix(rows, columns) {
     return ret;
   }
 
-  /**
-   *
-   * @param {Number} from
-   * @param {Number} to
-   *
-   */
-  function generateRandomNumber(from, to) {
-    /**
-     * + Result: [10,20]
-     *
-     * - math.random() = [0,0.999999]
-     * - from = 10
-     * - to = 20
-     * - to - from = 10
-     * - math.random() * to = [0,19.99998]
-     * - math.random() * to + from = [10,29.99999]
-     *
-     * - math.random() * (to-from) = [0,9.9999999]
-     * - math.random() * (to-from) + from = [10,19.9999999]
-     *
-     * - math.floor(math.random()*(to-from)+from) = [10,19]
-     * - math.round(math.random()*(to-from)+from) = [10,20]
-     *
-     *
-     */
-    return Math.round(Math.random() * (to - from) + from);
-  }
-
   let ret = [];
   for (let i = rows - 1; i >= 0; --i) {
     let column = [];
     for (let j = columns - 1; j >= 0; --j) {
-      column = push(column, generateRandomNumber(0, 100));
+      column = push(column, generateRandomNumber(20, 90));
     }
     ret = push(ret, column);
   }
@@ -600,14 +636,287 @@ function matrixBoundaryClockwiseTraverse(m) {
   console.log(ret);
 }
 
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixBlackHoleTraverseCorpse(m) {
+  /**
+   * 13. matrix black hole traverse tech
+   * - matrix
+   * -- 0 1 2 3
+   * 0| 4 1 3 5
+   * 1| 5 8 9 8
+   * 2| 2 6 7 8
+   * 3| 9 1 4 5
+   *
+   * - ret = 4 1 3 5 8 5 4 1 9 2 6 7
+   * + case 1: done
+   * + i = 0
+   *   + j = 0,1,2,3
+   *
+   * + case 2: done
+   * + i = 1
+   *   + j = 3
+   * + i = 2
+   *   + j = 3
+   *
+   * + case 3: done
+   * + i = 3 = m.length - 1
+   *   + j = 3,2,1,0
+   *
+   * + case 4:
+   *   + i = 2
+   *   + i = 1
+   *     + j = 1,2
+   *       + i = 2
+   *         + j = 1
+   *
+   *
+   *
+   *
+   * -> Play around for a while
+   * we realise that the matrix black hole traverse is the
+   * clockwise boundary traverse and sub-boundary clock wise traverse,
+   * check this out
+   *
+   * + step 1: write a boundary clockwise traverse function
+   * + step 2: write a level down matrix function
+   * + step 3: use step 1 to traverse step 2 until the matrix level is
+   * equal to 0
+   *
+   *
+   *
+   */
+  let ret = "";
+
+  for (let i = 0; i < m.length; ++i) {
+    if (i === 0) {
+      for (let j = 0; j < m[i].length; ++j) {
+        ret += m[i][j] + " ";
+      }
+    }
+    if (i > 0 && i < m.length) {
+      ret += m[i][m[i].length - 1] + " ";
+    }
+    if (i === m.length - 1) {
+      for (let j = m[i].length - 1 - 1; j >= 0; --j) {
+        ret += m[i][j] + " ";
+      }
+    }
+  }
+
+  return ret;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixBlackHoleTraverse(m) {
+  /**
+   * 13. matrix black hole traverse tech
+   *
+   * + step 1: write a boundary clockwise traverse function
+   * + step 2: write a level down matrix function - done
+   * + step 3: get the number of time level down the matrix - done
+   * + step 4: use step 1 to traverse step 2 until  the number of time
+   * level down is equal to 0
+   *
+   *
+   */
+  let breakTime = getTheNumberOfBreakTimeLevelingDownTheMatrix(m);
+  console.log("Time the matrix can level down: ", breakTime);
+
+  let ret = "";
+  for (let i = 0; i < m.length; ++i) {
+    if (i === 0) {
+      for (let j = 0; j <= m[0].length - 1; ++j) {
+        ret += m[i][j] + " ";
+      }
+    }
+    if (i > 0 && i < m.length - 1) {
+      ret += m[i][m[i].length - 1] + " ";
+    }
+    if (i === m.length - 1 && i !== 0) {
+      if (m[i].length - 1 !== 0) {
+        for (let j = m[i].length - 1; j >= 0; --j) {
+          ret += m[i][j] + " ";
+        }
+        for (let k = m.length - 1 - 1; k > 0; --k) {
+          ret += m[k][0] + " ";
+        }
+      }
+    }
+  }
+  console.log("Matrix before level down boundary traverse ret");
+  console.log(ret);
+
+  while (breakTime > 0) {
+    // boundary clockwise traverse this
+    m = matrixLevelingDown(m);
+    console.log("Matrix after level down");
+    advanceLogMatrix(m);
+
+    /**
+     * - boundary clock wise traverse
+     * -- matrix
+     * -- 0 1 2 3
+     * 0| 1 2 3 4
+     * 1| 6 2 3 5
+     * 2| 2 2 3 6
+     * 3| 5 6 8 7
+     *
+     * -- boundary
+     * -- 0 1 2 3
+     * 0| 1 2 3 4
+     * 1| 6     5
+     * 2| 2     6
+     * 3| 5 6 8 7
+     *
+     * - ret = 1 2 3 4 5 6 7 8 6 5 2 6
+     *
+     */
+    let ret = "";
+    for (let i = 0; i < m.length; ++i) {
+      if (i === 0) {
+        for (let j = 0; j <= m[0].length - 1; ++j) {
+          ret += m[i][j] + " ";
+        }
+      }
+      if (i > 0 && i <= m.length - 1) {
+        ret += m[i][m[i].length - 1] + " ";
+      }
+      if (i === m.length - 1 && i !== 0) {
+        for (let j = m[i].length - 1; j >= 0; --j) {
+          ret += m[i][j] + " ";
+        }
+        for (let k = m.length - 1 - 1; k > 0; --k) {
+          ret += m[k][0] + " ";
+        }
+      }
+    }
+    console.log("Matrix after level down boundary traverse ret");
+    console.log(ret);
+
+    breakTime--;
+  }
+}
+
+function getTheNumberOfBreakTimeLevelingDownTheMatrix(m) {
+  let breakTime = 0;
+  let breakWhileLoopCondition = "Can't leveling down this matrix";
+  while (m !== breakWhileLoopCondition) {
+    m = matrixLevelingDown(m);
+
+    breakTime++;
+  }
+
+  breakTime--;
+
+  return breakTime;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixLevelingDown(m) {
+  /**
+   * - matrix 0
+   * -- 0 1 2 3
+   * 0| 1 2 3 4
+   *
+   * -> only boundary clockwise traverse
+   *
+   * - matrix 1
+   * -- 0 1 2 3
+   * 0| 1 2 3 4
+   * 1| 5 6 7 8
+   *
+   * - r: number of row: 2
+   * - c: number of column: 4
+   * - r x c = 8
+   *
+   * - leveling down:
+   *   + r: number of row - 2
+   *   + c: number of column - 2
+   *   + r x c = 0 x 4 = 0
+   *
+   * -> only boundary clockwise traverse
+   *
+   *
+   *
+   * - matrix 2
+   * -- 0 1 2 3
+   * 0| 1 2 3 4
+   * 1| 5 6 7 8
+   * 2| 4 3 2 1
+   *
+   * + r: number of row: 3
+   * + c: number of column: 4
+   * + r x c = 3 x 4 = 12
+   *
+   * + leveling down:
+   *   + r: number of row - 2: 1
+   *   + c: number of column - 2: 2
+   *   + r x c = 1 x 2 = 2
+   *
+   * + have matrix black hole traverse
+   *
+   *
+   * ->
+   *   + if m.length <=2
+   *     + boundary clock wise traverse
+   *
+   *   + if m.length > 2
+   *     + boundary clock wise traverse
+   *     + leveling down matrix
+   *
+   * + step 1: get start column index
+   * + step 2: get start row index
+   * + step 3: get end column index
+   * + step 4: get end row index
+   * + step 5: get sub matrix size
+   * + step 6: create empty matrix with sub matrix size
+   * + step 7: use step 1,2,3,4 to pour element to step 6
+   *
+   *
+   *
+   *
+   * - matrix 3
+   * -- 0 1 2 3
+   * 0| 1 2 3 4
+   * 1| 5 6 7 8
+   * 2| 5 4 1 3
+   * 3| 4 3 2 1
+   *
+   *
+   */
+  if (m.length <= 2 || m[0].length <= 2) {
+    return "Can't leveling down this matrix";
+  }
+
+  const startColumnIndex = 1;
+  const endColumnIndex = m[0].length - 1 - 1;
+
+  const startRowIndex = 1;
+  const endRowIndex = m.length - 1 - 1;
+
+  let matrixRet = [];
+
+  for (let i = startRowIndex; i <= endRowIndex; ++i) {
+    let rowI = [];
+    for (let j = startColumnIndex; j <= endColumnIndex; ++j) {
+      rowI = push(rowI, m[i][j]);
+    }
+    matrixRet = push(matrixRet, rowI);
+  }
+
+  return matrixRet;
+}
+
 {
-  const m = [
-    [1, 2, 3, 4],
-    [2, 5, 6, 7],
-    [3, 5, 6, 2],
-    [4, 5, 6, 1],
-    [7, 8, 9, 8],
-  ];
   // console.log(matrixLinearTraverse(m));
   // console.log(matrixRowReverseTraverse(m));
   // console.log(matrixRowLinearTraverseBackward(m));
@@ -620,7 +929,91 @@ function matrixBoundaryClockwiseTraverse(m) {
   //   matrixTraverseTopLeftToMidAndBottomRightToNextMid(m);
   // matrixTraverseFromTopLeftToMidAndFromNextMidToEnd(m);
   // advanceLogMatrix(generateMatrix(3, 4));
-  matrixBoundaryClockwiseTraverse(m); // 1 2 3 4 7 2 1 8 9 8 7 4 3 2
+  // matrixBoundaryClockwiseTraverse(m); // 1 2 3 4 7 2 1 8 9 8 7 4 3 2
+  // console.log(matrixBlackHoleTraverse(m));
+}
+
+function test1() {
+  console.log("\nMatrix input 1");
+  advanceLogMatrix(m1);
+  matrixBlackHoleTraverse(m1);
+}
+
+function test2() {
+  console.log("\nMatrix input 2");
+  advanceLogMatrix(m2);
+  matrixBlackHoleTraverse(m2);
+}
+
+function test3() {
+  console.log("\nMatrix input 3");
+  advanceLogMatrix(m3);
+  matrixBlackHoleTraverse(m3);
+}
+
+function test4() {
+  console.log("\nMatrix input 4");
+  advanceLogMatrix(m4);
+  matrixBlackHoleTraverse(m4);
+}
+
+function test5() {
+  console.log("\nMatrix input 5");
+  advanceLogMatrix(m5);
+  matrixBlackHoleTraverse(m5);
+}
+
+function test6() {
+  console.log("\nMatrix input 6");
+  advanceLogMatrix(m6);
+  matrixBlackHoleTraverse(m6);
+}
+
+function test7() {
+  console.log("\nMatrix input 7");
+  advanceLogMatrix(m7);
+  matrixBlackHoleTraverse(m7);
+}
+
+function test8() {
+  console.log("\nMatrix input 8");
+  advanceLogMatrix(m8);
+  matrixBlackHoleTraverse(m8);
+}
+
+function generateTestCaseCode() {
+  const startNumberTestCase = 1;
+  const endNumberOfTestCase = 8;
+  function generateFunctionTestCaseCode() {
+    for (let i = startNumberTestCase; i <= endNumberOfTestCase; ++i) {
+      console.log(`function test${i}() {
+        console.log("\\nMatrix input ${i}");
+        advanceLogMatrix(m${i});
+        matrixBlackHoleTraverse(m${i});
+      }
+      `);
+    }
+  }
+  function generateActivateFunctionTestCaseCode() {
+    for (let i = startNumberTestCase; i <= endNumberOfTestCase; ++i) {
+      console.log(`test${i}()`);
+    }
+  }
+
+  // generateFunctionTestCaseCode()
+  generateActivateFunctionTestCaseCode();
+}
+
+{
+  // generateTestCaseCode();
+  test1();
+  test2();
+  test3();
+  test4();
+  test5();
+  test6();
+  test7();
+  test8();
 }
 
 /**

@@ -20,3 +20,7 @@ toggle zen mode
 6. Configure setting json 
 - ctr + shift + P 
 - type: setting json 
+
+7. f12 
+- go to function definition 
+- work on one tab 
