@@ -717,11 +717,11 @@ function matrixBlackHoleTraverse(m) {
   /**
    * 13. matrix black hole traverse tech
    *
-   * + step 1: write a boundary clockwise traverse function
+   * + step 1: write a boundary clockwise traverse function - done
    * + step 2: write a level down matrix function - done
    * + step 3: get the number of time level down the matrix - done
    * + step 4: use step 1 to traverse step 2 until  the number of time
-   * level down is equal to 0
+   * level down is equal to 0 - done
    *
    *
    */
@@ -747,8 +747,12 @@ function matrixBlackHoleTraverse(m) {
           ret += m[k][0] + " ";
         }
       }
+      if (m[i].length - 1 === 0) {
+        ret += m[i][0] + " ";
+      }
     }
   }
+
   console.log("Matrix before level down boundary traverse ret");
   console.log(ret);
 
@@ -784,15 +788,20 @@ function matrixBlackHoleTraverse(m) {
           ret += m[i][j] + " ";
         }
       }
-      if (i > 0 && i <= m.length - 1) {
+      if (i > 0 && i < m.length - 1) {
         ret += m[i][m[i].length - 1] + " ";
       }
       if (i === m.length - 1 && i !== 0) {
-        for (let j = m[i].length - 1; j >= 0; --j) {
-          ret += m[i][j] + " ";
+        if (m[i].length - 1 !== 0) {
+          for (let j = m[i].length - 1; j >= 0; --j) {
+            ret += m[i][j] + " ";
+          }
+          for (let k = m.length - 1 - 1; k > 0; --k) {
+            ret += m[k][0] + " ";
+          }
         }
-        for (let k = m.length - 1 - 1; k > 0; --k) {
-          ret += m[k][0] + " ";
+        if (m[i].length - 1 === 0) {
+          ret += m[i][0] + " ";
         }
       }
     }

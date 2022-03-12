@@ -40,6 +40,16 @@
  *
  */
 function fx(m) {
+  let matrixElements = [];
+
+  for (let i = m.length - 1; i >= 0; --i) {
+    for (let j = m[i].length - 1; j >= 0; --j) {
+      matrixElements = push(matrixElements, m[i][j]);
+    }
+  }
+
+  console.log(matrixElements);
+
   console.log("matrix after the row were sorted");
 
   return m;
@@ -60,6 +70,161 @@ function ascendingBubbleSort(a) {
     }
   }
   return a;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
+  /**
+   * -------0 1 2 3 4
+   * - a = [1,2,3,4,5]
+   * + step 1: get minimum value of array - done
+   * + step 2: write a function to find the closest greater than the number n - done
+   * + step 3: move those element to the start index 0,1,2,..
+   *
+   * -------0 1 2 3 4
+   * - a = [1,2,5,4,3]
+   * + i = 4
+   *   + a[i] = 3
+   *   + greaterNear = 4 = a[3]
+   *   + swap
+   *   + a = [1,2,5,3,4]
+   *
+   *
+   *
+   */
+  /**
+   *
+   * @param {Array} a
+   */
+  function getArrayMinimumNumber(a) {
+    let minimumNumber = Number.POSITIVE_INFINITY;
+
+    for (let i = a.length - 1; i >= 0; --i) {
+      if (a[i] < minimumNumber) {
+        minimumNumber = a[i];
+      }
+    }
+
+    return minimumNumber;
+  }
+  /**
+   *
+   * @param {Array} a
+   * @param {Number} n
+   */
+  function getClosestGreaterNumberNInArray(a, n) {
+    /**
+     * -------0 1 2 3 4
+     * - a = [1,2,3,4,5]
+     * - n = 2
+     * - ret = 3
+     *
+     * + i = 0
+     *   + a[i] = a[0] = 1 > 2 ? -> false
+     * + i = 1
+     *   + a[i] = a[1] = 2 > 2 ? -> false
+     * + i = 2
+     *   + a[i] = a[2] = 3 > 2 ? -> true
+     *   + saveNumber = 3
+     * + i = 3
+     *   + a[i] = a[3] = 4 > 2 ? -> true
+     *     + a[i] <= saveNumber ? saveNumber = a[i] : i++
+     *
+     *
+     * - a = [1,3,5,2,4]
+     * - n = 2
+     * - ret = 3
+     *
+     * + step 1: get |n-a[i]| array
+     * + step 2: get min && min > 0 step 1
+     * + step 3: get a[min index]
+     *
+     *
+     */
+    let arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement = [];
+
+    for (let i = a.length - 1; i >= 0; --i) {
+      arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement = reversePush(
+        arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement,
+        Math.abs(n - a[i])
+      );
+    }
+
+    let minimumButNotZero = Number.POSITIVE_INFINITY;
+    for (
+      let i = arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement.length - 1;
+      i >= 0;
+      --i
+    ) {
+      if (
+        arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement[i] !== 0 &&
+        arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement[i] <
+          minimumButNotZero
+      ) {
+        minimumButNotZero =
+          arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement[i];
+      }
+    }
+
+    let ret = null;
+
+    for (let i = a.length - 1; i >= 0; --i) {
+      if (
+        Math.abs(n - a[i]) !== 0 &&
+        Math.abs(n - a[i]) === minimumButNotZero &&
+        a[i] > n
+      ) {
+        ret = a[i];
+      }
+    }
+
+    return ret;
+  }
+
+  let minimumNumberIncreasinger = getArrayMinimumNumber(a);
+
+  let startIndexIncreasinger = 0;
+
+  let ret = new Array(a.length);
+
+  for (let i = a.length - 1; i >= 0; --i) {
+    ret[startIndexIncreasinger] = minimumNumberIncreasinger;
+    minimumNumberIncreasinger = getClosestGreaterNumberNInArray(
+      a,
+      minimumNumberIncreasinger
+    );
+    startIndexIncreasinger++;
+  }
+
+  return ret;
+}
+
+/**
+ *
+ * @param {Array} a
+ * @param {any} e
+ *
+ */
+function reversePush(a, e) {
+  /**
+   * -------0 1 2
+   * - a = [1,2,3]
+   * - e = 4
+   * ---------0 1 2 3
+   * - ret = [4,1,2,3]
+   */
+  const ret = new Array(a.length + 1);
+
+  ret[0] = e;
+
+  for (let i = ret.length - 1; i >= 1; --i) {
+    ret[i] = a[i - 1];
+  }
+
+  return ret;
 }
 
 /**
@@ -275,7 +440,7 @@ function generateMatrix(rows, columns) {
   for (let i = rows - 1; i >= 0; --i) {
     let row = [];
     for (let j = columns - 1; j >= 0; --j) {
-      row = push(row, generateNumber(-100, 100));
+      row = push(row, generateRandomNumber(-100, 100));
     }
     ret = push(ret, row);
   }
@@ -288,62 +453,77 @@ function generateMatrix(rows, columns) {
  * @param {Number} to
  *
  */
-function generateNumber(from, to) {
+function generateRandomNumber(from, to) {
   return Math.round(Math.random() * (to - from) + from);
 }
 
-function test() {
-  const rows_1 = 1;
-  const rows_2 = 2;
-  const rows_3 = 3;
-  const rows_4 = 4;
+const numberOfRow = generateRandomNumber(1, 9);
+const numberOfColumn = generateRandomNumber(1, 9);
 
-  const columns_1 = 1;
-  const columns_2 = 2;
-  const columns_3 = 3;
-  const columns_4 = 4;
-  const columns_5 = 5;
+const m1 = generateMatrix(1, 1);
+const m2 = generateMatrix(5, 1);
+const m3 = generateMatrix(5, 2);
+const m4 = generateMatrix(5, 6);
 
-  const m3 = generateMatrix(rows_2, columns_3);
-  const m4 = generateMatrix(rows_3, columns_4);
-  const m5 = generateMatrix(rows_4, columns_5);
+const m5 = generateMatrix(1, 6);
+const m6 = generateMatrix(2, 6);
+const m7 = generateMatrix(5, 6);
 
-  const column_index_0 = 0;
-  const column_index_1 = 1;
-  const column_index_2 = 2;
-  const column_index_3 = 3;
+const m8 = generateMatrix(numberOfRow, numberOfColumn);
 
-  const row_index_0 = 0;
-  const row_index_1 = 1;
-  const row_index_2 = 2;
-  const row_index_3 = 3;
+function test1() {
+  console.log("\nMatrix input 1");
+  advanceLogMatrix(m1);
+  matrixBlackHoleTraverse(m1);
+}
 
-  const remove_row_index_0 = 0;
-  const remove_row_index_1 = 1;
-  const remove_row_index_2 = 2;
-  const remove_row_index_3 = 3;
-  const remove_row_index_4 = 4;
+function test2() {
+  console.log("\nMatrix input 2");
+  advanceLogMatrix(m2);
+  matrixBlackHoleTraverse(m2);
+}
 
-  const remove_column_index_0 = 0;
-  const remove_column_index_1 = 1;
-  const remove_column_index_2 = 2;
-  const remove_column_index_3 = 3;
-  const remove_column_index_4 = 4;
-
+function test3() {
+  console.log("\nMatrix input 3");
   advanceLogMatrix(m3);
-  advanceLogMatrix(fx(m3));
-  // console.log(fx(m3));
+  matrixBlackHoleTraverse(m3);
+}
 
+function test4() {
+  console.log("\nMatrix input 4");
   advanceLogMatrix(m4);
-  advanceLogMatrix(fx(m4));
-  // console.log(fx(m4));
+  matrixBlackHoleTraverse(m4);
+}
 
+function test5() {
+  console.log("\nMatrix input 5");
   advanceLogMatrix(m5);
-  advanceLogMatrix(fx(m5));
-  // console.log(fx(m5));
+  matrixBlackHoleTraverse(m5);
+}
+
+function test6() {
+  console.log("\nMatrix input 6");
+  advanceLogMatrix(m6);
+  matrixBlackHoleTraverse(m6);
+}
+
+function test7() {
+  console.log("\nMatrix input 7");
+  advanceLogMatrix(m7);
+  matrixBlackHoleTraverse(m7);
+}
+
+function test8() {
+  console.log("\nMatrix input 8");
+  advanceLogMatrix(m8);
+  matrixBlackHoleTraverse(m8);
 }
 
 {
   // test();
-  console.log(ascendingBubbleSort([4, 1, 3, 5, 2, 6, 7, 8, 9, 1, 4, 5]));
+  console.log(
+    bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort([
+      1, 3, 5, 2, 4, 9, 8, 7, 6,
+    ])
+  );
 }
