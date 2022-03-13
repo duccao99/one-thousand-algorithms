@@ -52,42 +52,53 @@ function fx(m) {
     bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(
       matrixElements
     );
-  console.log(matrixElements);
+  console.log("sorted matrixElements: ", matrixElements);
   // use matrix black hole traverse tech
   // fill
   let breakTime = getTheNumberOfBreakTimeLevelDownMatrix(m);
+  let breakBoundary = 0;
   let zeroNumber = 0;
-  for (let i = zeroNumber; i < m.length; ++i) {
-    if (i === zeroNumber) {
-      for (let j = zeroNumber; j <= m[zeroNumber].length - 1; ++j) {
-        m[i][j] = matrixElements[zeroNumber];
-        matrixElements = shift(matrixElements);
-      }
-    }
-    if (i > zeroNumber && i < m.length - 1) {
-      m[i][m[i].length - 1] = matrixElements[zeroNumber];
-      matrixElements = shift(matrixElements);
-    }
-    if (i === m.length - 1 && i !== zeroNumber) {
-      if (m[i].length - 1 !== zeroNumber) {
-        for (let j = m[i].length - 1; j >= zeroNumber; --j) {
-          m[i][j] = matrixElements[zeroNumber];
-          matrixElements = shift(matrixElements);
-        }
-        for (let k = m.length - 1; k > zeroNumber; --k) {
-          m[k][zeroNumber] = matrixElements[zeroNumber];
-          matrixElements = shift(matrixElements);
-        }
-      }
-      if (m[i].length - 1 === zeroNumber) {
-        m[i][zeroNumber] = matrixElements[zeroNumber];
-        matrixElements = shift(matrixElements);
-      }
-    }
-  }
 
   while (breakTime > 0) {
-    const matrixTemporary = matrixLevelDown(m);
+    let ret = "";
+    for (let i = breakBoundary; i <= m.length - 1 - breakBoundary; ++i) {
+      if (i === breakBoundary) {
+        for (
+          let j = breakBoundary;
+          j <= m[breakBoundary].length - 1 - breakBoundary;
+          ++j
+        ) {
+          ret += m[i][j] + " ";
+        }
+      }
+      if (i > breakBoundary && i < m.length - 1 - breakBoundary) {
+        ret += m[i][m[i + breakBoundary].length - 1 - breakBoundary] + " ";
+      }
+      if (i === m.length - 1 - breakBoundary && i !== breakBoundary) {
+        if (m[i].length - 1 - breakBoundary !== 0) {
+          for (
+            let j = m[i].length - 1 - breakBoundary;
+            j >= 0 + breakBoundary;
+            --j
+          ) {
+            ret += m[i][j] + " ";
+          }
+          for (
+            let k = m.length - 1 - 1 - breakBoundary;
+            k > 0 + breakBoundary;
+            --k
+          ) {
+            ret += m[k][0 + breakBoundary] + " ";
+          }
+        }
+        if (m[i].length - 1 === 0) {
+          ret += m[i][0] + " ";
+        }
+      }
+    }
+    breakBoundary++;
+    breakTime--;
+    console.log("ret: ", ret);
   }
   console.log("matrix after the row were sorted");
 
@@ -105,8 +116,6 @@ function getTheNumberOfBreakTimeLevelDownMatrix(m) {
     m = matrixLevelDown(m);
     breakTime++;
   }
-
-  breakTime--;
 
   return breakTime;
 }
@@ -198,87 +207,49 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
    * @param {Number} n
    */
   function getClosestGreaterNumberNInArray(a, n) {
-    /**
-     * -------0 1 2 3 4
-     * - a = [1,2,3,4,5]
-     * - n = 2
-     * - ret = 3
-     *
-     * + i = 0
-     *   + a[i] = a[0] = 1 > 2 ? -> false
-     * + i = 1
-     *   + a[i] = a[1] = 2 > 2 ? -> false
-     * + i = 2
-     *   + a[i] = a[2] = 3 > 2 ? -> true
-     *   + saveNumber = 3
-     * + i = 3
-     *   + a[i] = a[3] = 4 > 2 ? -> true
-     *     + a[i] <= saveNumber ? saveNumber = a[i] : i++
-     *
-     *
-     * - a = [1,3,5,2,4]
-     * - n = 2
-     * - ret = 3
-     *
-     * + step 1: get |n-a[i]| array
-     * + step 2: get min && min > 0 step 1
-     * + step 3: get a[min index]
-     *
-     *
-     */
-    let arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement = [];
-
+    let ret = Number.POSITIVE_INFINITY;
     for (let i = a.length - 1; i >= 0; --i) {
-      arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement = reversePush(
-        arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement,
-        Math.abs(n - a[i])
-      );
-    }
-
-    let minimumButNotZero = Number.POSITIVE_INFINITY;
-    for (
-      let i = arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement.length - 1;
-      i >= 0;
-      --i
-    ) {
-      if (
-        arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement[i] !== 0 &&
-        arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement[i] <
-          minimumButNotZero
-      ) {
-        minimumButNotZero =
-          arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement[i];
+      for (let j = a.length - 1; j >= 0; --j) {
+        if (a[j] > n && a[j] < ret) {
+          ret = a[j];
+        }
       }
     }
-
-    let ret = null;
-
-    for (let i = a.length - 1; i >= 0; --i) {
-      if (
-        Math.abs(n - a[i]) !== 0 &&
-        Math.abs(n - a[i]) === minimumButNotZero &&
-        a[i] > n
-      ) {
-        ret = a[i];
-      }
-    }
-
     return ret;
   }
 
-  let minimumNumberIncreasinger = getArrayMinimumNumber(a);
-
-  let startIndexIncreasinger = 0;
-
+  /**
+   * -------0 1 2 3 4
+   * - a = [1,3,5,2,4]
+   * - increasingly = 1
+   * - next = 2
+   *
+   * + i = 4
+   *   + ret[0] = increasingly = 1
+   *   + increasingly = 2 = findClosestGreater(a,increasingly)
+   * + i = 3
+   *   + ret[1] = increasingly = 2
+   *   + increasingly = 3 = findClosestGreater(a,increasingly)
+   * + i = 2
+   *   + ret[2] = increasingly = 3
+   *   + increasingly = 4 = findClosestGreater(a,increasingly)
+   * + i = 1
+   *   + ret[3] = increasingly = 4
+   *   + increasingly = 5 = findClosestGreater(a,increasingly)
+   * + i = 0
+   *   + ret[4] = increasingly = 5
+   *   + increasingly = Infinity = findClosestGreater(a,increasingly)
+   *
+   *
+   *
+   */
+  let increasingly = getArrayMinimumNumber(a);
   let ret = new Array(a.length);
 
-  for (let i = a.length - 1; i >= 0; --i) {
-    ret[startIndexIncreasinger] = minimumNumberIncreasinger;
-    minimumNumberIncreasinger = getClosestGreaterNumberNInArray(
-      a,
-      minimumNumberIncreasinger
-    );
-    startIndexIncreasinger++;
+  for (let i = 0; i <= ret.length - 1; ++i) {
+    console.log("increasingly: ", increasingly);
+    ret[i] = increasingly;
+    increasingly = getClosestGreaterNumberNInArray(a, increasingly);
   }
 
   return ret;
@@ -576,56 +547,58 @@ const m8 = generateMatrix(numberOfRow, numberOfColumn);
 function test1() {
   console.log("\nMatrix input 1");
   advanceLogMatrix(m1);
-  matrixBlackHoleTraverse(m1);
+  fx(m1);
 }
 
 function test2() {
   console.log("\nMatrix input 2");
   advanceLogMatrix(m2);
-  matrixBlackHoleTraverse(m2);
+  fx(m2);
 }
 
 function test3() {
   console.log("\nMatrix input 3");
   advanceLogMatrix(m3);
-  matrixBlackHoleTraverse(m3);
+  fx(m3);
 }
 
 function test4() {
   console.log("\nMatrix input 4");
   advanceLogMatrix(m4);
-  matrixBlackHoleTraverse(m4);
+  fx(m4);
 }
 
 function test5() {
   console.log("\nMatrix input 5");
   advanceLogMatrix(m5);
-  matrixBlackHoleTraverse(m5);
+  fx(m5);
 }
 
 function test6() {
   console.log("\nMatrix input 6");
   advanceLogMatrix(m6);
-  matrixBlackHoleTraverse(m6);
+  fx(m6);
 }
 
 function test7() {
   console.log("\nMatrix input 7");
   advanceLogMatrix(m7);
-  matrixBlackHoleTraverse(m7);
+  fx(m7);
 }
 
 function test8() {
   console.log("\nMatrix input 8");
   advanceLogMatrix(m8);
-  matrixBlackHoleTraverse(m8);
+  fx(m8);
 }
 
 {
-  // test();
-  console.log(
-    bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort([
-      1, 3, 5, 2, 4, 9, 8, 7, 6,
-    ])
-  );
+  test1();
+  test2();
+  test3();
+  test4();
+  test5();
+  test6();
+  test7();
+  test8();
 }

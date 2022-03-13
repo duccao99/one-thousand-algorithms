@@ -48,8 +48,9 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
    * @param {Array} a
    * @param {Number} n
    */
-  function getClosestGreaterNumberNInArray(a, n) {
+  function getClosestGreaterNumberNInArrayCorpse(a, n) {
     /**
+     * - n > 0
      * -------0 1 2 3 4
      * - a = [1,2,3,4,5]
      * - n = 2
@@ -75,6 +76,66 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
      * + step 2: get min && min > 0 step 1
      * + step 3: get a[min index]
      *
+     * + n < 0
+     * - n = -2
+     * --------0  1 2  3 4
+     * - a = [-1,-3,5,-2,4]
+     * - ret = -1 = a[0]
+     *
+     * + i = 4
+     *   + abs(n-a[i]) = |-2-4| = |-6| = 6
+     * + i = 3
+     *   + abs(n-a[i]) = |-2--2| = |0| = 0
+     * + i = 2
+     *   + abs(n-a[i]) = |-2-5| = |-7| = 7
+     * + i = 1
+     *   + abs(n-a[i]) = |-2--3| = |1| = 1
+     * + i = 0
+     *   + abs(n-a[i]) = |-2--1| = |-1| = 1
+     *
+     * - abs = [1,1,7,0,6]
+     * - min abs = 1
+     *
+     *
+     * - n = -1
+     * --------0  1 2  3 4
+     * - a = [-1,-3,5,-2,4]
+     * - ret = 4 = a[4]
+     * - abs (n-a[i]) = [0,2,6,1,5]
+     *
+     *
+     * + i = 4
+     *   + abs(n-a[i]) = |-1-4| = |-5| = 5
+     * + i = 3
+     *   + abs(n-a[i]) = |-1--2| = |1| = 1
+     * + i = 2
+     *   + abs(n-a[i]) = |-1-5| = |-6| = 6
+     * + i = 1
+     *   + abs(n-a[i]) = |-1--3| = |2| = 2
+     * + i = 0
+     *   + abs(n-a[i]) = |-1--1| = |0| = 0
+     * - abs = [0,2,6,1,5]
+     * - min abs = 1
+     * - need abs[4]
+     *
+     *
+     * - n = -1
+     * --------0  1 2  3 4
+     * - a = [-1,-3,5,-2,4]
+     * - ret = 4 = a[4]
+     * + i = 4
+     *   + a[i] > n && a[i] < ret  ? ret = a[i]
+     *   + ret  = a[4] = 4
+     * + i = 3
+     *   + a[i] > n && a[i] < ret  ? ret = a[i]
+     * + i = 2
+     * + i = 1
+     * + i = 0
+     *
+     *
+     *
+     * - a = [-13, -77, 91, -75, -48, -62]
+     *
      *
      */
     let arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement = [];
@@ -87,6 +148,13 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
     }
 
     let minimumButNotZero = Number.POSITIVE_INFINITY;
+    console.log("n: ", n);
+    console.log("a: ", a);
+    console.log(
+      "arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement: ",
+      arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement
+    );
+
     for (
       let i = arrayOfTheAbsoluteSubtractionOfNAndAllArrayElement.length - 1;
       i >= 0;
@@ -102,6 +170,8 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
       }
     }
 
+    console.log("minimumButNotZero: ", minimumButNotZero);
+
     let ret = null;
 
     for (let i = a.length - 1; i >= 0; --i) {
@@ -111,6 +181,45 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
         a[i] > n
       ) {
         ret = a[i];
+      }
+    }
+
+    return ret;
+  }
+
+  /**
+   *
+   * @param {Array} a
+   * @param {Number} n
+   */
+  function getClosestGreaterNumberNInArray(a, n) {
+    /**
+     * - n = -1
+     * --------0  1 2  3 4
+     * - a = [-1,-3,5,-2,4]
+     * - ret = 4 = a[4]
+     * + i = 4
+     *   + a[i] > n && a[i] < ret  ? ret = a[i]
+     *   + ret  = a[4] = 4
+     * + i = 3
+     *   + a[i] > n && a[i] < ret  ? ret = a[i]
+     * + i = 2
+     * + i = 1
+     * + i = 0
+     *
+     *  - n = -1
+     * --------0  1 2  3 4
+     * - a = [-1,-3,5,-2,4,-1,-1]
+     * - ret = -1
+     */
+    let ret = Number.POSITIVE_INFINITY;
+    let is;
+
+    for (let i = a.length - 1; i >= 0; --i) {
+      for (let j = a.length - 1; j >= 0; --j) {
+        if (a[j] > n && a[j] < ret) {
+          ret = a[j];
+        }
       }
     }
 
@@ -160,17 +269,45 @@ function reversePush(a, e) {
   return ret;
 }
 
-{
-  const a1 = [1, 2, 3, 4, 5]; // [2,3,4,5,6]
-  const a2 = [2, 4, 6, 8]; // [3,5,7,9]
-  const a3 = [1, 3, 5, 7]; // [2,4,6,8]
+function test1() {
+  const a1 = [1, 2, 5, 3, 4];
   console.log(
     bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a1)
   );
+}
+
+function test2() {
+  const a2 = [-1, 2, -5, 3, -4];
   console.log(
     bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a2)
   );
+}
+
+function test3() {
+  const a3 = [1, 2, 5, 3, 4, 5, 4, 3, 2, 1];
   console.log(
     bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a3)
   );
+}
+
+function test4() {
+  const a4 = [-1, 2, -5, 3, -4, -1, -5, -4, 2, 3];
+  console.log(
+    bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a4)
+  );
+}
+
+function test5() {
+  const a5 = generateArray(9);
+  console.log(
+    bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a5)
+  );
+}
+
+{
+  // test1();
+  // test2();
+  test3();
+  // test4();
+  // test5();
 }

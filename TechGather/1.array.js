@@ -580,6 +580,47 @@ function generateArray(length) {
   return ret;
 }
 
+function getClosestGreaterNumberNInArray(a, n) {
+  /**
+   * 22. Get closest greater than n in an array tech
+   *
+   *
+   */
+  console.log("a: ", a);
+  console.log("n: ", n);
+
+  let positiveInfinityNumber = Number.POSITIVE_INFINITY;
+  let ret = positiveInfinityNumber;
+  for (let i = a.length - 1; i >= 0; --i) {
+    for (let j = a.length - 1; j >= 0; --j) {
+      if (a[j] > n && a[j] < ret) {
+        ret = a[j];
+      }
+    }
+  }
+  return ret === positiveInfinityNumber ? -1 : ret;
+}
+
+function test1() {
+  const a1 = [1, 2, 5, 3, 4];
+}
+
+function test2() {
+  const a2 = [-1, 2, -5, 3, -4];
+}
+
+function test3() {
+  const a3 = [1, 2, 5, 3, 4, 5, 4, 3, 2, 1];
+}
+
+function test4() {
+  const a4 = [-1, 2, -5, 3, -4, -1, -5, -4, 2, 3];
+}
+
+function test5() {
+  const a5 = generateArray(9);
+}
+
 {
   // arrayTraverseLinear();
   // arrayReverseTraverse();
@@ -598,5 +639,14 @@ function generateArray(length) {
   // console.log(javascriptArrayJoin([1, 2, 3, 4, 5], " "));
   // console.log(reversePush([1, 2, 3], 5));
   // advanceLogArray([1, 2, 3, 4, 5]);
-  advanceLogArray(generateArray(9));
+  // advanceLogArray(generateArray(9));
+  // console.log(getClosestGreaterNumberNInArray(a, a[0]));
+}
+
+{
+  test1();
+  test2();
+  test3();
+  test4();
+  test5();
 }
