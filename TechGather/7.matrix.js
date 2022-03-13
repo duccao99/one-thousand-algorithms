@@ -713,7 +713,7 @@ function matrixBlackHoleTraverseCorpse(m) {
  *
  * @param {Array<Array>} m
  */
-function matrixBlackHoleTraverse(m) {
+function matrixBlackHoleTraverseCorpse2(m) {
   /**
    * 13. matrix black hole traverse tech
    *
@@ -812,6 +812,93 @@ function matrixBlackHoleTraverse(m) {
   }
 }
 
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixBlackHoleTraverse(m) {
+  /**
+   * 13. matrix black hole traverse tech
+   *
+   * + step 1: write a boundary clockwise traverse function - done
+   * + step 2: write a level down matrix function - done
+   * + step 3: get the number of time level down the matrix - done
+   * + step 4: use step 1 to traverse step 2 until  the number of time
+   * level down is equal to 0 - done
+   *
+   *
+   */
+  let breakTime = getTheNumberOfBreakTimeLevelingDownTheMatrix(m);
+  console.log("Time the matrix can level down: ", breakTime);
+
+  /**
+   * - matrix
+   * -- 0 1 2 3
+   * 0| 1 2 3 4
+   * 1| 5 6 7 8
+   * 2| 4 3 2 1
+   * 3| 9 8 7 6
+   *
+   * + breakTime = 2
+   *   + ret = 1 2 3 4 8 1 6 7 8 9 4 5
+   * + breakTime = 1
+   *   + ret = 6 7 2 3
+   *
+   *
+   *
+   *
+   *
+   */
+
+  let breakBoundary = 0;
+  while (breakTime !== 0) {
+    console.log("breakTime: ", breakTime);
+    let ret = "";
+
+    for (let i = breakBoundary; i <= m.length - 1 - breakBoundary; ++i) {
+      if (i === breakBoundary) {
+        for (
+          let j = breakBoundary;
+          j <= m[breakBoundary].length - 1 - breakBoundary;
+          ++j
+        ) {
+          ret += m[i][j] + " ";
+        }
+      }
+      if (i > breakBoundary && i < m.length - 1 - breakBoundary) {
+        ret += m[i][m[i + breakBoundary].length - 1 - breakBoundary] + " ";
+      }
+      if (i === m.length - 1 - breakBoundary && i !== breakBoundary) {
+        if (m[i].length - 1 - breakBoundary !== 0) {
+          for (
+            let j = m[i].length - 1 - breakBoundary;
+            j >= 0 + breakBoundary;
+            --j
+          ) {
+            ret += m[i][j] + " ";
+          }
+          for (
+            let k = m.length - 1 - 1 - breakBoundary;
+            k > 0 + breakBoundary;
+            --k
+          ) {
+            ret += m[k][0 + breakBoundary] + " ";
+          }
+        }
+        if (m[i].length - 1 === 0) {
+          ret += m[i][0] + " ";
+        }
+      }
+    }
+    breakBoundary++;
+    breakTime--;
+
+    console.log("ret: ", ret);
+  }
+
+  console.log("Matrix before level down boundary traverse ret");
+}
+
 function getTheNumberOfBreakTimeLevelingDownTheMatrix(m) {
   let breakTime = 0;
   let breakWhileLoopCondition = "Can't leveling down this matrix";
@@ -820,8 +907,6 @@ function getTheNumberOfBreakTimeLevelingDownTheMatrix(m) {
 
     breakTime++;
   }
-
-  breakTime--;
 
   return breakTime;
 }

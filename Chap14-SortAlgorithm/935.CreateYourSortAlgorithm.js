@@ -10,6 +10,7 @@
  */
 function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
   /**
+   * - Bá dơ sort
    * -------0 1 2 3 4
    * - a = [1,2,3,4,5]
    * + step 1: get minimum value of array - done

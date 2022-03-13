@@ -48,11 +48,93 @@ function fx(m) {
     }
   }
 
+  matrixElements =
+    bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(
+      matrixElements
+    );
   console.log(matrixElements);
+  // use matrix black hole traverse tech
+  // fill
+  let breakTime = getTheNumberOfBreakTimeLevelDownMatrix(m);
+  let zeroNumber = 0;
+  for (let i = zeroNumber; i < m.length; ++i) {
+    if (i === zeroNumber) {
+      for (let j = zeroNumber; j <= m[zeroNumber].length - 1; ++j) {
+        m[i][j] = matrixElements[zeroNumber];
+        matrixElements = shift(matrixElements);
+      }
+    }
+    if (i > zeroNumber && i < m.length - 1) {
+      m[i][m[i].length - 1] = matrixElements[zeroNumber];
+      matrixElements = shift(matrixElements);
+    }
+    if (i === m.length - 1 && i !== zeroNumber) {
+      if (m[i].length - 1 !== zeroNumber) {
+        for (let j = m[i].length - 1; j >= zeroNumber; --j) {
+          m[i][j] = matrixElements[zeroNumber];
+          matrixElements = shift(matrixElements);
+        }
+        for (let k = m.length - 1; k > zeroNumber; --k) {
+          m[k][zeroNumber] = matrixElements[zeroNumber];
+          matrixElements = shift(matrixElements);
+        }
+      }
+      if (m[i].length - 1 === zeroNumber) {
+        m[i][zeroNumber] = matrixElements[zeroNumber];
+        matrixElements = shift(matrixElements);
+      }
+    }
+  }
 
+  while (breakTime > 0) {
+    const matrixTemporary = matrixLevelDown(m);
+  }
   console.log("matrix after the row were sorted");
 
   return m;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function getTheNumberOfBreakTimeLevelDownMatrix(m) {
+  let breakTime = 0;
+
+  while (m !== -1) {
+    m = matrixLevelDown(m);
+    breakTime++;
+  }
+
+  breakTime--;
+
+  return breakTime;
+}
+
+/**
+ *
+ * @param {Array<Array>} m
+ */
+function matrixLevelDown(m) {
+  if (m.length <= 2 || m[0].length <= 2) {
+    return -1;
+  }
+  const startColumnIndex = 1;
+  const endColumnIndex = m[0].length - 1 - 1;
+  const startRowIndex = 1;
+  const endRowIndex = m.length - 1 - 1;
+
+  let matrixRet = [];
+
+  for (let i = startRowIndex; i <= endRowIndex; ++i) {
+    let rowI = [];
+    for (let j = startColumnIndex; j <= endColumnIndex; ++j) {
+      rowI = push(rowI, m[i][j]);
+    }
+    matrixRet = push(matrixRet, rowI);
+  }
+
+  return matrixRet;
 }
 
 /**
@@ -197,6 +279,26 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
       minimumNumberIncreasinger
     );
     startIndexIncreasinger++;
+  }
+
+  return ret;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function shift(a) {
+  /**
+   * -------0 1 2
+   * - a = [1,2,3]
+   * ---------0 1
+   * - ret = [2,3]
+   */
+  const ret = new Array(a.length - 1);
+
+  for (let i = ret.length - 1; i >= 0; --i) {
+    ret[i] = a[i + 1];
   }
 
   return ret;
