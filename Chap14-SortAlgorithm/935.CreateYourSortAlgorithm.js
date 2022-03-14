@@ -26,6 +26,19 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
    *   + a = [1,2,5,3,4]
    *
    *
+   * -------0 1 2 3 4 5 6 7 8
+   * - a = [1,1,2,2,3,5,5,7,6]
+   * ----------0 1 2 3 4 5 6 7 8
+   * - ret  = [1,1,2,2,3,5,5,6,7]
+   *
+   * - hashmap = {
+   *   1:2,
+   *   2:2,
+   *   3:1,
+   *   5:2,
+   *   6:1,
+   *   7:1,
+   * }
    *
    */
   /**
@@ -191,8 +204,10 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
    *
    * @param {Array} a
    * @param {Number} n
+   * @param {Object} hashmap
+   *
    */
-  function getClosestGreaterNumberNInArray(a, n) {
+  function getClosestGreaterNumberNInArray(a, n, hashmap) {
     /**
      * - n = -1
      * --------0  1 2  3 4
@@ -208,17 +223,23 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
      * + i = 0
      *
      *  - n = -1
+     *  - hashmap = {
+     *    -1:3,
+     *    -3:1,
+     *     5:1,
+     *    -2:1,
+     *     4:1,
+     *  }
      * --------0  1 2  3 4
      * - a = [-1,-3,5,-2,4,-1,-1]
      * - ret = -1
      */
     let ret = Number.POSITIVE_INFINITY;
-    let is;
 
     for (let i = a.length - 1; i >= 0; --i) {
       for (let j = a.length - 1; j >= 0; --j) {
-        if (a[j] > n && a[j] < ret) {
-          ret = a[j];
+        if (a[i] >= n && a[i] <= ret && hashmap[a[i]] !== 0) {
+          ret = a[i];
         }
       }
     }
@@ -226,9 +247,42 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
     return ret;
   }
 
+  /**
+   *
+   * @param {Array} a
+   * @param {Number} pos
+   */
+  function removeElementAtPosition(a, pos) {
+    /**
+     * -------0 1 2 3 4
+     * - a = [1,2,3,4,5]
+     * - pos = 2
+     * ---------0 1 2 3
+     * - ret = [1,2,4,5]
+     */
+    let ret = new Array(a.length - 1);
+
+    for (let i = pos - 1; i >= 0; --i) {
+      ret[i] = a[i];
+    }
+
+    for (let i = pos; i < ret.length; ++i) {
+      ret[i] = a[i + 1];
+    }
+
+    return ret;
+  }
+
+  let hashmap = {};
+  for (let i = a.length - 1; i >= 0; --i) {
+    hashmap[a[i]] = (hashmap[a[i]] || 0) + 1;
+  }
+
   let minimumNumberIncreasinger = getArrayMinimumNumber(a);
 
   let startIndexIncreasinger = 0;
+
+  hashmap[minimumNumberIncreasinger]--;
 
   let ret = new Array(a.length);
 
@@ -236,9 +290,17 @@ function bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a) {
     ret[startIndexIncreasinger] = minimumNumberIncreasinger;
     minimumNumberIncreasinger = getClosestGreaterNumberNInArray(
       a,
-      minimumNumberIncreasinger
+      minimumNumberIncreasinger,
+      hashmap
     );
+    hashmap[minimumNumberIncreasinger]--;
     startIndexIncreasinger++;
+  }
+
+  for (let i = ret.length - 1; i >= 0; --i) {
+    if (ret[i] === Number.POSITIVE_INFINITY) {
+      ret = removeElementAtPosition(ret, i);
+    }
   }
 
   return ret;
@@ -269,6 +331,42 @@ function reversePush(a, e) {
   return ret;
 }
 
+/**
+ *
+ * @param {Number} length
+ */
+function generateArray(length) {
+  /**
+   * 21. Generate array tech
+   *
+   */
+
+  /**
+   *
+   * @param {Number} from
+   * @param {Number} to
+   *
+   */
+  function generateRandomNumber(from, to) {
+    /**
+     * +  Math.random() - [0,1)
+     * + from = 1
+     * + to = 10
+     * + Math.floor(Math.random()*to + 1)
+     *
+     * + [0,1) * 10 = [0,9.9999)
+     * + [0,1] * 10 + 1 = [0,10.999999]
+     * + floor( [0,1] * 10 + 1 ) = [0,10]
+     */
+    return Math.floor(Math.random() * to + from);
+  }
+  const ret = new Array(length);
+  for (let i = ret.length - 1; i >= 0; --i) {
+    ret[i] = generateRandomNumber(0, 100);
+  }
+  return ret;
+}
+
 function test1() {
   const a1 = [1, 2, 5, 3, 4];
   console.log(
@@ -287,7 +385,7 @@ function test3() {
   const a3 = [1, 2, 5, 3, 4, 5, 4, 3, 2, 1];
   console.log(
     bringIncreasinglyElementToTheIncreasinglyIndexAscendingOrderSort(a3)
-  );
+  ); // 1 1 2 2 3 3 4 4 5 5
 }
 
 function test4() {
@@ -305,9 +403,9 @@ function test5() {
 }
 
 {
-  // test1();
-  // test2();
+  test1();
+  test2();
   test3();
-  // test4();
-  // test5();
+  test4();
+  test5();
 }
