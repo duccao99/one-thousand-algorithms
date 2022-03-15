@@ -618,6 +618,41 @@ function test4() {
 }
 
 function test5() {
+  /**
+   *
+   * @param {Number} length
+   */
+  function generateArray(length) {
+    /**
+     * 21. Generate array tech
+     *
+     */
+
+    /**
+     *
+     * @param {Number} from
+     * @param {Number} to
+     *
+     */
+    function generateRandomNumber(from, to) {
+      /**
+       * +  Math.random() - [0,1)
+       * + from = 1
+       * + to = 10
+       * + Math.floor(Math.random()*to + 1)
+       *
+       * + [0,1) * 10 = [0,9.9999)
+       * + [0,1] * 10 + 1 = [0,10.999999]
+       * + floor( [0,1] * 10 + 1 ) = [0,10]
+       */
+      return Math.floor(Math.random() * to + from);
+    }
+    const ret = new Array(length);
+    for (let i = ret.length - 1; i >= 0; --i) {
+      ret[i] = generateRandomNumber(0, 100);
+    }
+    return ret;
+  }
   const a5 = generateArray(9);
 }
 

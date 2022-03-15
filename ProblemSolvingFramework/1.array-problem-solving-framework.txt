@@ -1,38 +1,87 @@
 /**
- * Problem: description
- * 
+ * Problem: 
+ *
  * Understanding the problem
- * 
-  const m1 = []; // 
-  const m2 = []; // 
-  const m3 = []; // 
-  const m4 = []; // 
-  const m5 = []; // 
- * 
- * 
- * 
- * Approach
- * + step 1: 
- * + step 2: 
- * + step 3: 
- * 
+
+ * Approach 
+ *
  */
 
-function fx(a) {}
+function fx1(a) {}
+function fx2(a) {}
 
-function test1() {
-  const m1 = []; //
-  const m2 = []; //
-  const m3 = []; //
-  const m4 = []; //
-  const m5 = []; //
-
-  console.log(fx(m1));
-  console.log(fx(m2));
-  console.log(fx(m3));
-  console.log(fx(m4));
-  console.log(fx(m5));
+function test1(fx) {
+  const a1 = [1, 2, 5, 3, 4];
+  fx(a1);
 }
+
+function test2(fx) {
+  const a2 = [-1, 2, -5, 3, -4];
+  fx(a2);
+}
+
+function test3(fx) {
+  const a3 = [1, 2, 5, 3, 4, 5, 4, 3, 2, 1];
+  fx(a3);
+}
+
+function test4(fx) {
+  const a4 = [-1, 2, -5, 3, -4, -1, -5, -4, 2, 3];
+  fx(a4);
+}
+
+function test5(fx) {
+  /**
+   *
+   * @param {Number} length
+   */
+  function generateArray(length) {
+    /**
+     * 21. Generate array tech
+     *
+     */
+
+    /**
+     *
+     * @param {Number} from
+     * @param {Number} to
+     *
+     */
+    function generateRandomNumber(from, to) {
+      /**
+       * +  Math.random() - [0,1)
+       * + from = 1
+       * + to = 10
+       * + Math.floor(Math.random()*to + 1)
+       *
+       * + [0,1) * 10 = [0,9.9999)
+       * + [0,1] * 10 + 1 = [0,10.999999]
+       * + floor( [0,1] * 10 + 1 ) = [0,10]
+       */
+      return Math.floor(Math.random() * to + from);
+    }
+    const ret = new Array(length);
+    for (let i = ret.length - 1; i >= 0; --i) {
+      ret[i] = generateRandomNumber(0, 100);
+    }
+    return ret;
+  }
+  const a5 = generateArray(9);
+  fx(a5);
+}
+
 {
-  test1();
+  test1(fx1);
+  test2(fx1);
+  test3(fx1);
+  test4(fx1);
+  test5(fx1);
+}
+
+{
+  test1(fx2);
+  test2(fx2);
+  test3(fx2);
+  test4(fx2);
+  test5(fx2);
 }
