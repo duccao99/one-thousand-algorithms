@@ -15,8 +15,9 @@
  *
  * Approach 2: use math equation
  *                            n x (n + 1)
- *  + S(n) = 1 + 2 + .. + n = ___________ (Why we have this stuff?)
+ *  + S(n) = 1 + 2 + .. + n = ___________ (Why we have this stuff? -
  *                                 2
+ * Use mathematicalinduction to proof )
  *
  *  + Why S(n) = n x (n+1) / 2 ?
  *    + S(3) = 1 + 2 + 3 = 6
@@ -51,6 +52,6 @@ function testFx2() {
 }
 
 {
-  testFx1();
-  // testFx2();
+  // testFx1();
+  testFx2();
 }
