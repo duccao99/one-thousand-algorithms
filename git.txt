@@ -338,3 +338,12 @@ git clone https://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@github.com/carparknow
 
 - git clone https://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@github.com/DEV-heyfritz/HeyFritz.git
 
+- new token: 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
+
+git remote add origin https://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@github.com/tcvduc/one-thousand-algorithms.git
+
+git remote set-url origin https://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@github.com/tcvduc/one-thousand-algorithms.git
+
+git remote set-url origin new.git.url/here
+
+
