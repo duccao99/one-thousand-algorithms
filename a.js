@@ -1,1 +1,3 @@
-console.log(4 ** 2);
+for (let i = 10; i >= -10; --i) {
+  console.log(isFinite(i));
+}
