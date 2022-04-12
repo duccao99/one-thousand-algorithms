@@ -9,5 +9,7 @@ means the product of no numbers at all
 
 3. Why 0 was not an odd number?
 
+4. why nthRoot(x^m) = x^(m/n) ?
+
 
 
