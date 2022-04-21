@@ -1,4 +1,4 @@
-const a = 1;
-const b = 2;
-const c = a + b;
-console.log(c);
+const a = 123;
+console.log(a % 10);
+console.log(a % 9);
+console.log(a % 8);
