@@ -61,17 +61,58 @@ function generateRandomNumber(from, to) {
    *
    *
    */
-  return Math.round(Math.random() * (to - from) + from);
+  return Math.floor(Math.random() * to + from);
+}
+
+/**
+ *
+ * @param {number} n
+ */
+function cutNumberLastDigit(n) {
+  /**
+   * 4. cut number last digit
+   *
+   * - n digits > 1
+   * - n = 123
+   * - ret = 12
+   *
+   */
+  return Math.floor(n / 10);
+}
+
+/**
+ *
+ * @param {number} n
+ */
+function cutNumberFirstDigit(n) {
+  /**
+   * - n = 1234
+   * - ret = 234
+   *
+   * - ret = n % 1000 = n mod 10^3 = n mod 10^(n.length - 1)
+   */
+
+  /**
+   *
+   * @param {number} n
+   */
+  function getNTotalDigits(n) {
+    let ret = 0;
+
+    while (n !== 0) {
+      ret = ret + 1;
+      n = Math.floor(n / 10);
+    }
+
+    return ret;
+  }
+  return n % 10 ** (getNTotalDigits(n) - 1);
 }
 
 {
   for (let i = 0; i <= 30; ++i) {
-    const ret = generateRandomNumber(10, 30);
-    if (ret === 10) {
-      console.log(ret);
-    }
-    if (ret === 30) {
-      console.log(ret);
-    }
+    const ret = generateRandomNumber(1, 300);
+    // console.log(`n = ${ret} - ${cutNumberLastDigit(ret)}`);
+    console.log(`n = ${ret} - ${cutNumberFirstDigit(ret)}`);
   }
 }
