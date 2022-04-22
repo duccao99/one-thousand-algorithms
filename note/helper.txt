@@ -90,7 +90,7 @@ seconds than in total seconds.
 + because we want to get the exactly location/position 
 then coordinate/longitude/latitude definition was born.
 
- 
++ NASA: The National Aeronautic and Space Administration
 
    
 
@@ -105,4 +105,17 @@ then coordinate/longitude/latitude definition was born.
 6. Advance flag tech 
 - Use literally flag to handle literally 
 logic purpose
+
+7. To get the computer has privacy, and nobody can't see our 
+content, work, idea, secret, dream,...
+
+-> when start ?
+
++ step 1: acknowledge computer hardware part
++ step 2: acknowledge OS 
++ step 3: figure out the record content essence
++ step 4: create computer hardware part 
++ step 5: create OS 
++ step 6: continue work
+
 

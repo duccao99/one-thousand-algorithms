@@ -54,7 +54,7 @@ function getNDivisors(n) {
  * @param {number} n
  *
  */
-function fx(a, b) {
+function fx1(a, b) {
   const aDivisors = getNDivisors(a);
   const bDivisors = getNDivisors(b);
   const abCommonDivisor = [];
@@ -81,5 +81,5 @@ function fx(a, b) {
 {
   const a = 10;
   const b = 15;
-  console.log(`GCD (${a}, ${b}) = ${fx(a, b)}`);
+  console.log(`GCD (${a}, ${b}) = ${fx1(a, b)}`);
 }

@@ -11,5 +11,10 @@ means the product of no numbers at all
 
 4. why nthRoot(x^m) = x^(m/n) ?
 
+5. why n / 0 was error
+
+6. Why do we have f(x) = ax + b equation ?
++ 
+
 
 
