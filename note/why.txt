@@ -14,7 +14,7 @@ means the product of no numbers at all
 5. why n / 0 was error
 
 6. Why do we have f(x) = ax + b equation ?
-+ 
++ Because it was a foundation for something
 
 
 

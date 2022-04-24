@@ -347,3 +347,57 @@ git remote set-url origin https://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@githu
 git remote set-url origin new.git.url/here
 
 
+
+30. github recovery code
+- scenario: 
+  + 2FA OTP login need phone app to provide OTP 
+  + phone broke
+  -> Recovery code
+
+4eb19-fe14b
+ffa23-23618
+b65ac-4c623
+41a2b-9c293
+172ef-a98e8
+a4546-dd4b4
+fb242-ea9be
+803a2-81716
+68ae6-3d766
+89e0c-561b7
+7a174-39059
+b3ea5-aaf77
+7e671-d5472
+1d25a-cad56
+fec43-90e5f
+983f7-ca559
+
+
+31. Info
++ Github account 
+- email: caovanducs@gmail.com
+- password: 0908011888Duc
+- username: tcvduc
+- personal access token: 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
+
+- email: tcvduc.io@gmail.com
+- password: 0908011888Duc
+- username: tcvduc99
+- personal access token: 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
+
+
++ npm account 
+- email: tcvduc.io@gmail.com
+- password: \ . X :;123
+- username: tcvduc
+- repository: git://github.com/my-org/test.git
+
+
+- email: caovanducs@gmail.com
+- password: \ . X :;123
+- username: duccao
+
+- xlG4qH8WOep+Kc4p+IvEhR/1Rmk=
+
+
+
+

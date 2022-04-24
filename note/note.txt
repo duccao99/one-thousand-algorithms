@@ -38,6 +38,11 @@
 - \: back slash
 - /: forward slash 
 
+- Region
+- North & Latin America
+- EMEA: Europe, Middle East, Africa
+- JAPAC: Japan & Asia-Pacific
+
 
 
 
@@ -117,5 +122,11 @@ content, work, idea, secret, dream,...
 + step 4: create computer hardware part 
 + step 5: create OS 
 + step 6: continue work
+
+
+8. math note
++ Linear Equation:  ax + b = 0 
+
++ Quadratic Equation: ax^2 + bx + c = 0
 
 
