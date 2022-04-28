@@ -43,6 +43,7 @@
 - EMEA: Europe, Middle East, Africa
 - JAPAC: Japan & Asia-Pacific
 
+- MMORPG: Massively Multiplayer Online Role-Playing Game
 
 
 
@@ -126,7 +127,18 @@ content, work, idea, secret, dream,...
 
 8. math note
 + Linear Equation:  ax + b = 0 
-
 + Quadratic Equation: ax^2 + bx + c = 0
++ Cubic Equation: ax^3 + bx^2 + cx + d = 0
+
++ Formula: Công thức
+  + Example: x^2 + (a + b)x + ab = (x + a)(x + b)
+
++ Factor out
+  + Example: Factor out x in x^2 - x
+    x^2 - x 
+<=> x(x - 1)
+
+
+
 
 
