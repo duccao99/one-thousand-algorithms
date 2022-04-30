@@ -1,3 +1,4 @@
-for (let i = 10; i >= -10; --i) {
-  console.log(isFinite(i));
-}
+const a = null;
+
+const b = [...a];
+console.log(b);

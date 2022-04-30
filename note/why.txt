@@ -16,5 +16,6 @@ means the product of no numbers at all
 6. Why do we have f(x) = ax + b equation ?
 + Because it was a foundation for something
 
+7. Why (a - b)(a - b) = a^2 - ab - ab + b^2 ?
 
 

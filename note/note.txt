@@ -126,9 +126,42 @@ content, work, idea, secret, dream,...
 
 
 8. math note
-+ Linear Equation:  ax + b = 0 
-+ Quadratic Equation: ax^2 + bx + c = 0
-+ Cubic Equation: ax^3 + bx^2 + cx + d = 0
+
+8.1. Linear Equation:  ax + b = 0 
++ a = 0 - x = null
++ a != 0 - x = -b / a
+
+8.2. Quadratic Equation: ax^2 + bx + c = 0
++ a = 0 - solveLinearEquation(b,c)
+
++ a != 0   
+  + 2thRoot(b^2 - 4ac) is not a number ? return null
+  + 2thRoot(b^2 - 4ac) is a number ? return 
+  
+  Quadratic formula:
+      -b + 2thRoot(b^2 - 4ac)
+  x1 = _______________________
+                  2a
+
+      -b - 2thRoot(b^2 - 4ac)
+  x2 = ________________________
+                  2a
+
+
+
+8.3. Cubic Equation: ax^3 + bx^2 + cx + d = 0
+
+
+
+8.4. Quartic Equation: ax^4 + bx^3 + cx^2 + dx + e = 0
+
+8.5. stands for, keywords
++ sqrt: Square Root, 2th Root
++ cbrt: Cube Root, 3th Root
+
++ then (and only then) means: 
+  + if not then then what ?
+  + then
 
 + Formula: Công thức
   + Example: x^2 + (a + b)x + ab = (x + a)(x + b)
@@ -137,6 +170,11 @@ content, work, idea, secret, dream,...
   + Example: Factor out x in x^2 - x
     x^2 - x 
 <=> x(x - 1)
+
++ real root: nghiệm 
+  + Example: x - 1 = 0
+  - x - 1 = 0 has one real root means: x - 1 = 0
+  has one real root and it was x = 1
 
 
 
