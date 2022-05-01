@@ -554,6 +554,11 @@ function solveCubicEquationMethod1(a, b, c, d) {
    * -- --------------------------------------------------------------------------------
    * -- Method 1: make cubic equation becomes quadratic equation and linear equation
    * -- ---------------------------------------------------------------------------------
+   * Method 1 name: Cubic to quadratic and linear
+   * Method 1 essence:
+   * make: ax^3 + bx^2 + cx + d
+   * become something like: (ex + f)(gx^2 + mx + n)
+   *
    * To solve cubic equation: ax^3 + bx^2 + cx + d = 0
    * find one root then make the equation becomes
    * quadratic equation & linear equation
@@ -654,7 +659,7 @@ function solveCubicEquationMethod1(a, b, c, d) {
      *
      */
     const oneRoot = findOneRoot(a, b, c, d);
-    const aCoefficient = 1;
+    const aCoefficient = a;
     const bCoefficient = b + oneRoot * aCoefficient;
     const cCoefficient = c + oneRoot * bCoefficient;
 
@@ -706,6 +711,10 @@ function solveCubicEquationMethod1(a, b, c, d) {
     return [oneRoot];
   }
 
+  if (typeof anotherRoot[Symbol.iterator] !== "function") {
+    return [oneRoot];
+  }
+
   return [oneRoot, ...anotherRoot];
 }
 
@@ -732,9 +741,526 @@ function solveCubicEquationMethod1(a, b, c, d) {
  *
  *
  */
-const a = 1;
-const b = -5;
-const c = -2;
-const d = 24;
 
-console.log(solveCubicEquationMethod1(a, b, c, d));
+function test1() {
+  const a = 1;
+  const b = -5;
+  const c = -2;
+  const d = 24;
+
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+
+  const roots = solveCubicEquationMethod1(a, b, c, d);
+
+  console.log(`Have ${roots.length} root`);
+  roots.forEach((root) => {
+    console.log(`x = ${root}`);
+  });
+}
+
+function test2() {
+  /**
+   * f(x) = x^3 - 7x - 6 = 0
+   * f(-2) = 0 => x = -2
+   *    x^3 - 7x - 6
+   * =  (x + 2)(x^2 - 2x - 3)
+   * => x = -2
+   *    x^2 - 2x - 3 = 0
+   *    + a = 1 != 0
+   *    + b = -2
+   *    + c = -3
+   *    + delta = b^2 - 4ac = (-2)^2 - 4.1.(-3) = 4 + 12 = 16 > 0
+   *    + x1 = (-b + 2thRoot(delta))/(2a)
+   *         = (--2 + 2thRoot(16))/(2.1)
+   *         = (2 + 4) / 2 = 6 / 2 = 3
+   *    + x2 = (-b - 2thRoot(delta))/(2a)
+   *         = (--2 - 2thRoot(16))/(2.1)
+   *         = (2 - 4) / 2
+   *         = -2 / 2  = -1
+   *
+   * => x^3 - 7x - 6 = 0 has three roots
+   * and those are: x = -2, x = 3, x = -1
+   *
+   *
+   *
+   *
+   * make: x^3 - 7x - 6
+   * become something has: (x + 2)
+   *   x^3 - 7x - 6
+   * = x^3 + 2x^2 - 2x^2 - 4x - 3x - 6
+   * = x^2(x + 2) - 2x(x + 2) - 3(x + 2)
+   * = (x + 2)(x^2 - 2x - 3)
+   *
+   * draft:
+   * -3(x + 2) = -3x - 6
+   * -2x(x + 2) = -2x^2 - 4x
+   * x^2(x + 2) = x^3 + 2x^2
+   *
+   *
+   *
+   *
+   */
+  const a = 1;
+  const b = 0;
+  const c = -7;
+  const d = -6;
+
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  // [-2, 3 - 1]
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+
+function test3() {
+  /**
+   * Solve the equation: x^3 - 4x^2 - 9x + 36 = 0
+   * Utils:
+   * 1. a^2 - b^2
+   * =  a^2 - ab + ab - b^2
+   * =  a(a - b) + b(a - b)
+   * =  (a - b)(a + b)
+   *
+   *     x^3 - 4x^2 - 9x + 36 = 0
+   * <=> x^2(x - 4) - 9(x - 4) = 0
+   * <=> (x - 4)(x^2 - 9) = 0
+   * <=> (x - 4)(x - 3)(x + 3) = 0
+   * => x = 4, x = 3, x = -3
+   *
+   * -- --------------------
+   * make: x^3 - 4x^2 - 9x + 36
+   * become something has: (x - 4)
+   *   x^3 - 4x^2 - 9x + 36
+   * = x^3 - 4x^2 - 9x + 36
+   * = x^2(x - 4) - 9(x - 4)
+   * = (x - 4)(x^2 - 9)
+   * = (x - 4)(x - 3)(x + 3)
+   *
+   * draft:
+   * -9(x - 4) = -9x + 36
+   * x^2(x - 4) = x^3 - 4x^2
+   *
+   * -- --------------------
+   * utils:
+   * 1. (a - b)(a + b) = a^2 - b^2
+   *
+   *   (x - 4)(x - 3)(x + 3)
+   * = (x - 4)(x^2 - 3^2)
+   * = (x - 4)(x^2 - 9)
+   * = x^3 - 9x - 4x^2 + 36
+   * = x^3 - 4x^2 - 9x + 36
+   *
+   *
+   * -- --------------------
+   *   (x - 4)(x - 3)(x + 3)
+   * = (x^2 - 3x - 4x + 12)(x + 3)
+   * = (x^2 - 7x + 12)(x + 3)
+   * = x^3 + 3x^2 - 7x^2 - 21x + 12x + 36
+   * = x^3 - 4x^2 - 9x + 36
+   *
+   * -- --------------------
+   *   (x - 4)(x - 3)(x + 3)
+   * = (x - 4)(x + 3)(x - 3)
+   * = (x^2 - 3x - 4x - 12)(x - 3)
+   * = (x^2 - 7x - 12)(x - 3)
+   * = x^3 - 3x^2 - 7x^2 + 21x - 12x + 36
+   * = x^3 - 9x^2 + 9x + 36
+   *
+   *
+   * -- --------------------
+   * make: x^3 - 4x^2 - 9x + 36
+   * become something has: (x - 3)
+   *   x^3 - 4x^2 - 9x + 36
+   * = x^3 - 3x^2 - x^2 + 3x - 12x + 36
+   * = x^2(x - 3) - x(x - 3) - 12(x - 3)
+   * = (x - 3)(x^2 - x - 12)
+   *
+   * draft:
+   * -12(x - 3) = -12x + 36
+   * k + 3 = - 9
+   * k = -9 - 3
+   * k = -12
+   * -x(x - 3) = -x^2 + 3x
+   * x^2(x - 3) = x^3 - 3x^2
+   *
+   * -- --------------------
+   * make: x^3 - 4x^2 - 9x + 36
+   * become something has: (x + 3)
+   *   x^3 - 4x^2 - 9x + 36
+   * = x^3 + 3x^2 - 7x^2 - 21x + 12x + 36
+   * = x^2(x + 3) - 7x(x + 3) + 12(x + 3)
+   * = (x + 3)(x^2 - 7x + 12)
+   *
+   * draft:
+   * 12(x + 3) = 12x + 36
+   * k - 21 = -9
+   * k = 21 - 9
+   * k = 12
+   * -7x(x + 3) = -7x^2 - 21x
+   * k + 3 = -4
+   * k = -4 - 3
+   * k = -7
+   * x^2(x + 3) = x^3 + 3x^2
+   *
+   *
+   *
+   *
+   */
+  const a = 1;
+  const b = -4;
+  const c = -9;
+  const d = 36;
+
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  // [4, 3, -3]
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+
+function test4() {
+  /**
+   * x^3 - 6x^2 - 6x - 7 = 0
+   * + x = 7
+   * <=> (x - 7)(x^2 + x + 1) = 0
+   * <=> x = 7
+   *     x^2 + x + 1 = 0
+   *     + a = 1 != 0
+   *     + b = 1
+   *     + c = 1
+   *     + delta = b^2 - 4ac = 1^2 - 4.1.1 = 1 - 4 = -3 < 0
+   *     => x = null
+   * => x^3 - 6x^2 - 6x - 7 = 0
+   * has one root: x = 7
+   *
+   * make: x^3 - 6x^2 - 6x - 7
+   * become something has: (x - 7)
+   *   x^3 - 6x^2 - 6x - 7
+   * = x^3 - 7x^2 + x^2 - 7x + x - 7
+   * = x^2(x - 7) + x(x - 7) + (x - 7)
+   * = (x - 7)(x^2 + x + 1)
+   *
+   *
+   * draft:
+   * x(x - 7) = x^2 - 7x
+   * x^2(x - 7) = x^3 - 7x^2
+   *
+   *
+   *
+   *
+   *
+   */
+  const a = 1;
+  const b = -6;
+  const c = -6;
+  const d = -7;
+
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+
+function test5() {
+  /**
+   * Solve the equation: x^3 + 3x^2 + 3x + 1 = 0
+   * utils:
+   * 1. (a + b)^3
+   * = (a + b)(a + b)(a + b)
+   * = (a^2 + ab + ba + b^2)(a + b)
+   * = (a^2 + 2ab + b^2)(a + b)
+   * = a^3 + a^2b + 2a^2b + 2ab^2 + ab^2 + b^3
+   * = a^3 + 3a^2b + 3ab^2 + b^3
+   *
+   *
+   *     x^3 + 3x^2 + 3x + 1 = 0
+   * <=> x^3 + 3.x^2.1 + 3.x.1^2 + 1^3 = 0
+   * <=> (x + 1)^3 = 0
+   * <=> x = -1, x = -1, x = -1
+   * => x^3 + 3x^2 + 3x + 1 = 0
+   * have three repeated roots: x = -1
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   */
+
+  const a = 1;
+  const b = 3;
+  const c = 3;
+  const d = 1;
+
+  console.log("");
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+
+function test6() {
+  /**
+   * Solve the equation: x^3 + 3x^2 - 6x - 8 = 0
+   * + x = 2
+   *
+   *     x^3 + 3x^2 - 6x - 8 = 0
+   * <=> (x - 2)(x^2 + 5x + 4) = 0
+   * <=> x = 2
+   *     x^2 + 5x + 4 = 0
+   *     + a = 1 != 0
+   *     + b = 5
+   *     + c = 4
+   *     + delta = b^2 - 4ac = 5^2 - 4.1.4 = 25 - 16 = 9 > 0
+   *     + x1 = (-b + 2thRoot(delta)) / (2a)
+   *          = (-5 + 2thRoot(9)) / 2
+   *          = (-5 + 3) / 2
+   *          = -2 / 2
+   *          = -1
+   *     + x2 = (-b - 2thRoot(delta)) / (2a)
+   *          = (-5 - 2thRoot(9)) / 2
+   *          = (-5 - 3) / 2
+   *          = -8 / 2
+   *          = -4
+   *
+   * => x^3 + 3x^2 - 6x - 8 = 0
+   * has three roots: x = 2, x = -1, x = -4
+   *
+   *
+   *
+   * make: x^3 + 3x^2 - 6x - 8
+   * become something has: (x - 2)
+   *   x^3 + 3x^2 - 6x - 8
+   * = x^3 - 2x^2 + 5x^2 - 10x + 4x - 8
+   * = x^2(x - 2) + 5x(x - 2) + 4(x - 2)
+   * = (x - 2)(x^2 + 5x + 4)
+   *
+   *
+   * draft:
+   * 5x(x - 2) = 5x^2 - 10x
+   * k - 2 = 3
+   * k = 2 + 3
+   * k = 5
+   * x^2(x - 2) = x^3 - 2x^2
+   *
+   *
+   */
+  const a = 1;
+  const b = 3;
+  const c = -6;
+  const d = -8;
+
+  console.log("");
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  // 2 -1 - 4
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+
+function test7() {
+  /**
+   * Solve the equation: x^3 + 2x^2 - 21x + 18 = 0
+   *
+   *     x^3 + 2x^2 - 21x + 18 = 0
+   * <=> (x - 3)(x^2 + 5x - 6) = 0
+   * <=> x = 3
+   *     x^2 + 5x - 6 = 0
+   *     + a = 1 != 0
+   *     + b = 5
+   *     + c = -6
+   *     + delta = b^2 - 4ac = 5^2 - 4.1.(-6) = 25 + 24 = 49 > 0
+   *     + x1 = (-b + 2thRoot(delta)) / (2a)
+   *          = (-5 + 2thRoot(49)) / 2
+   *          = (-5 + 7) / 2
+   *          = 2 / 2
+   *          = 1
+   *     + x2 = (-b - 2thRoot(delta)) / (2a)
+   *          = (-5 - 2thRoot(49)) / 2
+   *          = (-5 - 7) / 2
+   *          = -12 / 2
+   *          = -6
+   *
+   * => x^3 + 2x^2 - 21x + 18 = 0
+   * have three roots: x = 3, x = 1, x = -6
+   *
+   *
+   * make: x^3 + 2x^2 - 21x + 18
+   * become something has: (x - 3)
+   *   x^3 + 2x^2 - 21x + 18
+   * = x^3 - 3x^2 + 5x^2 - 15x - 6x + 18
+   * = x^2(x - 3) + 5x(x - 3) - 6(x - 3)
+   * = (x - 3)(x^2 + 5x - 6)
+   *
+   * draft:
+   * -6(x - 3) = -6x + 18
+   * k - 15 = -21
+   * k = 15 - 21
+   * k = -(21 - 15)
+   * k = -(6)
+   * 5x(x - 3) = 5x^2 - 15x
+   * x^2(x - 3) = x^3 - 3x^2
+   *
+   *
+   * -- ------------------------
+   *   x^3 + 2x^2 - 21x + 18
+   * = (x - 3)(x - 1)(x + 6)
+   *
+   *
+   *
+   * -- ------------------------
+   * make: x^3 + 2x^2 - 21x + 18
+   * become something has: (x - 1)
+   *   x^3 + 2x^2 - 21x + 18
+   * = x^3 - x^2 + 3x^2 - 3x - 18x + 18
+   * = x^2(x - 1) + 3x(x - 1) - 18(x - 1)
+   * = (x - 1)(x^2 + 3x - 18)
+   *
+   * draft:
+   * -18(x - 1) = -18x + 18
+   * 3x(x - 1) = 3^2 - 3x
+   * x^2(x - 1) = x^3 - x^2
+   *
+   *
+   * -- ------------------------
+   * make: x^3 + 2x^2 - 21x + 18
+   * become something has: (x + 6)
+   *   x^3 + 2x^2 - 21x + 18
+   * = x^3 + 6x^2 - 4x^2 - 24x + 3x + 18
+   * = x^2(x + 6) - 4x(x + 6) + 3(x + 6)
+   * = (x + 6)(x^2 - 4x + 3)
+   *
+   * draft:
+   * 3(x + 6) = 3x + 18
+   * -4x(x + 6) = -4x^2 - 24x
+   * x^2(x + 6) = x^3 + 6x^2
+   *
+   * -- -------------------------
+   *   x^3 + 2x^2 - 21x + 18
+   *
+   *   (x - 3)(x - 1)(x + 6)
+   * = (x^2 - x - 3x + 3)(x + 6)
+   * = (x^2 - 4x + 3)(x + 6)
+   * = x^3 + 6x^2 - 4x^2 - 24x + 3x + 18
+   * = x^3 + 2x^2 - 21x + 18
+   *
+   *
+   *
+   *
+   */
+
+  const a = 1;
+  const b = 2;
+  const c = -21;
+  const d = 18;
+
+  console.log("");
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  // 3 1 -6
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+
+function test8() {
+  /**
+   * solve the equation: x^3 + 4x^2 + 7x + 6 = 0
+   *     x^3 + 4x^2 + 7x + 6 = 0
+   * <=> (x + 2)(x^2 + 2x + 3) = 0
+   * <=> x = -2
+   *     x^2 + 2x + 3 = 0
+   *     + a = 1 != 0
+   *     + b = 2
+   *     + c = 3
+   *     + delta = b^2 - 4ac = 2^2 - 4.1.3 = 4 - 12 = -8 < 0
+   *     => x = null
+   *
+   * => x^3 + 4x^2 + 7x + 6 = 0
+   * has one root: x = -2
+   *
+   *
+   * make: x^3 + 4x^2 + 7x + 6
+   * become something has: (x + 2)
+   *   x^3 + 4x^2 + 7x + 6
+   * = x^3 + 2x^2 + 2x^2 + 4x + 3x + 6
+   * = x^2(x + 2) + 2x(x + 2) + 3(x + 2)
+   * = (x + 2)(x^2 + 2x + 3)
+   *
+   *
+   * draft:
+   * 2x(x + 2) = 2x^2 + 4x
+   * x^2(x + 2) = x^3 + 2x^2
+   *
+   */
+
+  const a = 1;
+  const b = 4;
+  const c = 7;
+  const d = 6;
+
+  console.log("");
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  // -2
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+
+function test9() {
+  /**
+   * Solve the equation: 2x^3 + 9x^2 + 3x - 4 = 0
+   *
+   *     2x^3 + 9x^2 + 3x - 4 = 0
+   * <=> (x + 4)(2x^2 + x - 1) = 0
+   * <=> x = - 4
+   *     2x^2 + x - 1 = 0
+   *     + a = 2 != 0
+   *     + b = 1
+   *     + c = -1
+   *     + delta = b^2 - 4ac = 1 - 4.2.(-1) = 1 + 8 = 9 > 0
+   *     + x1 = (-b + 2thRoot(delta)) / (2a)
+   *          = (-1 + 3) / 4
+   *          = 2 / 4
+   *          = 1 / 2
+   *          = 0.5
+   *     + x2 = (-b - 2thRoot(delta)) / (2a)
+   *          = (-1 - 2thRoot(9)) / (2.2)
+   *          = (-1 - 3) / 4
+   *          = -4 / 4
+   *          = -1
+   *
+   * => 2x^3 + 9x^2 + 3x - 4 = 0
+   * have three roots and those are: x = -4, x = 0.5, x = -1
+   *
+   *
+   *
+   *
+   *
+   *
+   * make: 2x^3 + 9x^2 + 3x - 4
+   * become something has: (x + 4)
+   *   2x^3 + 9x^2 + 3x - 4
+   * = 2x^3 + 8x^2 + x^2 + 4x - x - 4
+   * = 2x^2(x + 4) + x(x + 4) - 1.(x + 4)
+   * = (x + 4)(2x^2 + x - 1)
+   *
+   * draft:
+   * -1(x + 4) = -x - 4
+   * x(x + 4) = x^2 + 4x
+   * 2x^2(x + 4) = 2x^3 + 8x^2
+   *
+   *
+   *
+   *
+   *
+   *
+   */
+
+  const a = 2;
+  const b = 9;
+  const c = 3;
+  const d = -4;
+
+  console.log("");
+  console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+  // x = -4, x = 0.5, x = -1
+  console.log(solveCubicEquationMethod1(a, b, c, d));
+}
+// page = 9
+
+test1();
+test2();
+test3();
+test4();
+test5();
+test6();
+test7();
+test8();
+test9();
