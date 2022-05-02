@@ -1,0 +1,6 @@
+Cubic Equation: ax^3 + bx^2 + bx + c = 0
+
+Solve method:
+
+Graph:
+

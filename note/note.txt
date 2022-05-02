@@ -180,6 +180,60 @@ its path is described by a quadratic equation?
   - x - 1 = 0 has one real root means: x - 1 = 0
   has one real root and it was x = 1
 
++ polynomial: Đa thức
+  + Example: f(x) = x - 1
+
++ Thus: Do đó
++ Hence: vì thế
++ Furthermore: Hơn nữa
++ Nevertheless: Tuy nhiên
+
++ Calculus: 
+  + The branch of mathematics
+  + Deals with finding and properties of 
+  derivatives (Đạo hàm) and integrals (Tích phân)
+  of functions (f(x))
+  + Using method `summation of infinities differences`
+
+
++ Derivative essence: 
+  + The rate of the change bellow
+    + x change then y change
+    + Example:
+      + y = 1
+      d(y) / dx = d(1) / dx = 0
+      -> Because we don't have x in the y = 1
+      so the rate of the change is 0
+    + Example:
+      + y = x - 1
+      d(y) / dx 
+      = d(x - 1) / dx
+      = d(x) / dx + d(-1) / dx
+      = 1 + 0
+      = 1
+      -> Because we have x in the y = x - 1 
+      so we have the rate of the change. And
+      it was calculated by using derivative formula
+        + d(a) / dx = 0  
+          + But why one can found this formula ?
+            + Answer 1: because one has passionate
+            about mathematics, one do math a lot, 
+            the problem one meets increasing by the time
+            so does it problem level so it comes naturally.
+            + Answer 2: god gives one
+
+          + Why should we learn this ?
+          
+          + Forget about how one found this formula.
+ 
+
+        + d(x) / dx = 1
+      
+
+
++ Integrals essence:
+
+
 
 
 
