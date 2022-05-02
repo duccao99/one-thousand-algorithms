@@ -132,6 +132,10 @@ content, work, idea, secret, dream,...
 + a != 0 - x = -b / a
 
 8.2. Quadratic Equation: ax^2 + bx + c = 0
+
+- Did you know that when a rocket is launched,
+its path is described by a quadratic equation?
+
 + a = 0 - solveLinearEquation(b,c)
 
 + a != 0   

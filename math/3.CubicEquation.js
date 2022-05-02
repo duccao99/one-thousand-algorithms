@@ -558,6 +558,7 @@ function solveCubicEquationMethod1(a, b, c, d) {
    * Method 1 essence:
    * make: ax^3 + bx^2 + cx + d
    * become something like: (ex + f)(gx^2 + mx + n)
+   * Only can be solve if it has at least one integer root
    *
    * To solve cubic equation: ax^3 + bx^2 + cx + d = 0
    * find one root then make the equation becomes
@@ -1253,7 +1254,171 @@ function test9() {
   // x = -4, x = 0.5, x = -1
   console.log(solveCubicEquationMethod1(a, b, c, d));
 }
-// page = 9
+
+function useSyntheticDivisionToDetermineIfXIsRoot() {
+  /**
+   * 1. Is x = -2 a root of the equation
+   * x^3 + 9x^2 + 26x + 24 = 0 ?
+   *
+   * 1  9      26     24      | x = -2
+   *    1x(-2) 7x(-2) 12x(-2)
+   * 1  7      12     0(*)
+   *
+   * Because (*) = 0 then x = -2 was a root
+   *
+   *
+   * 2. Was x = 4 a root of the equation
+   * x^3 - 6x^2 + 9x + 1 = 0
+   *
+   * 1 -6  9      1   | x = 4
+   *   1x4 (-2)x4 1x4
+   * 1 -2  1      5(*)
+   *
+   * Because (*) != 0 so x = 4 wasn't a root
+   *
+   *
+   * 3. Was x = -1 a root of the equation
+   * x^3 + 6x^2 + 3x - 5 = 0
+   *
+   * 1 6      3      -5        | x = -1
+   *   1x(-1) 5x(-1) (-2)x(-1)
+   * 1 5      -2     -3(*)
+   *
+   * Because (*) != 0 so x = -1 wasn't a root
+   *
+   *
+   * 4. Was x = 2 a root of the equation
+   * x^3 + 2x^2 - 20x + 24 = 0
+   *
+   * 1 2   -20 24    | x = 2
+   *   1x2 4x2 -12x2
+   * 1 4   -12 0(*)
+   *
+   * Because (*) = 0 so x = 2 was a root
+   *
+   *
+   *
+   *
+   */
+
+  function test10() {
+    /**
+     *     x^3 + 9x^2 + 26x + 24 = 0
+     * <=> (x + 2)(x^2 + 7x + 12) = 0
+     * <=> x = -2
+     *     x^2 + 7x + 12 = 0
+     *     + a = 1 != 0
+     *     + b = 7
+     *     + c = 12
+     *     + delta = b^2 - 4ac = 7^2 - 4.1.12 = 49 - 48 = 1 > 0
+     *     + x1 = (-b + 2thRoot(delta)) / (2a)
+     *          = (-7 + 2thRoot(1)) / 2
+     *          = (-7 + 1) / 2
+     *          = -6 / 2
+     *          = -3
+     *     + x2 = (-b - 2thRoot(delta)) / (2a)
+     *          = (-7 - 2thRoot(1)) / 2
+     *          = (-7 - 1) / 2
+     *          = -8 / 2
+     *          = -4
+     *
+     * => x^3 + 9x^2 + 26x + 24 = 0
+     * have three roots: x =  -2, x = -3, x = -4
+     *
+     *
+     *
+     *
+     *
+     */
+    const a = 1;
+    const b = 9;
+    const c = 26;
+    const d = 24;
+
+    console.log("");
+    console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+    //x = -2, x = -3, x = -4
+    console.log(solveCubicEquationMethod1(a, b, c, d));
+  }
+
+  function test11() {
+    /**
+     * x^3 - 6x^2 + 9x + 1 = 0
+     *
+     *
+     */
+
+    const a = 1;
+    const b = -6;
+    const c = 9;
+    const d = 1;
+
+    console.log("");
+    console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+    // x = -0.10380334027
+    console.log(solveCubicEquationMethod1(a, b, c, d));
+  }
+
+  function test12() {
+    // x^3 + 6x^2 + 3x - 5
+
+    const a = 1;
+    const b = 6;
+    const c = 3;
+    const d = -5;
+
+    console.log("");
+    console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+    // x = -0.10380334027
+    console.log(solveCubicEquationMethod1(a, b, c, d));
+  }
+
+  function test13() {
+    /**
+     *     x^3 + 2x^2 - 20x + 24 = 0
+     * <=> (x - 2)(x^2 + 4x - 12) = 0
+     * <=> x = 2
+     *     x^2 + 4x - 12 = 0
+     *     + a = 1 != 0
+     *     + b = 4
+     *     + c = -12
+     *     + delta = b^2 - 4ac = 16 - 4.1.(-12) = 16 + 48 = 64 > 0
+     *     + x1 = (-b + 2thRoot(delta)) / (2a)
+     *          = (-4 + 2thRoot(64)) / (2.1)
+     *          = (-4 + 8) / 2
+     *          = 4 / 2
+     *          = 2
+     *     + x2 = (-b - 2thRoot(delta)) / (2a)
+     *          = (-4 - 2thRoot(64)) / (2.1)
+     *          = (-4 - 8) / 2
+     *          = -12 / 2
+     *          = -6
+     *
+     * => x^3 + 2x^2 - 20x + 24 = 0
+     * have two repeated roots: x = 2, x = 2
+     * and one root: x = -6
+     *
+     *
+     *
+     *
+     */
+
+    const a = 1;
+    const b = 2;
+    const c = -20;
+    const d = 24;
+
+    console.log("");
+    console.log(`${a}x^3 + ${b}x^2 + ${c}x + ${d} = 0 `);
+    // x = -0.10380334027
+    console.log(solveCubicEquationMethod1(a, b, c, d));
+  }
+
+  test10();
+  test11();
+  test12();
+  test13();
+}
 
 test1();
 test2();
@@ -1264,3 +1429,4 @@ test6();
 test7();
 test8();
 test9();
+useSyntheticDivisionToDetermineIfXIsRoot();
