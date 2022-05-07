@@ -188,6 +188,13 @@ its path is described by a quadratic equation?
 + Furthermore: Hơn nữa
 + Nevertheless: Tuy nhiên
 
++ Integrals: tích phân 
+  + Tích phân != nguyên hàm
++ : Nguyên hàm 
+  + Nguyên hàm != tích phân
+
+
+
 + Calculus: 
   + The branch of mathematics
   + Deals with finding and properties of 
@@ -195,6 +202,11 @@ its path is described by a quadratic equation?
   of functions (f(x))
   + Using method `summation of infinities differences`
 
+
++ Integrals essence: 
+  + Bản chất tích phân là gì? 
+    + Là tính diện tích của đường cong đồ thị nằm trong vùng x từ a đến b
+  + 
 
 + Derivative essence: 
   + The rate of the change bellow
@@ -231,8 +243,7 @@ its path is described by a quadratic equation?
       
 
 
-+ Integrals essence:
-
++ Absolute value: |x|
 
 
 
