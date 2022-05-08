@@ -21,7 +21,7 @@
  *
  */
 
-function f1() {
+function f() {
   const a = [1, 2, 3, 4, 5];
   console.log(a);
 
@@ -56,6 +56,6 @@ function f2() {
   console.log(a);
 }
 
-f1();
+f();
 console.log("");
 f2();
