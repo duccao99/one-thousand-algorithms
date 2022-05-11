@@ -88,8 +88,5 @@ function f3() {
   console.log(a);
 }
 
-// f1();
 console.log("");
-// f2();
-// console.log("");
 f3();
