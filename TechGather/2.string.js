@@ -213,10 +213,80 @@ function stringTrim(s) {
   };
 }
 
+function labelForCharacterPracticeTech() {
+  /**
+   * 6. Label for characters tech
+   *
+   *
+   */
+  const s = `
+  a = 1     A = 10
+  b = 2     B = 20
+  c = 3     C = 30
+  d = 4     D = 40
+  e = 5     E = 50
+  f = 6     F = 60
+  g = 7     G = 70
+  h = 8     H = 80
+  i = 9     I = 90
+  j = 10    J = 100
+  k = 11    K = 110
+  l = 12    L = 120
+  m = 13    M = 130
+  n = 14    N = 140
+  o = 15    O = 150
+  p = 16    P = 160
+  q = 17    Q = 170
+  r = 18    R = 180
+  s = 19    S = 190
+  t = 20    T = 200
+  u = 21    U = 210
+  v = 22    V = 220
+  w = 23    W = 230
+  x = 24    X = 240
+  y = 25    Y = 250
+  z = 26    Z = 260
+
+  0 = 0
+  1 = 1
+  2 = 2
+  3 = 3
+  4 = 4
+  5 = 5
+  6 = 6
+  7 = 7
+  8 = 8
+  9 = 9 
+`;
+
+  const data = [];
+
+  for (let i = 0; i <= s.length - 1; i++) {
+    if (isNaN(+s[i])) {
+      if (s[i] !== "=") {
+        data.push({
+          character: s[i],
+          labelNumber: +(s[i + 4] + s[i + 5] + s[i + 6]),
+        });
+      }
+    }
+  }
+
+  for (let i = 0; i <= 9; ++i) {
+    data.push({
+      character: `${i}`,
+      labelNumber: +i,
+    });
+  }
+
+  return data;
+}
+
 {
   const s = "   abc  de     f    ";
   // console.log(stringLeftTrim(s));
   // console.log(stringRightTrim(s));
 
-  console.log(stringTrim(s));
+  // console.log(stringTrim(s));
+  console.log(labelForCharacterPracticeTech());
 }
