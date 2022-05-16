@@ -23,11 +23,23 @@
  */
 function f(a) {
   for (let i = a.length - 1; i >= 0; --i) {
-    console.log(a[i].userName);
     for (let j = i - 1; j >= 0; --j) {
-      console.log(a[j].userName);
+      const s1 = a[i].userName;
+      const s2 = a[j].userName;
+      const s1SmallerThans2 = `${s1} < ${s2}`;
+      const textCompareTwoString = compareTwoStrings(
+        a[i].userName,
+        a[j].userName
+      );
+      if (textCompareTwoString === s1SmallerThans2) {
+        // swap
+        const temporary = a[i];
+        a[i] = a[j];
+        a[j] = temporary;
+      }
     }
   }
+  return a;
 }
 
 /**
@@ -201,7 +213,10 @@ function compareTwoStrings(s1, s2) {
 const a = [
   { userId: 1, userName: "user01" },
   { userId: 3, userName: "user03" },
+  { userId: 4, userName: "user04" },
   { userId: 2, userName: "user02" },
+  { userId: 6, userName: "user06" },
+  { userId: 5, userName: "user05" },
 ];
 
 const b = [
@@ -210,7 +225,5 @@ const b = [
   { userId: 3, userName: "user03" },
 ];
 
-// console.log(f(a));
+console.log(f(a));
 // console.log(f(b));
-
-console.log(compareTwoStrings("user01", "user02"));
