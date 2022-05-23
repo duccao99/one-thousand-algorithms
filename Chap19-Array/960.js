@@ -30,3 +30,9 @@ const a = [1, 2, 3, 4, 5];
 const pos = 2;
 console.log(a);
 console.log(f(a, pos));
+
+console.log("");
+
+const b = [1, 2, 3, 4, 5];
+console.log(b);
+console.log(f(b, b.length - 1));
