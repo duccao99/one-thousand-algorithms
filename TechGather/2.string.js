@@ -181,6 +181,27 @@ function stringRightTrim(s) {
 
 /**
  *
+ * @param {number} length
+ */
+function generateRandomString(length) {
+  function generateRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  let ret = "";
+
+  for (let i = 0; i < length; ++i) {
+    ret += characters.charAt(generateRandomNumber(0, characters.length - 1));
+  }
+
+  return ret;
+}
+
+/**
+ *
  * @param {string} s
  */
 function stringTrim(s) {
@@ -280,6 +301,32 @@ function labelForCharacterPracticeTech() {
   }
 
   return data;
+}
+
+/**
+ *
+ * @param {number} length
+ */
+function generateRandomString(length) {
+  /**
+   * 7. generate random string tech
+   *
+   */
+
+  function generateRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  let ret = "";
+
+  for (let i = 0; i < length; ++i) {
+    ret += characters.charAt(generateRandomNumber(0, characters.length - 1));
+  }
+
+  return ret;
 }
 
 {
