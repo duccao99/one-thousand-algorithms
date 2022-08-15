@@ -162,12 +162,16 @@ function f() {
           if (wasTString === tdString[0] && wasDString === tdString[1]) {
             countTd++;
           }
+
+          if (countTr === 1) {
+            let tr1StartTraverseIndex = p;
+            console.log(s[tr1StartTraverseIndex]);
+            console.log("1 tr index: ", p);
+          }
         }
       }
-      console.log(s);
 
-      console.log("countTr: ", countTr);
-      console.log("countTd: ", countTd);
+      console.log(s);
 
       trTds2 = reverseArray(trTds2.split("")).join("");
       // console.log("trTds2: ", trTds2);
