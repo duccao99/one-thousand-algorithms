@@ -1,5 +1,5 @@
 /**
- * 1. Palindromic number - Số gánh
+ * 1. Palindromic number - Số gánh, so ganh
  * A palindromic number (numeral palindrome or a numeric palindrome) is a number
  * that remains the same when its digits are reversed, it has reflectional symmetry
  * across a vertical axis symmetry
@@ -32,7 +32,7 @@ function isPalindromicNumber(n: number): boolean {
   let flag: boolean = true;
 
   let a: number[] = String(n)
-    .split('')
+    .split("")
     .map((ele) => +ele);
 
   for (let i = 0; i <= Math.floor(a.length / 2); ++i) {

@@ -245,6 +245,14 @@ its path is described by a quadratic equation?
 
 + Absolute value: |x|
 
+9. Data Structure And Algorithm Note
+9.1. The Matrix Data Structure
++ Because of the matrix is a dangerous word
+so use another word instead.
++ Some word 
+  + Forge: 60%
+  + Grid: 90%, same same matrix
+  -> Grid Data Structure ?
 
 
 
