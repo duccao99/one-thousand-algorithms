@@ -97,10 +97,6 @@ function getAsiaZodiac(personBornYear) {
 }
 
 {
-  const PutinBornYear = 1952;
-  const DucCongBornYear = 1999;
-  const someoneBornOneNineNineThree = 1993;
-  console.log(getAsiaZodiac(PutinBornYear));
-  console.log(getAsiaZodiac(DucCongBornYear));
-  console.log(getAsiaZodiac(someoneBornOneNineNineThree));
+  const year = 1996;
+  console.log(getAsiaZodiac(year));
 }
