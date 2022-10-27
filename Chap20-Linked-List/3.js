@@ -1,3 +1,7 @@
+/**
+ * Hacker Rank Problem: Linked List Get Node Value
+ *
+ */
 const SinglyLinkedListNode = class {
   constructor(nodeData) {
     this.data = nodeData;
@@ -26,6 +30,22 @@ const SinglyLinkedList = class {
 
 /**
  *
+ * @param {SinglyLinkedList} singlyLinkedList
+ */
+function getSinglyLinkedListLength(singlyLinkedList) {
+  let traverseNode = singlyLinkedList;
+  let ret = 0;
+
+  while (traverseNode !== null) {
+    ret++;
+    traverseNode = traverseNode.next;
+  }
+
+  return ret;
+}
+
+/**
+ *
  * @param {SinglyLinkedListNode} node
  */
 function logSinglyLinkedList(node) {
@@ -35,10 +55,9 @@ function logSinglyLinkedList(node) {
   }
 }
 
-const nodeData1 = 1;
+const nodeData1 = 3;
 const nodeData2 = 2;
-const nodeData3 = 3;
-const nodeData4 = 4;
+const nodeData3 = 1;
 
 const singlyLinkedList = new SinglyLinkedList();
 
@@ -52,4 +71,28 @@ const singlyLinkedList = new SinglyLinkedList();
 singlyLinkedList.insertNode(nodeData1);
 singlyLinkedList.insertNode(nodeData2);
 singlyLinkedList.insertNode(nodeData3);
-singlyLinkedList.insertNode(nodeData4);
+
+/**
+ *
+ * @param {SinglyLinkedList} singlyLinkedList
+ * @param {number} positionFromTail
+ */
+function f(singlyLinkedList, positionFromTail) {
+  const headNode = singlyLinkedList.head;
+  let countBackwards = getSinglyLinkedListLength(headNode) - 1;
+  let traverseNode = headNode;
+
+  while (traverseNode !== null) {
+    if (positionFromTail === countBackwards) {
+      console.log(`Node ${countBackwards}: data ${traverseNode.data}`);
+      break;
+    }
+
+    countBackwards--;
+    traverseNode = traverseNode.next;
+  }
+}
+
+const positionFromTail = 2;
+
+f(singlyLinkedList, positionFromTail);
