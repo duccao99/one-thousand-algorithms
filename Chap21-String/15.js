@@ -10,3 +10,5 @@ for (let i = a.length - 1; i >= 0; --i) {
 }
 
 console.log(ret);
+
+console.log(1);
