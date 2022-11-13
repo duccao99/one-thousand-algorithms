@@ -61,6 +61,92 @@
 
 /**
  *
+ * @param {Array} a
+ */
+function wasExistNegativeNumberInAnArray(a) {
+  /**
+   * + a = [1,2,-1,3,4,5,-6]
+   * + ret = true
+   *
+   *
+   */
+  let flag = false;
+
+  for (let i = a.length - 1; i >= 0; --i) {
+    if (a[i] < 0) {
+      flag = true;
+      break;
+    }
+  }
+
+  return flag;
+}
+
+/**
+ *
+ * @param {Array} array2d
+ */
+function getRowIndicate(array2d) {
+  let ret = "--";
+  const lastColumnIndex = array2d[0].length - 1;
+  const lastRowIndex = array2d.length - 1;
+  const arrayIndicateNumber = [];
+  const columnElements = [];
+
+  for (let i = 0; i <= lastColumnIndex; ++i) {
+    let columnTraverse = [];
+    for (let j = 0; j <= lastRowIndex; ++j) {
+      columnTraverse.push(array2d[j][i]);
+    }
+
+    if (wasExistNegativeNumberInAnArray(columnTraverse)) {
+      arrayIndicateNumber.push(-1);
+    }
+
+    if (!wasExistNegativeNumberInAnArray(columnTraverse)) {
+      arrayIndicateNumber.push(1);
+    }
+
+    columnElements.push(columnTraverse);
+  }
+
+  for (let i = 0; i <= arrayIndicateNumber.length - 1; ++i) {
+    if (arrayIndicateNumber[i] === -1) {
+      ret += " " + " " + i;
+    }
+
+    if (arrayIndicateNumber[i] === 1) {
+      ret += " " + i;
+    }
+  }
+
+  return ret;
+}
+
+/**
+ *
+ * @param {Array} a
+ */
+function push(a, element) {
+  /**
+   * + a = [1,2,3,4,5]
+   * + element = 6
+   * + ret = [1,2,3,4,5,6]
+   *
+   */
+  const ret = new Array(a.length + 1);
+
+  for (let i = a.length - 1; i >= 0; --i) {
+    ret[i] = a[i];
+  }
+
+  ret[ret.length - 1] = element;
+
+  return ret;
+}
+
+/**
+ *
  * @param {Array} array2d
  */
 function logTwoDimensionalArray(array2d) {
@@ -72,32 +158,42 @@ function logTwoDimensionalArray(array2d) {
   const elementSpace = " ";
   const negativeSpace = " ";
 
-  let rowIndexIndicate = "-- ";
-  for (let i = 0; i <= lastRowIndex; ++i) {
-    if (i === 0) {
-      rowIndexIndicate += i;
-    }
-
-    if (i !== 0) {
-      if (array2d[0][i] < 0) {
-        rowIndexIndicate += negativeSpace;
-        rowIndexIndicate += commaSpace;
-        rowIndexIndicate += elementSpace;
-        rowIndexIndicate += i;
-      }
-
-      if (array2d[0][i] > 0) {
-        rowIndexIndicate += commaSpace;
-        rowIndexIndicate += elementSpace;
-        rowIndexIndicate += i;
-      }
-    }
-  }
+  let rowIndexIndicate = getRowIndicate(array2d);
 
   console.log(rowIndexIndicate);
 
   for (let j = 0; j <= lastRowIndex; ++j) {
-    console.log(array2d[j]);
+    let rowTraverse = j + "|";
+    let rowElements = [];
+
+    for (let k = 0; k <= lastColumnIndex; ++k) {
+      rowElements = push(rowElements, array2d[j][k]);
+    }
+
+    for (let l = 0; l <= rowElements.length - 1; ++l) {
+      if (rowElements[l] < 0) {
+        rowTraverse += " " + rowElements[l];
+      }
+
+      if (rowElements[l] >= 0) {
+        rowTraverse += " " + rowElements[l];
+
+        const columnIndex = l;
+        const columnElements = getArray2dColumnElements(array2d, columnIndex);
+        if (wasExistNegativeNumberInAnArray(columnElements)) {
+          // rowTraverse += " " + rowElements[l];
+        }
+      }
+    }
+
+    if (wasExistNegativeNumberInAnArray(rowElements)) {
+    }
+
+    if (!wasExistNegativeNumberInAnArray(rowElements)) {
+    }
+
+    // console.log("rowElements: ", rowElements);
+    console.log(rowTraverse);
   }
 }
 
@@ -120,6 +216,23 @@ function f(a) {
   }
 }
 
+/**
+ *
+ * @param {Array} array2d
+ * @param {number} columnIndex
+ *
+ */
+function getArray2dColumnElements(array2d, columnIndex) {
+  let elements = [];
+  const lastRowIndex = array2d.length - 1;
+  for (let i = 0; i <= lastRowIndex; ++i) {
+    elements = push(elements, array2d[i][columnIndex]);
+  }
+  return elements;
+}
+
 logTwoDimensionalArray(array2d);
+
+// getRowIndicate(array2d);
 
 // console.log(f(array2d));
