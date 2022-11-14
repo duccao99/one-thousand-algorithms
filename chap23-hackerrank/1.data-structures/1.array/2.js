@@ -208,13 +208,41 @@ const array2d = [
   [0, 0, 1, 2, 4, 0],
 ];
 
-function f(a) {
+function f(array2d) {
   const numberElements = 6 * 6;
-  const hourglassArea = 9;
-  const numberHourglass = numberElements / hourglassArea;
+  const numberHourGlasses = 4 * 4;
+  const maxHourGlassColumnIndex = 3;
+  const maxHourGlassRowIndex = 3;
 
-  for (let i = 1; i <= numberHourglass; ++i) {
-    console.log(i);
+  for (let i = 0; i <= maxHourGlassColumnIndex; ++i) {
+    const hourglass = [];
+    const firstThreeElements = [];
+    const secondOneElement = [];
+    const lastThreeElements = [];
+
+    const sci1 = i;
+    const eci1 = i + maxHourGlassColumnIndex - 1;
+    let rowIndexTraverse = 0;
+
+    // first 3 elements
+    for (let j = sci1; j <= eci1; ++j) {
+      firstThreeElements.push(array2d[rowIndexTraverse][j]);
+    }
+
+    // last 3 elements
+    rowIndexTraverse = maxHourGlassRowIndex - 1;
+
+    for (let k = sci1; k <= eci1; ++k) {
+      lastThreeElements.push(array2d[rowIndexTraverse][k]);
+    }
+
+    // middle 1 element
+    rowIndexTraverse = 1;
+    secondOneElement.push(array2d[rowIndexTraverse][i + 1]);
+
+    hourglass.push(firstThreeElements, secondOneElement, lastThreeElements);
+
+    console.log("hourglass: ", hourglass);
   }
 }
 
@@ -233,8 +261,14 @@ function getArray2dColumnElements(array2d, columnIndex) {
   return elements;
 }
 
-logTwoDimensionalArray(array2d);
-
-// getRowIndicate(array2d);
+const a2 = [
+  [1, 1, 1, 0, 0, 0],
+  [0, 1, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0],
+  [0, 0, 2, 4, 4, 0],
+  [0, 0, 0, 2, 0, 0],
+  [0, 0, 1, 2, 4, 0],
+];
 
 // console.log(f(array2d));
+console.log(f(a2));
