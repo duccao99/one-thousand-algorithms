@@ -176,12 +176,14 @@ function logTwoDimensionalArray(array2d) {
       }
 
       if (rowElements[l] >= 0) {
-        rowTraverse += " " + rowElements[l];
-
         const columnIndex = l;
         const columnElements = getArray2dColumnElements(array2d, columnIndex);
         if (wasExistNegativeNumberInAnArray(columnElements)) {
-          // rowTraverse += " " + rowElements[l];
+          rowTraverse += " " + " " + rowElements[l];
+        }
+
+        if (!wasExistNegativeNumberInAnArray(columnElements)) {
+          rowTraverse += " " + rowElements[l];
         }
       }
     }
