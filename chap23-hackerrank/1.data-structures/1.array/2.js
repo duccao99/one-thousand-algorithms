@@ -208,41 +208,53 @@ const array2d = [
   [0, 0, 1, 2, 4, 0],
 ];
 
+/**
+ *
+ * @param {Array} array2d
+ */
 function f(array2d) {
   const numberElements = 6 * 6;
   const numberHourGlasses = 4 * 4;
   const maxHourGlassColumnIndex = 3;
   const maxHourGlassRowIndex = 3;
 
-  for (let i = 0; i <= maxHourGlassColumnIndex; ++i) {
-    const hourglass = [];
-    const firstThreeElements = [];
-    const secondOneElement = [];
-    const lastThreeElements = [];
+  logTwoDimensionalArray(array2d);
+  console.log("");
 
-    const sci1 = i;
-    const eci1 = i + maxHourGlassColumnIndex - 1;
-    let rowIndexTraverse = 0;
+  for (let l = 0; l <= maxHourGlassRowIndex; ++l) {
+    const hourglassSetFourElements = [];
+    for (let i = 0; i <= maxHourGlassColumnIndex; ++i) {
+      const hourglass = [];
+      const firstThreeElements = [];
+      const secondOneElement = [];
+      const lastThreeElements = [];
 
-    // first 3 elements
-    for (let j = sci1; j <= eci1; ++j) {
-      firstThreeElements.push(array2d[rowIndexTraverse][j]);
+      const sci1 = i;
+      const eci1 = i + maxHourGlassColumnIndex - 1;
+      let rowIndexTraverse = 0;
+
+      // first 3 elements
+      for (let j = sci1; j <= eci1; ++j) {
+        firstThreeElements.push(array2d[rowIndexTraverse][j]);
+      }
+
+      // last 3 elements
+      rowIndexTraverse = maxHourGlassRowIndex - 1;
+
+      for (let k = sci1; k <= eci1; ++k) {
+        lastThreeElements.push(array2d[rowIndexTraverse][k]);
+      }
+
+      // middle 1 element
+      rowIndexTraverse = 1;
+      secondOneElement.push(array2d[rowIndexTraverse][i + 1]);
+
+      hourglass.push(firstThreeElements, secondOneElement, lastThreeElements);
+
+      hourglassSetFourElements.push(hourglass);
     }
-
-    // last 3 elements
-    rowIndexTraverse = maxHourGlassRowIndex - 1;
-
-    for (let k = sci1; k <= eci1; ++k) {
-      lastThreeElements.push(array2d[rowIndexTraverse][k]);
-    }
-
-    // middle 1 element
-    rowIndexTraverse = 1;
-    secondOneElement.push(array2d[rowIndexTraverse][i + 1]);
-
-    hourglass.push(firstThreeElements, secondOneElement, lastThreeElements);
-
-    console.log("hourglass: ", hourglass);
+    // console.log("l: ", l);
+    console.log("hourglassSetFourElements: ", hourglassSetFourElements);
   }
 }
 
