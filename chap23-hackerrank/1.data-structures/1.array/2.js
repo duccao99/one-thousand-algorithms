@@ -213,16 +213,11 @@ const array2d = [
  * @param {Array} array2d
  */
 function f(array2d) {
-  const numberElements = 6 * 6;
-  const numberHourGlasses = 4 * 4;
   const maxHourGlassColumnIndex = 3;
   const maxHourGlassRowIndex = 3;
-
-  logTwoDimensionalArray(array2d);
-  console.log("");
+  const hourglassElements = [];
 
   for (let l = 0; l <= maxHourGlassRowIndex; ++l) {
-    const hourglassSetFourElements = [];
     for (let i = 0; i <= maxHourGlassColumnIndex; ++i) {
       const hourglass = [];
       const firstThreeElements = [];
@@ -231,7 +226,7 @@ function f(array2d) {
 
       const sci1 = i;
       const eci1 = i + maxHourGlassColumnIndex - 1;
-      let rowIndexTraverse = 0;
+      let rowIndexTraverse = l;
 
       // first 3 elements
       for (let j = sci1; j <= eci1; ++j) {
@@ -239,23 +234,38 @@ function f(array2d) {
       }
 
       // last 3 elements
-      rowIndexTraverse = maxHourGlassRowIndex - 1;
+      rowIndexTraverse += maxHourGlassRowIndex - 1;
 
       for (let k = sci1; k <= eci1; ++k) {
         lastThreeElements.push(array2d[rowIndexTraverse][k]);
       }
 
       // middle 1 element
-      rowIndexTraverse = 1;
+      rowIndexTraverse = l + 1;
       secondOneElement.push(array2d[rowIndexTraverse][i + 1]);
 
-      hourglass.push(firstThreeElements, secondOneElement, lastThreeElements);
-
-      hourglassSetFourElements.push(hourglass);
+      hourglass.push(
+        ...firstThreeElements,
+        ...secondOneElement,
+        ...lastThreeElements
+      );
+      hourglassElements.push(hourglass);
     }
-    // console.log("l: ", l);
-    console.log("hourglassSetFourElements: ", hourglassSetFourElements);
   }
+
+  let max = Number.NEGATIVE_INFINITY;
+
+  for (let i = hourglassElements.length - 1; i >= 0; --i) {
+    let sum = 0;
+    for (let j = hourglassElements[i].length - 1; j >= 0; --j) {
+      sum += hourglassElements[i][j];
+    }
+    if (max <= sum) {
+      max = sum;
+    }
+  }
+
+  return max;
 }
 
 /**
